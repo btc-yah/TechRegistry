@@ -1,0 +1,90 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Content from "../../layouts/Content.astro";
+
+const pageScript = "/js/pages/converters/json-xml.js";
+
+const sampleJson = `{
+  "catalog": {
+    "product": {
+      "id": 101,
+      "name": "TechRegistry",
+      "status": "active"
+    }
+  }
+}`;
+
+const sampleXml = `<catalog>
+  <product>
+    <id>101</id>
+    <name>TechRegistry</name>
+    <status>active</status>
+  </product>
+</catalog>`;
+---
+
+<Layout title="JSON and XML | TechRegistry">
+	<Content title="JSON and XML" titleTag="Converter" starCount="5.4k stars" usageCount="8.7k uses today" version="v2.7.1" statusText="All Systems Operational" freeLabel="100% Free" privacyLabel="Client-Side Only" breadcrumbs={[{ label: "Home", href: "/" }, { label: "JSON and XML" }]}>
+		<div class="tool-page-shell">
+			<div class="card">
+				<div class="card-body">
+					<div class="tool-toolbar">
+						<button id="load-sample" class="btn btn-outline-light btn-sm" type="button">Load Sample</button>
+						<button id="clear-input" class="btn btn-outline-secondary btn-sm" type="button">Clear</button>
+						<button id="convert-json-xml" class="btn btn-primary btn-sm" type="button">Convert</button>
+						<button id="swap-direction" class="btn btn-outline-warning btn-sm" type="button">Swap</button>
+						<button id="copy-output" class="btn btn-outline-info btn-sm" type="button">Copy Output</button>
+					</div>
+
+					<div class="tool-field-grid mt-3 mb-3">
+						<div>
+							<label for="conversion-direction" class="form-label">Direction</label>
+							<select id="conversion-direction" class="form-select">
+								<option value="json-to-xml">JSON to XML</option>
+								<option value="xml-to-json">XML to JSON</option>
+							</select>
+						</div>
+						<div>
+							<label for="root-node" class="form-label">Root Node</label>
+							<input id="root-node" class="form-control" value="root" placeholder="root" />
+						</div>
+					</div>
+
+					<div class="tool-editors">
+						<div>
+							<div class="tool-label-row">
+								<label for="converter-input" class="form-label mb-0">Input</label>
+								<span class="text-body-secondary">Paste JSON or XML</span>
+							</div>
+							<textarea id="converter-input" class="form-control tool-code-input js-clipboard-source">{sampleJson}</textarea>
+						</div>
+						<div>
+							<div class="tool-label-row">
+								<label class="form-label mb-0">Output</label>
+								<span class="text-body-secondary">Converted content appears here</span>
+							</div>
+							<pre id="converter-output" class="tool-code-output">{sampleXml}</pre>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="card tool-details-card">
+				<div class="card-header"><h3 class="card-title">About This JSON and XML Converter</h3></div>
+				<div class="card-body">
+					<p>This JSON and XML converter helps bridge modern API payloads and legacy system formats when you need to move quickly between object-based JSON and markup-based XML documents.</p>
+					<p>It is useful for integration work, feed generation, test payload creation, service interoperability, and validating how structured data looks in each representation.</p>
+					<ul class="tool-detail-list">
+						<li>Converts JSON to XML and XML back to JSON.</li>
+						<li>Supports a custom root node for wrapped JSON arrays.</li>
+						<li>Useful for integrations, migrations, and API support tasks.</li>
+					</ul>
+					<div class="tool-points"><a class="tool-point" href="https://github.com/NaturalIntelligence/fast-xml-parser" target="_blank" rel="noreferrer"><i class="fa-solid fa-link"></i>Powered by fast-xml-parser</a></div>
+				</div>
+			</div>
+		</div>
+	</Content>
+</Layout>
+
+<div hidden data-json-xml-config data-sample-json={encodeURIComponent(sampleJson)} data-sample-xml={encodeURIComponent(sampleXml)}></div>
+<script type="module" src={pageScript}></script>

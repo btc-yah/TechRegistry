@@ -1,0 +1,158 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import Content from "../../../layouts/Content.astro";
+const pageScript = "/js/pages/regex/explainer.js";
+---
+
+<Layout title="Visual Regex Builder | TechRegistry"
+    ><Content
+        title="Visual Regex Builder"
+        titleTag="Regex"
+        starCount="2.1k stars"
+        usageCount="4.8k uses today"
+        version="v2.0.0"
+        statusText="All Systems Operational"
+        freeLabel="100% Free"
+        privacyLabel="Client-Side Only"
+        poweredBy="SortableJS"
+        poweredByLink="https://sortablejs.github.io/Sortable/"
+        breadcrumbs={[
+            { label: "Home", href: "/" },
+            { label: "Visual Regex Builder" },
+        ]}
+        ><div class="tool-page-shell" id="tool-page-root">
+            <style is:inline>
+                .builder-container { display: flex; gap: 1rem; min-height: 120px; }
+                .expression-area { flex: 1; border: 2px dashed #444; border-radius: 8px; padding: 10px; display: flex; flex-wrap: wrap; gap: 5px; align-content: flex-start; background: rgba(0,0,0,0.1); }
+                .library-area { width: 250px; background: rgba(255,255,255,0.05); border-radius: 8px; padding: 10px; }
+                .regex-tag { background: #3b82f6; color: white; padding: 4px 10px; border-radius: 4px; font-family: monospace; cursor: grab; user-select: none; border: 1px solid rgba(255,255,255,0.1); font-size: 0.85rem; }
+                .regex-tag:hover { background: #2563eb; }
+                .library-list { display: flex; flex-wrap: wrap; gap: 5px; }
+                .test-pad { margin-top: 2rem; }
+                .match-preview { min-height: 150px; padding: 1rem; border-radius: 8px; background: #1e1e1e; border: 1px solid #333; white-space: pre-wrap; color: #d4d4d4; }
+                .regex-match { background: #fde047; color: #000; border-radius: 2px; }
+                .tag-label { display: block; font-size: 0.7rem; opacity: 0.8; margin-top: 2px; }
+                .expression-area .regex-tag { cursor: pointer; }
+            </style>
+
+            <div class="card">
+                <div class="card-body">
+                    <div class="tool-toolbar">
+                        <span class="text-body-secondary me-auto">Drag tokens into the builder to create your regex</span>
+                        <button id="tool-load-sample" class="btn btn-outline-light btn-sm" type="button">Load Sample</button>
+                        <button
+                            id="tool-clear"
+                            class="btn btn-outline-secondary btn-sm"
+                            type="button">Reset Builder</button>
+                    </div>
+
+                    <div class="row mt-3 align-items-center">
+                        <div class="col">
+                            <label class="form-label small text-uppercase opacity-50 mb-1">Expression Pattern</label>
+                            <div class="input-group">
+                                <span class="input-group-text font-monospace bg-dark text-white border-0">/</span>
+                                <input type="text" id="tool-output" class="form-control font-monospace bg-dark text-info border-0" placeholder="Expression will appear here...">
+                                <div class="input-group-text bg-dark border-0">
+                                    <div class="form-check form-check-inline mb-0 me-2">
+                                        <input class="form-check-input regex-flag-check" type="checkbox" id="flagG" data-tool-field="flagG" checked>
+                                        <label class="form-check-label small" for="flagG">g</label>
+                                    </div>
+                                    <div class="form-check form-check-inline mb-0 me-2">
+                                        <input class="form-check-input regex-flag-check" type="checkbox" id="flagI" data-tool-field="flagI">
+                                        <label class="form-check-label small" for="flagI">i</label>
+                                    </div>
+                                    <div class="form-check form-check-inline mb-0">
+                                        <input class="form-check-input regex-flag-check" type="checkbox" id="flagM" data-tool-field="flagM">
+                                        <label class="form-check-label small" for="flagM">m</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="builder-container mt-3">
+                        <div class="expression-area" id="expression-builder-list">
+                            <!-- Default tokens for ([A-Z])\w+ -->
+                            <div class="regex-tag" data-value="(">(<span class="tag-label">Group</span>)<i class="fas fa-trash-alt btn-remove" title="Remove"></i></div>
+                            <div class="regex-tag" data-value="[A-Z]">[A-Z]<span class="tag-label">A-Z</span><i class="fas fa-trash-alt btn-remove" title="Remove"></i></div>
+                            <div class="regex-tag" data-value=")">)<span class="tag-label">End</span><i class="fas fa-trash-alt btn-remove" title="Remove"></i></div>
+                            <div class="regex-tag" data-value="\w">Word<span class="tag-label">\w</span><i class="fas fa-trash-alt btn-remove" title="Remove"></i></div>
+                            <div class="regex-tag" data-value="+">+<span class="tag-label">1 or more</span><i class="fas fa-trash-alt btn-remove" title="Remove"></i></div>
+                        </div>
+                        <div class="library-area">
+                            <h6 class="mb-2 small text-uppercase fw-bold opacity-50">Token Library</h6>
+                            <div class="library-list" id="expression-library-list">
+                                <div class="regex-tag" data-value="\d">Digit<span class="tag-label">\d</span></div>
+                                <div class="regex-tag" data-value="\D">Non-Digit<span class="tag-label">\D</span></div>
+                                <div class="regex-tag" data-value="\w">Word<span class="tag-label">\w</span></div>
+                                <div class="regex-tag" data-value="\s">Space<span class="tag-label">\s</span></div>
+                                <div class="regex-tag" data-value=".">Any<span class="tag-label">.</span></div>
+                                <div class="regex-tag" data-value="(">( <span class="tag-label">Group</span></div>
+                                <div class="regex-tag" data-value=")"> ) <span class="tag-label">End</span></div>
+                                <div class="regex-tag" data-value="|"> OR <span class="tag-label">|</span></div>
+                                <div class="regex-tag" data-value="[a-z]">a-z<span class="tag-label">range</span></div>
+                                <div class="regex-tag" data-value="[A-Z]">A-Z<span class="tag-label">range</span></div>
+                                <div class="regex-tag" data-value="[0-9]">0-9<span class="tag-label">range</span></div>
+                                <div class="regex-tag" data-value="+">+<span class="tag-label">1 or more</span></div>
+                                <div class="regex-tag" data-value="*">*<span class="tag-label">0 or more</span></div>
+                                <div class="regex-tag" data-value="?">?<span class="tag-label">optional</span></div>
+                                <div class="regex-tag" data-value="^">Start<span class="tag-label">^</span></div>
+                                <div class="regex-tag" data-value="$">End<span class="tag-label">$</span></div>
+                                <div class="regex-tag" data-value="\b">Boundary<span class="tag-label">\b</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <input type="hidden" id="hidden-expression" data-tool-field="expression" />
+
+                    <div class="test-pad">
+                        <div>
+                            <label class="form-label" for="tool-input"
+                                >Test Text Content</label
+                            ><textarea
+                                id="tool-input"
+                                class="form-control js-clipboard-source"
+                                data-tool-field="testText"
+                                rows="6"
+                                placeholder="Paste long text here to test your expression..."></textarea>
+                        </div>
+                    </div>
+
+                    <div id="tool-status" class="tool-status mt-3">
+                        Ready.
+                    </div><div class="mt-3">
+                        <div class="tool-label-row">
+                            <label class="form-label mb-0">Live Preview & Highlighting</label
+                            ><span class="text-body-secondary"
+                                >Matched segments will be highlighted below</span>
+                        </div>
+                        <div id="tool-detail-panel" class="mt-2">
+                            <div id="tool-detail-output" class="match-preview"></div>
+                        </div>
+                    </div>
+                </div>
+            </div><div class="card tool-details-card">
+                <div class="card-header">
+                    <h3 class="card-title">About Visual Regex Builder</h3>
+                </div><div class="card-body">
+                    <p>
+                        This tool provides a drag-and-drop interface for building
+                        regular expressions. Instead of typing complex syntax,
+                        you can visually assemble your pattern using standard
+                        tokens.
+                    </p><p>
+                        The test pad below provides instant feedback by
+                        applying your regex to the provided text and highlighting
+                        every match found.
+                    </p><ul class="tool-detail-list">
+                        <li>Drag tokens to the dotted builder area.</li>
+                        <li>Double-click a token in the builder to remove it.</li>
+                        <li>Real-time highlighting of matches in sample text.</li>
+                        <li>Supports global and multi-line matching.</li>
+                    </ul>
+                </div>
+            </div>
+        </div></Content
+    ></Layout
+><script is:inline src="/js/Sortable.min.js"></script>
+<script type="module" src={pageScript}></script>

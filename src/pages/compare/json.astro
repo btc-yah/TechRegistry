@@ -1,0 +1,81 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Content from "../../layouts/Content.astro";
+
+const pageScript = "/js/pages/compare/json.js";
+
+const sampleLeft = `{
+  "id": 101,
+  "name": "TechRegistry",
+  "status": "active",
+  "flags": {
+    "beta": true
+  }
+}`;
+
+const sampleRight = `{
+  "id": 101,
+  "name": "TechRegistry UI",
+  "status": "draft",
+  "flags": {
+    "beta": true,
+    "internal": true
+  }
+}`;
+---
+
+<Layout title="Compare JSON | TechRegistry">
+	<Content
+		title="Compare JSON"
+		titleTag="Diff Tool"
+		starCount="5.6k stars"
+		usageCount="9.1k uses today"
+		version="v2.7.1"
+		statusText="All Systems Operational"
+		freeLabel="100% Free"
+		privacyLabel="Client-Side Only"
+		poweredBy="Monaco Editor and diff"
+		breadcrumbs={[
+			{ label: "Home", href: "/" },
+			{ label: "Compare JSON" },
+		]}
+	>
+		<div class="tool-page-shell">
+			<div class="card">
+				<div class="card-body">
+					<div class="tool-toolbar">
+						<button id="load-sample" class="btn btn-outline-light btn-sm" type="button">Load Sample</button>
+						<button id="clear-input" class="btn btn-outline-secondary btn-sm" type="button">Clear</button>
+						<button id="format-json" class="btn btn-primary btn-sm" type="button">Format JSON</button>
+						<button id="copy-output" class="btn btn-outline-info btn-sm" type="button">Copy Diff</button>
+					</div>
+
+					<div class="tool-label-row mt-3">
+						<label class="form-label mb-0">Live Diff Editor</label>
+						<span class="text-body-secondary">Edit both JSON documents directly inside Monaco</span>
+					</div>
+
+				<div id="json-output" class="tool-detail-output" style="height: 600px; width: 100%;"></div>
+				</div>
+			</div>
+
+			<div class="card tool-details-card">
+				<div class="card-header"><h3 class="card-title">About This JSON Compare Tool</h3></div>
+				<div class="card-body">
+					<p>This JSON compare tool helps teams inspect API payloads, fixture updates, configuration changes, and contract revisions using a side-by-side Monaco diff editor right in the browser.</p>
+					<p>It works especially well for frontend and backend developers who need to compare objects, arrays, settings files, and response snapshots while keeping the source data private on the client.</p>
+					<ul class="tool-detail-list">
+						<li>Ideal for JSON documents, API responses, and config diffs.</li>
+						<li>Supports live editing and quick JSON formatting.</li>
+						<li>Useful for schema review, debugging, and regression checks.</li>
+					</ul>
+
+				</div>
+			</div>
+		</div>
+	</Content>
+</Layout>
+
+<div hidden data-json-compare-config data-sample-left={encodeURIComponent(sampleLeft)} data-sample-right={encodeURIComponent(sampleRight)}></div>
+
+<script type="module" src={pageScript}></script>

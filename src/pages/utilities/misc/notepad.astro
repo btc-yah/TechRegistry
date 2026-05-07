@@ -1,0 +1,100 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import Content from "../../../layouts/Content.astro";
+
+const pageScript = "/js/pages/utilities/misc/notepad.js";
+---
+
+<Layout title="Notepad | TechRegistry">
+	<Content
+		title="Notepad"
+		titleTag="Misc"
+		breadcrumbs={[{ label: "Home", href: "/" }, { label: "Notepad" }]}
+	>
+		<div class="row">
+			<div class="col-md-3">
+				<div class="card">
+					<div class="card-header">
+						<h5 class="card-title mb-0">Files</h5>
+					</div>
+					<div
+						class="card-body p-2"
+						style="max-height: 600px; overflow-y: auto;"
+					>
+						<div id="filesList" class="d-flex flex-column gap-2">
+							<p class="text-muted text-center small">
+								No files yet
+							</p>
+						</div>
+					</div>
+					<div class="card-footer d-flex gap-1">
+						<button
+							class="btn btn-sm btn-primary flex-grow-1"
+							id="newFileBtn">+ New</button
+						>
+						<button
+							class="btn btn-sm btn-danger flex-grow-1"
+							id="deleteFileBtn"
+							disabled>🗑 Delete</button
+						>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-9">
+				<div class="card">
+					<div class="card-header">
+						<div
+							class="d-flex gap-2 justify-content-between align-items-center"
+						>
+							<div class="flex-grow-1">
+								<input
+									type="text"
+									id="fileName"
+									class="form-control form-control-sm"
+									placeholder="Untitled"
+								/>
+							</div>
+							<button class="btn btn-sm btn-success" id="saveBtn"
+								>💾 Save</button
+							>
+							<button class="btn btn-sm btn-info" id="copyBtn"
+								>📋 Copy</button
+							>
+							<button
+								class="btn btn-sm btn-primary"
+								id="downloadBtn">📥 Download</button
+							>
+						</div>
+					</div>
+					<div class="card-body">
+						<textarea
+							id="notepadArea"
+							class="form-control js-clipboard-source"
+							rows="18"
+							style="font-family: 'Courier New', monospace;"
+							placeholder="Start typing..."></textarea>
+					</div>
+					<div
+						class="card-footer d-flex justify-content-between align-items-center text-muted"
+					>
+						<small
+							>Characters: <span id="charCount">0</span> | Lines: <span
+								id="lineCount">1</span
+							></small
+						>
+						<small id="fileStatus" class="text-info">Ready</small>
+					</div>
+				</div>
+			</div>
+		</div>
+	</Content>
+</Layout>
+
+<style is:global>
+	.tr-copy-corner-btn {
+		top: 1.6rem !important;
+		right: 1.5rem !important;
+	}
+</style>
+
+<script type="module" src={pageScript}></script>

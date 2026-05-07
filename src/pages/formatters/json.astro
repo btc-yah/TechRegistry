@@ -1,0 +1,169 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Content from "../../layouts/Content.astro";
+
+const pageScript = "/js/pages/formatters/json.js";
+
+const sampleInput = `{"app":{"name":"TechRegistry","features":["compare","convert","format"],"enabled":true},"build":{"env":"prod","version":"2.7.1"}}`;
+const sampleOutput = `{
+  "app": {
+    "name": "TechRegistry",
+    "features": [
+      "compare",
+      "convert",
+      "format"
+    ],
+    "enabled": true
+  },
+  "build": {
+    "env": "prod",
+    "version": "2.7.1"
+  }
+}`;
+---
+
+<Layout title="Format JSON | TechRegistry">
+	<Content
+		title="Format JSON"
+		titleTag="Formatter"
+		starCount="6.2k stars"
+		usageCount="11.4k uses today"
+		version="v2.7.1"
+		statusText="All Systems Operational"
+		freeLabel="100% Free"
+		privacyLabel="Client-Side Only"
+		poweredBy="JSON.parse"
+		poweredByLink="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse"
+		breadcrumbs={[{ label: "Home", href: "/" }, { label: "Format JSON" }]}
+	>
+		<div class="tool-page-shell">
+			<div class="card">
+				<div class="card-body">
+					<div class="tool-toolbar">
+						<button
+							id="load-sample"
+							class="btn btn-outline-light btn-sm"
+							type="button">Load Sample</button
+						>
+						<button
+							id="clear-input"
+							class="btn btn-outline-secondary btn-sm"
+							type="button">Clear</button
+						>
+						<button
+							id="format-json"
+							class="btn btn-primary btn-sm"
+							type="button">Format JSON</button
+						>
+						<button
+							id="minify-json"
+							class="btn btn-outline-warning btn-sm"
+							type="button">Minify</button
+						>
+						<button
+							id="copy-output"
+							class="btn btn-outline-info btn-sm tool-toolbar-copy"
+							type="button">Copy Output</button
+						>
+					</div>
+
+					<div class="tool-field-grid mt-3 mb-3">
+						<div>
+							<label for="indent-style" class="form-label"
+								>Indentation</label
+							>
+							<select id="indent-style" class="form-select">
+								<option value="2">2 Spaces</option>
+								<option value="4">4 Spaces</option>
+								<option value="tab">Tab</option>
+							</select>
+						</div>
+						<div class="form-check d-flex align-items-center">
+							<input
+								class="form-check-input"
+								type="checkbox"
+								id="sort-keys"
+							/>
+							<label class="form-check-label" for="sort-keys"
+								>Sort object keys alphabetically</label
+							>
+						</div>
+					</div>
+
+					<div class="tool-editors">
+						<div>
+							<div class="tool-label-row">
+								<label
+									for="formatter-input"
+									class="form-label mb-0">Input JSON</label
+								>
+								<span class="text-body-secondary"
+									>Paste compact or messy JSON</span
+								>
+							</div>
+							<textarea
+								id="formatter-input"
+								class="form-control tool-code-input js-clipboard-source"
+								>{sampleInput}</textarea
+							>
+						</div>
+						<div>
+							<div class="tool-label-row">
+								<label class="form-label mb-0"
+									>Formatted Output</label
+								>
+								<span class="text-body-secondary"
+									>Readable JSON appears here</span
+								>
+							</div>
+							<pre
+								id="formatter-output"
+								class="tool-code-output">{sampleOutput}</pre>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="card tool-details-card">
+				<div class="card-header">
+					<h3 class="card-title">About This JSON Formatter</h3>
+				</div>
+				<div class="card-body">
+					<p>
+						This JSON formatter helps developers quickly turn
+						minified or inconsistent payloads into readable
+						structured output for debugging, API inspection, and
+						documentation work.
+					</p>
+					<p>
+						It is useful for request bodies, mock responses, config
+						snippets, and logs where indentation and key order make
+						a big difference during daily analysis.
+					</p>
+					<ul class="tool-detail-list">
+						<li>
+							Formats valid JSON with 2 spaces, 4 spaces, or tabs.
+						</li>
+						<li>
+							Can minify output again when you need compact
+							payloads.
+						</li>
+						<li>
+							Optional key sorting helps with review and
+							comparison.
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</Content>
+</Layout>
+
+<div
+	hidden
+	data-json-formatter-config
+	data-sample-input={encodeURIComponent(sampleInput)}
+	data-sample-output={encodeURIComponent(sampleOutput)}
+>
+</div>
+<script type="module" src={pageScript}></script>

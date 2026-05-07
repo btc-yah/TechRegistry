@@ -1,0 +1,78 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import Content from "../../../layouts/Content.astro";
+
+const pageScript = "/js/pages/utilities/misc/scientific-calculator.js";
+---
+
+<Layout title="Sci Calculator | TechRegistry">
+	<Content title="Sci Calculator" titleTag="Misc" breadcrumbs={[{ label: "Home", href: "/" }, { label: "Sci Calculator" }]}>
+		<div class="row justify-content-center">
+			<div class="col-md-6">
+				<div class="card">
+					<div class="card-body">
+						<style is:global>
+							/* Calculator-specific layout fixes to avoid theme overrides */
+							.calc-row > .col-3, .calc-row > .col-4 { padding: 4px; }
+							.calc-btn { width: 100%; white-space: nowrap; }
+							#memIndicator { min-width: 34px; }
+							#display { min-height: 48px; font-size: 1.25rem; }
+						</style>
+
+						<div class="d-flex mb-2 gap-2 align-items-center">
+							<button id="memIndicator" class="btn btn-sm btn-light me-2" disabled></button>
+							<input id="memValue" type="text" readonly class="form-control form-control-sm" placeholder="Memory" style="width:130px; text-align:left;" />
+							<div class="btn-group btn-group-sm" role="group">
+								<button class="btn btn-outline-secondary" onclick="memClear()">MC</button>
+								<button class="btn btn-outline-secondary" onclick="memRecall()">MR</button>
+								<button class="btn btn-outline-secondary" onclick="memAdd()">M+</button>
+								<button class="btn btn-outline-secondary" onclick="memSub()">M-</button>
+							</div>
+							<button id="modeBtn" class="btn btn-sm btn-outline-primary ms-auto" onclick="toggleMode()">DEG</button>
+						</div>
+
+						<input type="text" id="display" class="form-control form-control-lg mb-3 text-end font-monospace" readonly value="0" />
+						<div class="row g-1 calc-row">
+							<div class="col-3"><button class="btn btn-light calc-btn" onclick="appendDisplay('7')">7</button></div>
+							<div class="col-3"><button class="btn btn-light calc-btn" onclick="appendDisplay('8')">8</button></div>
+							<div class="col-3"><button class="btn btn-light calc-btn" onclick="appendDisplay('9')">9</button></div>
+							<div class="col-3"><button class="btn btn-outline-info calc-btn" onclick="appendDisplay('/')">÷</button></div>
+							<div class="col-3"><button class="btn btn-light calc-btn" onclick="appendDisplay('4')">4</button></div>
+							<div class="col-3"><button class="btn btn-light calc-btn" onclick="appendDisplay('5')">5</button></div>
+							<div class="col-3"><button class="btn btn-light calc-btn" onclick="appendDisplay('6')">6</button></div>
+							<div class="col-3"><button class="btn btn-outline-info calc-btn" onclick="appendDisplay('*')">×</button></div>
+							<div class="col-3"><button class="btn btn-light calc-btn" onclick="appendDisplay('1')">1</button></div>
+							<div class="col-3"><button class="btn btn-light calc-btn" onclick="appendDisplay('2')">2</button></div>
+							<div class="col-3"><button class="btn btn-light calc-btn" onclick="appendDisplay('3')">3</button></div>
+							<div class="col-3"><button class="btn btn-outline-info calc-btn" onclick="appendDisplay('-')">−</button></div>
+							<div class="col-3"><button class="btn btn-light calc-btn" onclick="appendDisplay('0')">0</button></div>
+							<div class="col-3"><button class="btn btn-light calc-btn" onclick="appendDisplay('.')">.</button></div>
+							<div class="col-3"><button class="btn btn-success calc-btn" onclick="calculate()">=</button></div>
+							<div class="col-3"><button class="btn btn-outline-info calc-btn" onclick="appendDisplay('+')">+</button></div>
+							<div class="col-3"><button class="btn btn-outline-danger calc-btn" onclick="clearDisplay()">C</button></div>
+							<div class="col-3"><button class="btn btn-outline-warning calc-btn" onclick="backspace()">⌫</button></div>
+							<div class="col-3"><button class="btn btn-secondary calc-btn" onclick="appendDisplay('(')">(</button></div>
+							<div class="col-3"><button class="btn btn-secondary calc-btn" onclick="appendDisplay(')')">)</button></div>
+							<div class="col-3"><button class="btn btn-secondary calc-btn" onclick="appendDisplay('PI')">π</button></div>
+							<div class="col-3"><button class="btn btn-secondary calc-btn" onclick="appendDisplay('E')">e</button></div>
+							<div class="col-4"><button class="btn btn-outline-secondary calc-btn" onclick="appendDisplay('^')">x^y</button></div>
+							<div class="col-4"><button class="btn btn-outline-secondary calc-btn" onclick="appendDisplay('sqrt(')">√</button></div>
+							<div class="col-4"><button class="btn btn-outline-secondary calc-btn" onclick="appendDisplay('fact(')">n!</button></div>
+							<div class="col-4"><button class="btn btn-outline-secondary calc-btn" onclick="appendDisplay('sin(')">sin</button></div>
+							<div class="col-4"><button class="btn btn-outline-secondary calc-btn" onclick="appendDisplay('cos(')">cos</button></div>
+							<div class="col-4"><button class="btn btn-outline-secondary calc-btn" onclick="appendDisplay('tan(')">tan</button></div>
+							<div class="col-4"><button class="btn btn-outline-secondary calc-btn" onclick="appendDisplay('asin(')">sin⁻¹</button></div>
+							<div class="col-4"><button class="btn btn-outline-secondary calc-btn" onclick="appendDisplay('acos(')">cos⁻¹</button></div>
+							<div class="col-4"><button class="btn btn-outline-secondary calc-btn" onclick="appendDisplay('atan(')">tan⁻¹</button></div>
+							<div class="col-4"><button class="btn btn-outline-secondary calc-btn" onclick="appendDisplay('ln(')">ln</button></div>
+							<div class="col-4"><button class="btn btn-outline-secondary calc-btn" onclick="appendDisplay('log(')">log</button></div>
+							<div class="col-4"><button class="btn btn-outline-secondary calc-btn" onclick="appendDisplay('exp(')">eˣ</button></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</Content>
+</Layout>
+
+<script type="module" src={pageScript}></script>

@@ -1,0 +1,108 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Content from "../../layouts/Content.astro";
+
+const pageScript = "/js/pages/compare/text.js";
+
+const sampleLeft = `TechRegistry helps teams compare payloads quickly.
+It works entirely in the browser.
+It is great for content review.
+
+The compare workspace is designed for product teams, developers, and QA reviewers.
+You can inspect revisions before publishing updates or merging changes.
+
+Key benefits:
+- fast side by side review
+- readable visual diff output
+- no server upload required
+
+This sample shows a baseline product note before edits are applied.
+It keeps the message compact, direct, and easy to scan.
+
+The release includes:
+- improved compare tools
+- better browser-side processing
+- cleaner interaction patterns`;
+
+const sampleRight = `TechRegistry helps teams compare payloads faster.
+It works fully in the browser.
+It is great for content reviews and quick checks.
+
+The compare workspace is designed for product teams, engineers, and QA reviewers.
+You can inspect revisions before publishing updates, approving drafts, or merging changes.
+
+Key benefits:
+- fast side by side review
+- readable highlighted diff output
+- no server upload required
+- simpler page-level interactions
+
+This sample shows an updated product note after edits are applied.
+It keeps the message clear, practical, and easier to scan.
+
+The release includes:
+- improved compare tools
+- stronger browser-side processing
+- cleaner interaction patterns
+- larger editor space for review`;
+---
+
+<Layout title="Compare Text | TechRegistry">
+	<Content
+		title="Compare Text"
+		titleTag="Diff Tool"
+		starCount="5.1k stars"
+		usageCount="8.4k uses today"
+		version="v2.7.1"
+		statusText="All Systems Operational"
+		freeLabel="100% Free"
+		privacyLabel="Client-Side Only"
+		poweredBy="Monaco Editor and diff"
+		breadcrumbs={[
+			{ label: "Home", href: "/" },
+			{ label: "Compare Text" },
+		]}
+	>
+		<div class="tool-page-shell">
+			<div class="card">
+				<div class="card-body">
+					<div class="tool-toolbar">
+						<button id="load-sample" class="btn btn-outline-light btn-sm" type="button">Load Sample</button>
+						<button id="clear-input" class="btn btn-outline-secondary btn-sm" type="button">Clear</button>
+						<button id="copy-output" class="btn btn-outline-info btn-sm" type="button">Copy Diff</button>
+					</div>
+
+					<div class="tool-label-row mt-3">
+						<label class="form-label mb-0">Live Diff Editor</label>
+						<div class="form-check m-0 small">
+							<input class="form-check-input" type="checkbox" id="ignore-trailing-space" checked />
+							<label class="form-check-label text-body-secondary small" for="ignore-trailing-space">
+								Ignore trailing whitespace
+							</label>
+						</div>
+					</div>
+
+				<div id="text-output" class="tool-detail-output" style="height: 600px; width: 100%;"></div>
+				</div>
+			</div>
+
+			<div class="card tool-details-card">
+				<div class="card-header"><h3 class="card-title">About This Text Compare Tool</h3></div>
+				<div class="card-body">
+					<p>This text compare tool helps you review edits, draft revisions, release notes, policy updates, and documentation changes directly in the browser with an editable side-by-side diff workspace.</p>
+					<p>It is useful when you need a quick before-and-after view for written content, product copy, support replies, or internal notes without pushing the content through a server-side workflow.</p>
+					<ul class="tool-detail-list">
+						<li>Best for plain text, documentation, and copy review.</li>
+						<li>Monaco highlights changed sections as you edit both sides.</li>
+						<li>Useful for QA checks, content review, and revision tracking.</li>
+					</ul>
+
+				</div>
+			</div>
+		</div>
+	</Content>
+</Layout>
+
+<div hidden data-text-compare-config data-sample-left={encodeURIComponent(sampleLeft)} data-sample-right={encodeURIComponent(sampleRight)}></div>
+
+<script type="module" src={pageScript}></script>

@@ -1,0 +1,140 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Content from "../../layouts/Content.astro";
+
+const pageScript = "/js/pages/porters/json-to-sql.js";
+
+const sampleJson = `[
+  {
+    "id": 101,
+    "name": "TechRegistry",
+    "status": "active"
+  },
+  {
+    "id": 102,
+    "name": "UI Toolkit",
+    "status": "draft"
+  }
+]`;
+
+const sampleSql = `INSERT INTO records (id, name, status)
+VALUES
+  (101, 'TechRegistry', 'active'),
+  (102, 'UI Toolkit', 'draft');`;
+---
+
+<Layout title="JSON to SQL (Insert Statements) | TechRegistry">
+	<Content
+		title="JSON to SQL (Insert Statements)"
+		titleTag="Converter"
+		starCount="5.4k stars"
+		usageCount="7.9k uses today"
+		version="v2.7.1"
+		statusText="All Systems Operational"
+		freeLabel="100% Free"
+		privacyLabel="Client-Side Only"
+		breadcrumbs={[
+			{ label: "Home", href: "/" },
+			{ label: "JSON to SQL (Insert Statements)" },
+		]}
+	>
+		<div class="tool-page-shell">
+			<div class="card">
+				<div class="card-body">
+					<div class="tool-toolbar">
+						<button id="load-sample" class="btn btn-outline-light btn-sm" type="button">Load Sample</button>
+						<button id="clear-input" class="btn btn-outline-secondary btn-sm" type="button">Clear</button>
+						<button id="generate-sql" class="btn btn-primary btn-sm" type="button">Generate SQL</button>
+						<button id="copy-output" class="btn btn-outline-info btn-sm" type="button">Copy Output</button>
+					</div>
+
+					<div class="tool-field-grid mt-3 mb-3">
+						<div>
+							<label for="table-name" class="form-label">Table Name</label>
+							<input id="table-name" class="form-control" value="records" placeholder="records" />
+						</div>
+						<div>
+							<label for="sql-dialect" class="form-label">Quote Style</label>
+							<select id="sql-dialect" class="form-select">
+								<option value="none">None</option>
+								<option value="ansi">ANSI double quotes</option>
+								<option value="mysql">MySQL backticks</option>
+								<option value="sqlserver">SQL Server brackets</option>
+							</select>
+						</div>
+						<div>
+							<label for="sql-mode" class="form-label">SQL Mode</label>
+							<select id="sql-mode" class="form-select">
+								<option value="insert">INSERT</option>
+								<option value="select">SELECT</option>
+								<option value="delete">DELETE</option>
+							</select>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" id="pretty-sql" checked />
+							<label class="form-check-label" for="pretty-sql">Format multi-line SQL</label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" id="include-columns" checked />
+							<label class="form-check-label" for="include-columns">Include column list</label>
+						</div>
+					</div>
+
+					<div class="tool-editors">
+						<div>
+							<div class="tool-label-row">
+								<label for="json-input" class="form-label mb-0">JSON Input</label>
+								<span class="text-body-secondary">Use an array of objects for row generation</span>
+							</div>
+							<textarea id="json-input" class="form-control tool-code-input js-clipboard-source">{sampleJson}</textarea>
+						</div>
+
+						<div>
+							<div class="tool-label-row">
+								<label class="form-label mb-0">Generated SQL</label>
+								<span class="text-body-secondary">INSERT, SELECT, or DELETE SQL appears here</span>
+							</div>
+							<pre id="sql-output" class="tool-code-output">{sampleSql}</pre>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="card tool-details-card">
+				<div class="card-header">
+					<h3 class="card-title">About This JSON to SQL Tool</h3>
+				</div>
+				<div class="card-body">
+					<p>
+						Use this page to turn JSON rows into SQL insert statements quickly when you are building seed data,
+						test fixtures, migration samples, or ad hoc database scripts.
+					</p>
+					<p>
+						The generator is designed for arrays of objects and normalizes primitive values into SQL-safe output.
+						Strings are escaped, booleans become `TRUE` or `FALSE`, nulls become `NULL`, and date-like strings stay quoted.
+					</p>
+					<ul class="tool-detail-list">
+						<li>Best for flat or lightly nested JSON row data.</li>
+						<li>Supports `INSERT`, `SELECT ... WHERE`, and `DELETE` SQL generation.</li>
+						<li>Supports table naming, quoting style, and column-list control.</li>
+						<li>Includes load, clear, generate, and copy actions.</li>
+						<li>Runs with page-level JavaScript only.</li>
+					</ul>
+					<div class="tool-points"><span class="tool-point"><i class="fa-solid fa-code"></i>Powered by browser-side JS</span></div>
+					<p>
+						This is especially helpful for test data generation, migration prep, admin tooling, quick debugging, and sample query creation when you want to transform object data into practical SQL statements fast.
+					</p>
+				</div>
+			</div>
+		</div>
+	</Content>
+</Layout>
+
+<div
+	hidden
+	data-json-to-sql-config
+	data-sample-json={encodeURIComponent(sampleJson)}
+	data-sample-sql={encodeURIComponent(sampleSql)}
+></div>
+
+<script type="module" src={pageScript}></script>

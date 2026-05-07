@@ -1,0 +1,128 @@
+---
+interface Props {
+	id: string;
+	label: string;
+}
+
+const { id, label } = Astro.props;
+---
+
+<div class="analog-clock-wrapper">
+	<div class="label fw-bold small mb-2 text-center text-white">{label}</div>
+	<div class="clock" id={id}>
+		<div class="hand hour"></div>
+		<div class="hand minute"></div>
+		<div class="hand second"></div>
+		<div class="center-dot"></div>
+		<ul>
+			<li><span>1</span></li>
+			<li><span>2</span></li>
+			<li><span>3</span></li>
+			<li><span>4</span></li>
+			<li><span>5</span></li>
+			<li><span>6</span></li>
+			<li><span>7</span></li>
+			<li><span>8</span></li>
+			<li><span>9</span></li>
+			<li><span>10</span></li>
+			<li><span>11</span></li>
+			<li><span>12</span></li>
+		</ul>
+	</div>
+</div>
+
+<style>
+	.analog-clock-wrapper {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		padding: 0.5rem;
+	}
+
+	.clock {
+		width: 120px;
+		height: 120px;
+		border: 5px solid rgba(255, 255, 255, 0.15);
+		border-radius: 50%;
+		position: relative;
+		background: #1a252f;
+		box-shadow: inset 0 0 20px rgba(0,0,0,0.5), 0 5px 15px rgba(0,0,0,0.3);
+	}
+
+	.clock .hand {
+		position: absolute;
+		bottom: 50%;
+		left: 50%;
+		transform-origin: bottom center;
+		border-radius: 10px;
+		transform: translateX(-50%) rotate(0deg);
+		z-index: 10;
+	}
+
+	.clock .hour { width: 4px; height: 26%; background: #fff; }
+	.clock .minute { width: 3px; height: 36%; background: rgba(255, 255, 255, 0.7); }
+	.clock .second { width: 1.5px; height: 44%; background: #ffc107; transition: transform 0.2s cubic-bezier(0.4, 2.08, 0.55, 0.44); }
+
+	.clock .center-dot {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		width: 10px;
+		height: 10px;
+		background: #ffc107;
+		border-radius: 50%;
+		transform: translate(-50%, -50%);
+		z-index: 15;
+		border: 2px solid #fff;
+	}
+
+	.clock ul {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		top: 0;
+		left: 0;
+	}
+
+	.clock ul li {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		text-align: center;
+		transform-origin: center;
+		font-size: 13px;
+		font-weight: 700;
+		color: rgba(255, 255, 255, 0.5);
+		padding: 5px;
+	}
+
+	.clock ul li span { display: inline-block; }
+
+	.clock ul li:nth-child(1)  { transform: rotate(30deg); }
+	.clock ul li:nth-child(1) span { transform: rotate(-30deg); }
+	.clock ul li:nth-child(2)  { transform: rotate(60deg); }
+	.clock ul li:nth-child(2) span { transform: rotate(-60deg); }
+	.clock ul li:nth-child(3)  { transform: rotate(90deg); }
+	.clock ul li:nth-child(3) span { transform: rotate(-90deg); }
+	.clock ul li:nth-child(4)  { transform: rotate(120deg); }
+	.clock ul li:nth-child(4) span { transform: rotate(-120deg); }
+	.clock ul li:nth-child(5)  { transform: rotate(150deg); }
+	.clock ul li:nth-child(5) span { transform: rotate(-150deg); }
+	.clock ul li:nth-child(6)  { transform: rotate(180deg); }
+	.clock ul li:nth-child(6) span { transform: rotate(-180deg); }
+	.clock ul li:nth-child(7)  { transform: rotate(210deg); }
+	.clock ul li:nth-child(7) span { transform: rotate(-210deg); }
+	.clock ul li:nth-child(8)  { transform: rotate(240deg); }
+	.clock ul li:nth-child(8) span { transform: rotate(-240deg); }
+	.clock ul li:nth-child(9)  { transform: rotate(270deg); }
+	.clock ul li:nth-child(9) span { transform: rotate(-270deg); }
+	.clock ul li:nth-child(10) { transform: rotate(300deg); }
+	.clock ul li:nth-child(10) span { transform: rotate(-300deg); }
+	.clock ul li:nth-child(11) { transform: rotate(330deg); }
+	.clock ul li:nth-child(11) span { transform: rotate(-330deg); }
+	.clock ul li:nth-child(12) { transform: rotate(360deg); }
+	.clock ul li:nth-child(12) span { transform: rotate(-360deg); }
+</style>

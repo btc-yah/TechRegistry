@@ -1,0 +1,417 @@
+<aside class="app-sidebar bg-light-subtle">
+  <div class="sidebar-brand">
+    <a href="/" class="brand-link">
+      <span class="brand-image d-flex align-items-center justify-content-center">
+        <i class="fa-solid fa-toolbox"></i>
+      </span>
+      <span class="brand-text fw-semibold">TechRegistry</span>
+    </a>
+  </div>
+
+  <div class="sidebar-wrapper">
+    <div class="sidebar-search p-2">
+      <div class="input-group">
+        <input 
+          type="text" 
+          class="form-control form-control-sm bg-light-subtle border-secondary" 
+          id="sidebar-search-input" 
+          placeholder="Search tools..."
+          autocomplete="off"
+        />
+        <span class="input-group-text bg-light-subtle border-secondary">
+          <i class="bi bi-search text-secondary"></i>
+        </span>
+      </div>
+    </div>
+    <nav class="mt-2">
+      <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="navigation" data-accordion="false">
+
+        <!-- MAIN -->
+        <li class="nav-header">MAIN</li>
+        <li class="nav-item">
+          <a href="/" class="nav-link">
+            <i class="nav-icon fa-solid fa-gauge-high"></i>
+            <p>Dashboard</p>
+          </a>
+        </li>
+
+        <!-- DEVELOPER SUITE -->
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <i class="nav-icon fa-solid fa-code"></i>
+            <p>Developer Suite <i class="nav-arrow bi bi-chevron-right"></i></p>
+          </a>
+          <ul class="nav nav-treeview">
+
+			 <!-- Convertor -->
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="fa-solid fa-check"></i>
+                <p>Convertor <i class="nav-arrow bi bi-chevron-right"></i></p>
+              </a>
+              <ul class="nav nav-treeview">
+               	<li class="nav-item"><a href="/converters/metric" class="nav-link"><i class="fa-solid fa-ruler"></i><p>Metric</p></a></li>
+                <li class="nav-item"><a href="/converters/money" class="nav-link"><i class="fa-solid fa-dollar-sign"></i><p>Money</p></a></li>
+                <li class="nav-item"><a href="/converters/time" class="nav-link"><i class="fa-solid fa-clock"></i><p>Time</p></a></li>
+                <li class="nav-item"><a href="/converters/temperature" class="nav-link"><i class="fa-solid fa-temperature-high"></i><p>Temperature</p></a></li>
+                <li class="nav-item"><a href="/converters/data" class="nav-link"><i class="fa-solid fa-table"></i><p>Data</p></a></li>
+			  </ul>
+            </li>
+
+            <!-- Formatting -->
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                <p>Formatting <i class="nav-arrow bi bi-chevron-right"></i></p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item"><a href="/formatters/json" class="nav-link"><i class="fa-solid fa-braces"></i><p>JSON</p></a></li>
+                <li class="nav-item"><a href="/formatters/sql" class="nav-link"><i class="fa-solid fa-database"></i><p>SQL</p></a></li>
+                <li class="nav-item"><a href="/formatters/html" class="nav-link"><i class="fa-solid fa-code"></i><p>HTML</p></a></li>
+                <li class="nav-item"><a href="/formatters/docs/html-to-markdown" class="nav-link"><i class="fa-solid fa-markdown"></i><p>HTML → MD</p></a></li>
+                <li class="nav-item"><a href="/formatters/docs/readme-formatter" class="nav-link"><i class="fa-solid fa-file-lines"></i><p>Readme</p></a></li>
+              </ul>
+            </li>
+
+            <!-- Code Generation -->
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="fa-solid fa-code-branch"></i>
+                <p>Code Generation <i class="nav-arrow bi bi-chevron-right"></i></p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item"><a href="/porters/json-to-csharp" class="nav-link"><i class="fa-solid fa-code"></i><p>C#</p></a></li>
+                <li class="nav-item"><a href="/porters/json-to-java" class="nav-link"><i class="fa-solid fa-code"></i><p>Java</p></a></li>
+                <li class="nav-item"><a href="/porters/json-to-go" class="nav-link"><i class="fa-solid fa-code"></i><p>Go</p></a></li>
+                <li class="nav-item"><a href="/porters/json-to-typescript" class="nav-link"><i class="fa-solid fa-code"></i><p>TS</p></a></li>
+                <li class="nav-item"><a href="/porters/json-to-sql" class="nav-link"><i class="fa-solid fa-database"></i><p>SQL</p></a></li>
+              </ul>
+            </li>
+
+            <!-- Data -->
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="fa-solid fa-table"></i>
+                <p>Data Tools <i class="nav-arrow bi bi-chevron-right"></i></p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item"><a href="/converters/csv-json" class="nav-link"><i class="fa-solid fa-arrows-left-right"></i><p>CSV ↔ JSON</p></a></li>
+                <li class="nav-item"><a href="/converters/json-xml" class="nav-link"><i class="fa-solid fa-arrows-left-right"></i><p>JSON ↔ XML</p></a></li>
+                <li class="nav-item"><a href="/converters/json-yaml" class="nav-link"><i class="fa-solid fa-arrows-left-right"></i><p>JSON ↔ YAML</p></a></li>
+                <li class="nav-item"><a href="/converters/properties-yaml" class="nav-link"><i class="fa-solid fa-arrows-left-right"></i><p>Properties ↔ YAML</p></a></li>                
+              </ul>
+            </li>
+
+            <!-- Encoding -->
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="fa-solid fa-lock"></i>
+                <p>Encoding <i class="nav-arrow bi bi-chevron-right"></i></p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item"><a href="/encoding/base64" class="nav-link"><i class="fa-solid fa-key"></i><p>Base64 / JWT</p></a></li>
+                <li class="nav-item"><a href="/encoding/url" class="nav-link"><i class="fa-solid fa-link"></i><p>URL / HTML</p></a></li>
+                <li class="nav-item"><a href="/encoding/binary-hex-octal" class="nav-link"><i class="fa-solid fa-binary"></i><p>Binary / Hex</p></a></li>
+                <li class="nav-item"><a href="/encoding/ascii" class="nav-link"><i class="fa-solid fa-font"></i><p>ASCII</p></a></li>
+                <li class="nav-item"><a href="/encoding/html-entities" class="nav-link"><i class="fa-solid fa-code"></i><p>HTML Entities</p></a></li>
+                <li class="nav-item"><a href="/encoding/mime" class="nav-link"><i class="fa-solid fa-envelope"></i><p>MIME</p></a></li>
+                <li class="nav-item"><a href="/encoding/unicode" class="nav-link"><i class="fa-solid fa-font"></i><p>Unicode</p></a></li>
+              </ul>
+            </li>
+
+            <!-- Security -->
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="fa-solid fa-shield"></i>
+                <p>Security <i class="nav-arrow bi bi-chevron-right"></i></p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item"><a href="/generators/uuid-guid" class="nav-link"><i class="fa-solid fa-fingerprint"></i><p>UUID / ULID</p></a></li>
+                <li class="nav-item"><a href="/generators/password" class="nav-link"><i class="fa-solid fa-lock"></i><p>Password</p></a></li>
+                <li class="nav-item"><a href="/generators/hash" class="nav-link"><i class="fa-solid fa-hashtag"></i><p>Hash</p></a></li>
+                <li class="nav-item"><a href="/generators/hmac" class="nav-link"><i class="fa-solid fa-hashtag"></i><p>HMAC</p></a></li>
+              </ul>
+            </li>
+
+			 <!-- Compare -->
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="fa-solid fa-check"></i>
+                <p>Compare <i class="nav-arrow bi bi-chevron-right"></i></p>
+              </a>
+              <ul class="nav nav-treeview">
+              <li class="nav-item"><a href="/compare/code" class="nav-link"><i class="fa-solid fa-code"></i><p>Code Compare</p></a></li>
+                <li class="nav-item"><a href="/compare/json" class="nav-link"><i class="fa-solid fa-braces"></i><p>JSON Compare</p></a></li>
+                <li class="nav-item"><a href="/compare/text" class="nav-link"><i class="fa-solid fa-file-text"></i><p>Text Compare</p></a></li>
+               </ul>
+            </li>
+
+            <!-- Validation -->
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="fa-solid fa-check"></i>
+                <p>Validation<i class="nav-arrow bi bi-chevron-right"></i></p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item"><a href="/validators/json" class="nav-link"><i class="fa-solid fa-check"></i><p>JSON</p></a></li>
+                <li class="nav-item"><a href="/validators/xml" class="nav-link"><i class="fa-solid fa-check"></i><p>XML</p></a></li>
+               </ul>
+            </li>
+
+             <!-- RegExp -->
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="fa-solid fa-check"></i>
+                <p>RegEx <i class="nav-arrow bi bi-chevron-right"></i></p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item"><a href="/utilities/regex/explainer" class="nav-link"><i class="fa-solid fa-lightbulb"></i><p>Regex Explainer</p></a></li>
+               </ul>
+            </li>
+
+          </ul>
+        </li>
+
+        <!-- UTILITIES -->
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <i class="nav-icon fa-solid fa-toolbox"></i>
+            <p>Utilities <i class="nav-arrow bi bi-chevron-right"></i></p>
+          </a>
+          <ul class="nav nav-treeview">
+             <li class="nav-item"><a href="/utilities/misc/notes" class="nav-link"><i class="fa-solid fa-note-sticky"></i><p>Notes</p></a></li>
+            <li class="nav-item"><a href="/utilities/misc/calendar" class="nav-link"><i class="fa-solid fa-calendar"></i><p>Calendar</p></a></li>
+            <li class="nav-item"><a href="/utilities/misc/task-handler" class="nav-link"><i class="fa-solid fa-tasks"></i><p>Tasks</p></a></li>
+            <li class="nav-item"><a href="/utilities/misc/scientific-calculator" class="nav-link"><i class="fa-solid fa-square-root-variable"></i><p>Calculator</p></a></li>
+            <li class="nav-item"><a href="/utilities/misc/world-clock" class="nav-link"><i class="fa-solid fa-globe"></i><p>World Clock</p></a></li>
+          <li class="nav-item"><a href="/utilities/misc/notepad" class="nav-link"><i class="fa-solid fa-file-text"></i><p>Notepad</p></a></li>
+          <li class="nav-item"><a href="/utilities/misc/file-manager" class="nav-link"><i class="fa-solid fa-folder-open"></i><p>File Manager</p></a></li>
+        	<li class="nav-item"><a href="/utilities/misc/api-testing" class="nav-link"><i class="fa-solid fa-flask"></i><p>API Testing</p></a></li>
+               
+			</ul>
+        </li>
+
+        <!-- MEDIA -->
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <i class="nav-icon fa-solid fa-gamepad"></i>
+            <p>Media & Play <i class="nav-arrow bi bi-chevron-right"></i></p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item"><a href="/utilities/media-tools/audio-test" class="nav-link"><i class="fa-solid fa-volume-high"></i><p>Audio</p></a></li>
+            <li class="nav-item"><a href="/utilities/media-tools/video-player" class="nav-link"><i class="fa-solid fa-play"></i><p>Video</p></a></li>
+            <li class="nav-item"><a href="/utilities/media-tools/web-cam-test" class="nav-link"><i class="fa-solid fa-camera"></i><p>Webcam</p></a></li>
+            <li class="nav-item"><a href="/utilities/games/chess" class="nav-link"><i class="fa-solid fa-chess"></i><p>Chess</p></a></li>
+            <li class="nav-item"><a href="/utilities/games/2040" class="nav-link"><i class="fa-solid fa-gamepad"></i><p>2040</p></a></li>
+          </ul>
+        </li>
+
+      </ul>
+    </nav>
+  </div>
+</aside>
+
+<style is:global>
+  /* Hide only the search bar when the sidebar is collapsed to maintain a clean mini-sidebar */
+  .sidebar-collapse .sidebar-search {
+    display: none !important;
+  }
+</style>
+
+<script is:inline>
+	const SIDEBAR_EXPANDED_KEY = globalThis.TechRegistryStorageKeys?.sidebarExpanded || 'techregistry:sidebar-expanded';
+
+	function getSidebarStorage() {
+		return globalThis.TechRegistryStorage;
+	}
+
+	function normalizePath(path) {
+		if (!path) return '/';
+		if (path.length > 1 && path.endsWith('/')) {
+			return path.slice(0, -1);
+		}
+		return path;
+	}
+
+	function getDirectTreeview(item) {
+		return item?.querySelector(':scope > .nav-treeview') ?? null;
+	}
+
+	function getExpandableItems(sidebarMenu) {
+		return [...sidebarMenu.querySelectorAll('.nav-item')].filter(item => getDirectTreeview(item));
+	}
+
+	function ensureMenuIds(sidebarMenu) {
+		getExpandableItems(sidebarMenu).forEach((item, index) => {
+			if (item.dataset.menuId) return;
+
+			const label = item.querySelector(':scope > .nav-link p')?.childNodes?.[0]?.textContent?.trim()
+				|| item.querySelector(':scope > .nav-link')?.textContent?.trim()
+				|| `menu-${index}`;
+
+			item.dataset.menuId = label
+				.toLowerCase()
+				.replace(/[^a-z0-9]+/g, '-')
+				.replace(/^-|-$/g, '') || `menu-${index}`;
+		});
+	}
+
+	function getExpandedMenuIds(sidebarMenu) {
+		return getExpandableItems(sidebarMenu)
+			.filter(item => item.classList.contains('menu-open'))
+			.map(item => item.dataset.menuId)
+			.filter(Boolean);
+	}
+
+	function saveExpandedMenus(sidebarMenu) {
+		getSidebarStorage()?.setJson(SIDEBAR_EXPANDED_KEY, getExpandedMenuIds(sidebarMenu));
+	}
+
+	function restoreExpandedMenus(sidebarMenu) {
+		const expandedIds = getSidebarStorage()?.getJson(SIDEBAR_EXPANDED_KEY, []) || [];
+
+		getExpandableItems(sidebarMenu).forEach(item => {
+			const treeview = getDirectTreeview(item);
+			const shouldOpen = expandedIds.includes(item.dataset.menuId);
+
+			item.classList.toggle('menu-open', shouldOpen);
+			if (treeview) treeview.style.display = shouldOpen ? 'block' : 'none';
+		});
+	}
+
+	function applyActiveMenuState(sidebarMenu) {
+		const currentPath = normalizePath(globalThis.location?.pathname || '/');
+		const links = [...sidebarMenu.querySelectorAll('.nav-link[href]')];
+
+		links.forEach(link => {
+			const href = link.getAttribute('href');
+			const isRouteLink = href && href !== '#';
+			const isActive = isRouteLink && normalizePath(new URL(href, globalThis.location.origin).pathname) === currentPath;
+
+			link.classList.toggle('active', Boolean(isActive));
+			if (isActive) link.setAttribute('aria-current', 'page');
+			else link.removeAttribute('aria-current');
+		});
+
+		const activeLink = links.find(link => link.classList.contains('active'));
+		if (!activeLink) return;
+
+		let parent = activeLink.closest('.nav-item');
+		while (parent) {
+			const treeview = getDirectTreeview(parent);
+			if (treeview) {
+				parent.classList.add('menu-open');
+				treeview.style.display = 'block';
+			}
+			parent = parent.parentElement?.closest('.nav-item') ?? null;
+		}
+	}
+
+	function restoreSidebarState(sidebarMenu) {
+		restoreExpandedMenus(sidebarMenu);
+		applyActiveMenuState(sidebarMenu);
+	}
+
+	/**
+	 * Sidebar Search Logic for AdminLTE
+	 * Filters .nav-item elements based on sidebar input
+	 */
+	function initSidebarSearch() {
+		const searchInput = document.getElementById('sidebar-search-input');
+		const sidebarMenu = document.querySelector('.sidebar-menu');
+
+		if (!searchInput || !sidebarMenu) return;
+		if (sidebarMenu.dataset.sidebarInitialized === 'true') {
+			restoreSidebarState(sidebarMenu);
+			return;
+		}
+
+		sidebarMenu.dataset.sidebarInitialized = 'true';
+		ensureMenuIds(sidebarMenu);
+		restoreSidebarState(sidebarMenu);
+
+		sidebarMenu.addEventListener('click', event => {
+			const toggleLink = event.target.closest('.nav-item > .nav-link');
+			if (!toggleLink || !sidebarMenu.contains(toggleLink)) return;
+
+			const parentItem = toggleLink.closest('.nav-item');
+			if (!parentItem || !getDirectTreeview(parentItem)) return;
+
+			globalThis.setTimeout(() => saveExpandedMenus(sidebarMenu), 0);
+		});
+
+		sidebarMenu.addEventListener('click', event => {
+			const routeLink = event.target.closest('.nav-link[href]');
+			if (!routeLink || !sidebarMenu.contains(routeLink)) return;
+			if (routeLink.getAttribute('href') === '#') return;
+
+			saveExpandedMenus(sidebarMenu);
+		});
+
+		searchInput.addEventListener('input', function (e) {
+			const query = e.target.value.toLowerCase().trim();
+			const items = sidebarMenu.querySelectorAll('.nav-item');
+			const headers = sidebarMenu.querySelectorAll('.nav-header');
+
+			if (query.length > 0) {
+				// 1. Hide all items and headers initially
+				items.forEach(item => {
+					item.classList.add('d-none');
+					item.classList.remove('menu-open');
+					const tv = item.querySelector(':scope > .nav-treeview');
+					if (tv) tv.style.display = 'none';
+				});
+				headers.forEach(h => h.classList.add('d-none'));
+
+				// 2. Scan links for matches
+				const links = sidebarMenu.querySelectorAll('.nav-link');
+				links.forEach(link => {
+					const text = link.innerText.toLowerCase();
+					if (text.includes(query)) {
+						const item = link.closest('.nav-item');
+						if (!item) return;
+
+						// Show the matching item
+						item.classList.remove('d-none');
+
+						// Walk up the DOM to show and expand all parent ancestors
+						let parent = item.parentElement.closest('.nav-item');
+						while (parent) {
+							parent.classList.remove('d-none');
+							parent.classList.add('menu-open');
+							const tv = parent.querySelector(':scope > .nav-treeview');
+							if (tv) tv.style.display = 'block';
+							parent = parent.parentElement.closest('.nav-item');
+						}
+					}
+				});
+
+				// 3. Restore visibility to section headers if they have visible children
+				headers.forEach(header => {
+					let next = header.nextElementSibling;
+					while (next && !next.classList.contains('nav-header')) {
+						if (next.classList.contains('nav-item') && !next.classList.contains('d-none')) {
+							header.classList.remove('d-none');
+							break;
+						}
+						next = next.nextElementSibling;
+					}
+				});
+			} else {
+				// 4. Reset: Show everything and restore persisted expansion state
+				headers.forEach(h => h.classList.remove('d-none'));
+				items.forEach(item => {
+					item.classList.remove('d-none');
+					const tv = item.querySelector(':scope > .nav-treeview');
+					if (tv) tv.style.display = 'none';
+				});
+				restoreSidebarState(sidebarMenu);
+			}
+		});
+	}
+
+	// Initialize logic and handle Astro transitions
+	document.addEventListener('astro:page-load', initSidebarSearch);
+	if (document.readyState !== 'loading') initSidebarSearch();
+	else document.addEventListener('DOMContentLoaded', initSidebarSearch);
+</script>

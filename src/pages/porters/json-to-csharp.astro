@@ -1,0 +1,202 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Content from "../../layouts/Content.astro";
+const pageScript = "/js/pages/porters/json-to-csharp.js";
+
+const sampleJson = `{
+  "id": 101,
+  "name": "TechRegistry",
+  "isActive": true,
+  "tags": ["astro", "csharp", "generator"],
+  "owner": {
+    "firstName": "Thila",
+    "lastName": "Dev"
+  },
+  "stats": {
+    "stars": 42,
+    "lastUpdated": "2026-03-15T10:00:00Z"
+  }
+}`;
+
+const sampleCSharp = `using System;
+using System.Collections.Generic;
+using System.Text.Json.Serialization;
+
+namespace TechRegistry.Models;
+
+public class RootObject
+{
+    [JsonPropertyName("id")]
+    public int Id { get; set; }
+
+    [JsonPropertyName("name")]
+    public string Name { get; set; } = string.Empty;
+
+    [JsonPropertyName("isActive")]
+    public bool IsActive { get; set; }
+
+    [JsonPropertyName("tags")]
+    public List<string> Tags { get; set; } = new();
+
+    [JsonPropertyName("owner")]
+    public Owner Owner { get; set; } = new();
+
+    [JsonPropertyName("stats")]
+    public Stats Stats { get; set; } = new();
+}
+
+public class Owner
+{
+    [JsonPropertyName("firstName")]
+    public string FirstName { get; set; } = string.Empty;
+
+    [JsonPropertyName("lastName")]
+    public string LastName { get; set; } = string.Empty;
+}
+
+public class Stats
+{
+    [JsonPropertyName("stars")]
+    public int Stars { get; set; }
+
+    [JsonPropertyName("lastUpdated")]
+    public DateTime LastUpdated { get; set; }
+}`;
+---
+
+<Layout title="JSON to C# (POCO Classes) | TechRegistry">
+	<Content
+		title="JSON to C# (POCO Classes)"
+		titleTag="Converter"
+		starCount="5.9k stars"
+		usageCount="9.8k uses today"
+		version="v2.7.1"
+		statusText="All Systems Operational"
+		freeLabel="100% Free"
+		privacyLabel="Client-Side Only"
+		breadcrumbs={[
+			{ label: "Home", href: "/" },
+			{ label: "JSON to C# (POCO Classes)" },
+		]}
+	>
+		<div class="tool-page-shell">
+			<div class="card">
+				<div class="card-body">
+					<div class="tool-toolbar">
+						<button id="load-sample" class="btn btn-outline-light btn-sm" type="button">
+							<i class="fa-solid fa-wand-magic-sparkles me-1"></i>Load Sample
+						</button>
+						<button id="clear-input" class="btn btn-outline-secondary btn-sm" type="button">
+							<i class="fa-solid fa-trash me-1"></i>Clear
+						</button>
+						<button id="generate-csharp" class="btn btn-primary btn-sm" type="button">
+							<i class="fa-solid fa-gears me-1"></i>Generate C#
+						</button>
+						<button
+							id="copy-output"
+							class="btn btn-outline-info btn-sm tool-toolbar-copy"
+							type="button"
+						>
+							<i class="fa-regular fa-copy me-1"></i>Copy Output
+						</button>
+					</div>
+
+					<div class="tool-field-grid mt-3 mb-3">
+						<div>
+							<label for="namespace" class="form-label">Namespace</label>
+							<input id="namespace" class="form-control" value="TechRegistry.Models" placeholder="TechRegistry.Models" />
+						</div>
+						<div>
+							<label for="root-class" class="form-label">Root Class</label>
+							<input id="root-class" class="form-control" value="RootObject" placeholder="RootObject" />
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" id="nullable-types" checked />
+							<label class="form-check-label" for="nullable-types">Use nullable reference types</label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" id="json-property-name" checked />
+							<label class="form-check-label" for="json-property-name">Add <code>JsonPropertyName</code> attributes</label>
+						</div>
+					</div>
+
+					<div class="tool-editors">
+						<div>
+							<div class="tool-label-row">
+								<label for="json-input" class="form-label mb-0">JSON Input</label>
+								<span class="text-body-secondary">Paste valid JSON object or array</span>
+							</div>
+							<textarea id="json-input" class="form-control tool-code-input js-clipboard-source">{sampleJson}</textarea>
+						</div>
+
+						<div>
+							<div class="tool-label-row">
+								<label class="form-label mb-0">Generated C#</label>
+								<span class="text-body-secondary">POCO classes appear here</span>
+							</div>
+							<pre id="csharp-output" class="tool-code-output">{sampleCSharp}</pre>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div>
+				<div class="card tool-details-card">
+					<div class="card-header">
+						<h3 class="card-title">About This JSON to C# Tool</h3>
+					</div>
+					<div class="card-body">
+						<div class="tool-points">
+							<span class="tool-point"><i class="fa-solid fa-bolt"></i> Fast client-side conversion</span>
+							<span class="tool-point"><i class="fa-solid fa-shield-check"></i> Validation before generation</span>
+							<span class="tool-point"><i class="fa-solid fa-layer-group"></i> Nested objects supported</span>
+						</div>
+
+						<p>
+							This JSON to C# converter is designed for developers who need to move quickly
+							from raw payloads to usable model classes. It works well for API responses,
+							mock payloads, integration samples, configuration blobs, and any other JSON
+							structure that needs to become a readable C# starting point.
+						</p>
+
+						<p>
+							The generated output focuses on practical POCO classes with nested type creation,
+							collection inference, optional <code>JsonPropertyName</code> attributes, and
+							nullable reference support. That makes it especially useful when you are preparing
+							models for ASP.NET projects, shared libraries, test fixtures, or backend service layers.
+						</p>
+
+						<ul class="tool-detail-list">
+							<li>JSON must be valid before code generation starts.</li>
+							<li>Namespace can use letters, numbers, underscores, and dots.</li>
+							<li>Root class must start with a letter and stay C#-friendly.</li>
+							<li>Dates are inferred as <code>DateTime</code> when possible.</li>
+						</ul>
+						<div class="tool-points"><span class="tool-point"><i class="fa-solid fa-code"></i>Powered by browser-side JS</span></div>
+
+						<p>
+							The tool runs entirely in the browser, so the JSON you paste here stays on the
+							client while you iterate. That makes it safer for quick experimentation and helps
+							when you want to scaffold model code without sending payloads to a server.
+						</p>
+
+						<p>
+							If you are building DTOs, internal contracts, deserialization models, or quick
+							prototypes, this page gives you a strong first pass that you can refine further
+							inside your codebase once the structure looks right.
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</Content>
+</Layout>
+
+<div
+	hidden
+	data-json-to-csharp-config
+	data-sample-json={encodeURIComponent(sampleJson)}
+	data-sample-csharp={encodeURIComponent(sampleCSharp)}
+></div>
+
+<script type="module" src={pageScript}></script>

@@ -1,0 +1,72 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import Content from "../../../layouts/Content.astro";
+
+const pageScript = "/js/pages/utilities/media-tools/web-cam-test.js";
+---
+
+<Layout title="Webcam Test | TechRegistry">
+	<Content title="Webcam Test" titleTag="Misc" breadcrumbs={[{ label: "Home", href: "/" }, { label: "Webcam Test" }]}>
+		<div class="alert alert-info">
+			<strong>Note:</strong> If you see a timeout error, your antivirus (e.g., Quick Heal) may be blocking camera access. 
+			<br><small>✓ Allow camera in antivirus settings → Devices/Camera → Allow browser access</small>
+		</div>
+		<div class="card mb-3">
+			<div class="card-header d-flex justify-content-between align-items-center">
+				<div>
+					<button class="btn btn-primary" id="startBtn">📷 Start Webcam</button>
+					<button class="btn btn-danger" id="stopBtn" disabled>Stop</button>
+					<button class="btn btn-success" id="captureBtn" disabled>📸 Capture</button>
+					<button class="btn btn-info" id="downloadBtn" disabled>⬇️ Download</button>
+				</div>
+				<div id="status" class="badge bg-secondary" style="font-size: 0.85rem;">Standby</div>
+			</div>
+			<div class="card-body p-0">
+				<div style="width:100%; background:#000; position:relative; padding-bottom:66.67%; overflow:hidden;">
+					<video id="webcam" style="position:absolute; top:0; left:0; width:100%; height:100%; border-radius:4px;" autoplay muted playsinline></video>
+				</div>
+				<canvas id="canvas" style="display:none;"></canvas>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-8">
+				<div class="card">
+					<div class="card-header">
+						<h5 class="card-title mb-0">Captured Photo</h5>
+					</div>
+					<div class="card-body text-center" id="photoContainer" style="min-height: 200px; display:flex; align-items:center; justify-content:center;">
+						<p class="text-muted">Capture a photo to preview</p>
+						<img id="photo" style="display:none; max-width:100%; max-height:400px; border-radius:4px;" />
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="card">
+					<div class="card-header">
+						<h5 class="card-title mb-0">Device Info</h5>
+					</div>
+					<div class="card-body" id="deviceInfo">
+						<p class="text-muted">Click "Start Webcam" to begin</p>
+					</div>
+				</div>
+				<div class="card mt-3">
+					<div class="card-header">
+						<h5 class="card-title mb-0">Quick Tips</h5>
+					</div>
+					<div class="card-body">
+						<small class="text-muted">
+							<p><strong>If camera timeout:</strong></p>
+							<ul class="ps-3 mb-0">
+								<li>Check Quick Heal antivirus camera permissions</li>
+								<li>Restart browser and retry</li>
+								<li>Check if camera is in use elsewhere</li>
+							</ul>
+						</small>
+					</div>
+				</div>
+			</div>
+		</div>
+	</Content>
+</Layout>
+
+<script type="module" src={pageScript}></script>

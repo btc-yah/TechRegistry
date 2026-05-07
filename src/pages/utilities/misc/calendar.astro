@@ -1,0 +1,371 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import Content from "../../../layouts/Content.astro";
+
+const pageScript = "/js/pages/utilities/misc/calendar.js";
+---
+
+<Layout title="Calendar | TechRegistry">
+	<Content
+		title="Calendar"
+		titleTag="Holiday Planner"
+		subtitle="Check public holidays by country with a simple month or year calendar powered by Nager.Date."
+		version="v1.0.0"
+		statusText="Live Holiday Feed"
+		privacyLabel="Read-Only API Data"
+		poweredBy="Nager.Date"
+		poweredByLink="https://date.nager.at/"
+		breadcrumbs={[{ label: "Home", href: "/" }, { label: "Calendar" }]}
+	>
+		<div class="calendar-shell">
+			<div class="calendar-frame">
+				<div class="calendar-header">
+					<button class="calendar-nav-btn" id="prevBtn" type="button" aria-label="Previous period">
+						<i class="fas fa-caret-left"></i>
+					</button>
+					<div class="calendar-heading">
+						<h2 id="monthText">April</h2>
+						<h3 id="yearText">2026</h3>
+					</div>
+					<button class="calendar-nav-btn" id="nextBtn" type="button" aria-label="Next period">
+						<i class="fas fa-caret-right"></i>
+					</button>
+				</div>
+				<div class="calendar-toolbar">
+					<select id="countrySelect" class="form-select form-select-sm">
+						<option value="">Loading countries...</option>
+					</select>
+					<button class="btn btn-sm calendar-action-btn" id="todayBtn" type="button">Today</button>
+					<button class="btn btn-sm calendar-action-btn calendar-action-btn--accent" id="toggleYearView" type="button">
+						<i class="fas fa-calendar-alt me-1"></i> Year View
+					</button>
+				</div>
+				<div class="calendar-body">
+					<div id="calendarContainer">
+						<table class="calendar-table" id="calendarTable">
+							<thead>
+								<tr>
+									<th style="width: 14.28%">Mon</th>
+									<th style="width: 14.28%">Tue</th>
+									<th style="width: 14.28%">Wed</th>
+									<th style="width: 14.28%">Thu</th>
+									<th style="width: 14.28%">Fri</th>
+									<th style="width: 14.28%">Sat</th>
+									<th style="width: 14.28%">Sun</th>
+								</tr>
+							</thead>
+							<tbody id="calendarBody"></tbody>
+						</table>
+					</div>
+					<div id="yearViewContainer" class="calendar-year-view d-none">
+						<div id="yearGrid" class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="card mt-4">
+			<div class="card-header">
+				<h3 class="card-title mb-0">About This Calendar Tool</h3>
+			</div>
+			<div class="card-body">
+				<p>
+					This calendar tool helps you browse public holidays by country in a clear monthly or yearly view
+					without leaving the browser.
+				</p>
+				<p>
+					It works well for checking upcoming holidays, scanning an entire year at a glance, and reviewing
+					country-specific public holiday coverage from Nager.Date.
+				</p>
+				<ul class="mb-0">
+					<li>Loads available countries directly from the Nager.Date API.</li>
+					<li>Shows public holidays in both month view and year view.</li>
+					<li>Adds holiday names as tooltips in the compact year calendar.</li>
+					<li>Only countries returned by the upstream API will appear in the selector.</li>
+				</ul>
+			</div>
+		</div>
+	</Content>
+</Layout>
+
+<style is:global>
+	.calendar-shell {
+		--calendar-accent: #67b7ff;
+		--calendar-accent-deep: #3498eb;
+		--calendar-surface: #f3f9ff;
+		--calendar-grid: #d5e6f7;
+		--calendar-text: #55708c;
+		--calendar-muted: #58aef7;
+		max-width: 980px;
+		margin: 0 auto;
+	}
+	.calendar-shell .calendar-frame {
+		background: #fff;
+		border-radius: 0.35rem;
+		box-shadow: 0 20px 45px rgba(26, 33, 52, 0.08);
+		overflow: hidden;
+	}
+	.calendar-shell .calendar-header {
+		background: var(--calendar-accent);
+		color: #fff;
+		display: grid;
+		grid-template-columns: 56px 1fr 56px;
+		align-items: center;
+		padding: 1.15rem 1.4rem;
+	}
+	.calendar-shell .calendar-heading {
+		text-align: center;
+		line-height: 1.1;
+	}
+	.calendar-shell .calendar-heading h2,
+	.calendar-shell .calendar-heading h3 {
+		margin: 0;
+		text-transform: uppercase;
+		color: inherit;
+	}
+	.calendar-shell .calendar-heading h2 {
+		font-size: 1.9rem;
+		font-weight: 700;
+		letter-spacing: 0.05em;
+	}
+	.calendar-shell .calendar-heading h3 {
+		font-size: 0.78rem;
+		font-weight: 700;
+		letter-spacing: 0.14em;
+		margin-top: 0.2rem;
+	}
+	.calendar-shell .calendar-nav-btn {
+		border: 0 !important;
+		background: transparent !important;
+		color: #fff !important;
+		font-size: 1.15rem;
+		width: 2.5rem;
+		height: 2.5rem;
+		border-radius: 999px;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		transition: background-color 0.2s ease, transform 0.2s ease;
+	}
+	.calendar-shell .calendar-nav-btn:hover {
+		background: rgba(255, 255, 255, 0.16);
+		transform: scale(1.04);
+	}
+	.calendar-shell .calendar-toolbar {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.75rem;
+		justify-content: flex-end;
+		align-items: center;
+		padding: 1rem 1.25rem 0;
+		background: var(--calendar-surface);
+	}
+	.calendar-shell .calendar-toolbar .form-select {
+		width: auto;
+		min-width: 12rem;
+		border-color: rgba(103, 183, 255, 0.35) !important;
+	}
+	.calendar-shell .calendar-action-btn {
+		border: 1px solid rgba(103, 183, 255, 0.28) !important;
+		background: #fff !important;
+		color: var(--calendar-accent-deep) !important;
+		font-weight: 600;
+	}
+	.calendar-shell .calendar-action-btn:hover {
+		background: rgba(103, 183, 255, 0.12) !important;
+		color: var(--calendar-accent-deep) !important;
+	}
+	.calendar-shell .calendar-action-btn--accent {
+		background: var(--calendar-accent) !important;
+		border-color: var(--calendar-accent) !important;
+		color: #fff !important;
+	}
+	.calendar-shell .calendar-action-btn--accent:hover {
+		background: var(--calendar-accent-deep) !important;
+		border-color: var(--calendar-accent-deep) !important;
+		color: #fff !important;
+	}
+	.calendar-shell .calendar-body {
+		background: var(--calendar-surface);
+		padding: 1.25rem;
+	}
+	.calendar-shell .calendar-source-note {
+		padding: 0.85rem 1.25rem 0;
+		background: var(--calendar-surface);
+		color: var(--calendar-text);
+		font-size: 0.88rem;
+	}
+	.calendar-shell .calendar-table {
+		width: 100%;
+		table-layout: fixed;
+		border-collapse: collapse;
+		background: transparent !important;
+		margin-bottom: 0 !important;
+	}
+	.calendar-shell .calendar-table > thead > tr > th {
+		border: 0;
+		padding: 0.6rem 0 0.55rem;
+		text-align: center;
+		text-transform: uppercase;
+		font-size: 0.82rem;
+		font-weight: 700;
+		letter-spacing: 0.06em;
+		color: var(--calendar-muted);
+		background: transparent !important;
+	}
+	.calendar-shell .calendar-table > tbody > tr > td,
+	.calendar-shell .year-month-mini td {
+		border: 1px solid var(--calendar-grid) !important;
+		background: #fff !important;
+		box-shadow: none !important;
+	}
+	.calendar-shell .calendar-day {
+		height: 96px;
+		vertical-align: middle !important;
+		padding: 0.4rem !important;
+		position: relative;
+		cursor: pointer;
+		transition: background-color 0.2s ease, transform 0.2s ease;
+	}
+	.calendar-shell .calendar-day:hover {
+		background: #fff7f8;
+	}
+	.calendar-shell .calendar-day.is-empty {
+		background: transparent;
+		cursor: default;
+	}
+	.calendar-shell .calendar-day.is-empty:hover {
+		background: transparent;
+	}
+	.calendar-shell .calendar-day.today {
+		background: var(--calendar-accent) !important;
+		box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.08);
+	}
+	.calendar-shell .calendar-day.today .day-number,
+	.calendar-shell .calendar-day.today .holiday-mark {
+		color: #fff;
+	}
+	.calendar-shell .day-number {
+		height: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-size: clamp(1.15rem, 2.2vw, 2rem);
+		font-weight: 400;
+		color: var(--calendar-text);
+	}
+	.calendar-shell .holiday-mark {
+		position: absolute;
+		left: 0.45rem;
+		right: 0.45rem;
+		bottom: 0.35rem;
+		font-size: 0.68rem;
+		line-height: 1.2;
+		color: var(--calendar-accent-deep);
+		text-align: center;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+	.calendar-shell .calendar-year-view {
+		padding-top: 0.35rem;
+	}
+	.calendar-shell .year-month-mini {
+		background: #fff;
+		border-radius: 1rem;
+		padding: 0.8rem;
+		border: 1px solid rgba(103, 183, 255, 0.14);
+		transition: transform 0.2s ease, box-shadow 0.2s ease;
+	}
+	.calendar-shell .year-month-mini:hover {
+		transform: translateY(-4px);
+		box-shadow: 0 12px 24px rgba(26, 33, 52, 0.08);
+	}
+	.calendar-shell .year-month-card {
+		border: 0;
+		border-radius: 1rem;
+		background: transparent;
+	}
+	.calendar-shell .year-month-card .card-header {
+		background: transparent;
+		border: 0;
+		padding-bottom: 0.2rem;
+	}
+	.calendar-shell .year-month-card h6 {
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		color: var(--calendar-accent-deep);
+	}
+	.calendar-shell .year-month-mini table {
+		width: 100%;
+		font-size: 0.74rem;
+		border-collapse: collapse;
+		margin-bottom: 0 !important;
+	}
+	.calendar-shell .year-month-mini th {
+		font-size: 0.64rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		color: var(--calendar-muted);
+		padding: 0 0 0.35rem;
+		text-align: center;
+	}
+	.calendar-shell .year-month-mini td {
+		text-align: center;
+		padding: 0.18rem;
+		width: 14.28%;
+		height: 1.9rem;
+	}
+	.calendar-shell .mini-today {
+		background: var(--calendar-accent);
+		color: white;
+		border-radius: 999px;
+	}
+	.calendar-shell .mini-holiday {
+		background: rgba(103, 183, 255, 0.18);
+		color: var(--calendar-accent-deep) !important;
+		border-radius: 999px;
+		font-weight: 700;
+	}
+	.calendar-shell .mini-day {
+		width: 1.55rem;
+		height: 1.55rem;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		color: var(--calendar-text);
+		border-radius: 999px;
+	}
+	@media (max-width: 767.98px) {
+		.calendar-shell .calendar-header {
+			grid-template-columns: 44px 1fr 44px;
+			padding: 0.95rem 0.85rem;
+		}
+		.calendar-shell .calendar-heading h2 {
+			font-size: 1.4rem;
+		}
+		.calendar-shell .calendar-body,
+		.calendar-shell .calendar-toolbar,
+		.calendar-shell .calendar-source-note {
+			padding-left: 0.85rem;
+			padding-right: 0.85rem;
+		}
+		.calendar-shell .calendar-toolbar {
+			justify-content: stretch;
+		}
+		.calendar-shell .calendar-toolbar .form-select,
+		.calendar-shell .calendar-toolbar button {
+			width: 100%;
+		}
+		.calendar-shell .calendar-day {
+			height: 72px;
+		}
+		.calendar-shell .day-number {
+			font-size: 1.15rem;
+		}
+		.calendar-shell .holiday-mark {
+			font-size: 0.58rem;
+		}
+	}
+</style>
+
+<script type="module" src={pageScript}></script>

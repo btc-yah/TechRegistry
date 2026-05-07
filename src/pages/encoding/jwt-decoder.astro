@@ -1,0 +1,19 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Content from "../../layouts/Content.astro";
+const pageScript = "/js/pages/encoding/jwt-decoder.js";
+---
+<Layout title="JWT Decoder | TechRegistry">
+	<Content title="JWT Decoder" titleTag="Encoding" starCount="5.9k stars" usageCount="10.1k uses today" version="v2.7.1" statusText="All Systems Operational" freeLabel="100% Free" privacyLabel="Client-Side Only" breadcrumbs={[{ label: "Home", href: "/" }, { label: "JWT Decoder" }]}>
+		<div class="tool-page-shell" id="tool-page-root">
+			<div class="card"><div class="card-body">
+				<div class="tool-toolbar"><button id="tool-load-sample" class="btn btn-outline-light btn-sm" type="button">Load Sample</button><button id="tool-clear" class="btn btn-outline-secondary btn-sm" type="button">Clear</button><button id="tool-run" class="btn btn-primary btn-sm" type="button">Decode JWT</button></div>
+				<div id="tool-status" class="tool-status mt-3">Ready.</div>
+				<div class="tool-editors mt-3"><div><div class="tool-label-row"><label for="tool-input" class="form-label mb-0">JWT Token</label><span class="text-body-secondary">Paste header.payload.signature</span></div><textarea id="tool-input" class="form-control tool-code-input js-clipboard-source"></textarea></div><div><div class="tool-label-row"><label class="form-label mb-0">Decoded Output</label><span class="text-body-secondary">Header and payload appear here</span></div><pre id="tool-output" class="tool-code-output"></pre></div></div>
+				<div id="tool-detail-panel" hidden class="mt-3"><div class="tool-label-row"><label class="form-label mb-0">Summary</label><span class="text-body-secondary">Decoded token metadata</span></div><pre id="tool-detail-output" class="tool-detail-output"></pre></div>
+			</div></div>
+			<div class="card tool-details-card"><div class="card-header"><h3 class="card-title">About This JWT Decoder</h3></div><div class="card-body"><p>This JWT decoder helps inspect token headers and payload claims while debugging auth flows, API sessions, and identity integrations.</p><p>It is useful when you need to quickly verify issuer, subject, expiration, roles, or custom claims without sending the token anywhere.</p><ul class="tool-detail-list"><li>Decodes header and payload in the browser.</li><li>Helpful for auth troubleshooting and API debugging.</li><li>Shows token metadata for quick inspection.</li></ul><div class="tool-points"><a class="tool-point" href="https://github.com/auth0/jwt-decode" target="_blank" rel="noreferrer"><i class="fa-solid fa-link"></i>Powered by jwt-decode</a></div></div></div>
+		</div>
+	</Content>
+</Layout>
+<script type="module" src={pageScript}></script>

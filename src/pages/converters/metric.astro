@@ -1,0 +1,125 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Content from "../../layouts/Content.astro";
+
+const pageScript = "/js/pages/utilities/converter/metric.js";
+---
+
+<Layout title="Metric Converter | TechRegistry">
+	<Content
+		title="Metric Converter"
+		titleTag="Utility"
+		poweredBy="JavaScript"
+		poweredByLink="https://developer.mozilla.org/en-US/docs/Web/JavaScript"
+		breadcrumbs={[
+			{ label: "Home", href: "/" },
+			{ label: "Metric Converter" },
+		]}
+	>
+		<div class="tool-page-shell simple-converter-page">
+			<div class="card simple-converter-shell">
+				<div class="card-body">
+					<div class="simple-converter-actions">
+						<div class="simple-converter-mode">
+							<label for="metric-measure" class="form-label mb-0"
+								>Mode</label
+							>
+							<select
+								id="metric-measure"
+								class="form-select form-select-sm"
+							>
+								<option value="length">Length</option>
+								<option value="area">Area</option>
+								<option value="volume">Volume</option>
+							</select>
+						</div>
+						<button
+							id="metric-swap"
+							class="btn btn-outline-warning btn-sm"
+							type="button">Swap</button
+						>
+					</div>
+					<div class="simple-converter-grid mt-3">
+						<div>
+							<label for="metric-value" class="form-label"
+								>From:</label
+							>
+							<input
+								id="metric-value"
+								class="form-control simple-converter-input"
+								type="number"
+								value="12"
+							/>
+							<select
+								id="metric-from"
+								class="form-select simple-converter-list mt-3"
+								size="12"></select>
+						</div>
+						<div>
+							<label for="metric-result" class="form-label"
+								>To:</label
+							>
+							<input
+								id="metric-result"
+								class="form-control simple-converter-input"
+								type="text"
+								readonly
+							/>
+							<select
+								id="metric-to"
+								class="form-select simple-converter-list mt-3"
+								size="12"></select>
+						</div>
+					</div>
+					<p id="metric-meta" class="simple-converter-meta mb-0 mt-3">
+					</p>
+				</div>
+			</div>
+			<div class="card tool-details-card mt-3">
+				<div class="card-header">
+					<h3 class="card-title">About This Metric Converter</h3>
+				</div>
+				<div class="card-body">
+					<p>
+						This metric converter gives a clean browser-based way to
+						move between common metric and imperial values for
+						length, area, and volume.
+					</p>
+					<p>
+						It is helpful for engineering notes, packaging
+						dimensions, floor and land measurements, product specs,
+						and quick unit checks during implementation work.
+					</p>
+					<ul class="tool-detail-list">
+						<li>
+							Uses a direct from-unit to to-unit flow with clear
+							list selection.
+						</li>
+						<li>
+							Supports length, area, and volume on the same page.
+						</li>
+						<li>
+							Good for quick conversions without spreadsheet
+							formulas.
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="simple-converter-footnote">
+				<span
+					>Quick metric and imperial conversion for length, area, and
+					volume.</span
+				>
+				<a
+					class="tool-point"
+					href="https://github.com/convert-units/convert-units"
+					target="_blank"
+					rel="noreferrer"
+					><i class="fa-solid fa-link"></i>Powered by convert-units</a
+				>
+			</div>
+		</div>
+	</Content>
+</Layout>
+
+<script type="module" src={pageScript}></script>

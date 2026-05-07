@@ -1,0 +1,233 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Content from "../../layouts/Content.astro";
+
+const pageScript = "/js/pages/utilities/converter/temperature.js";
+---
+
+<Layout title="Temperature Converter | TechRegistry">
+	<Content
+		title="Temperature Converter"
+		titleTag="Utility"
+		breadcrumbs={[
+			{ label: "Home", href: "/" },
+			{ label: "Temperature Converter" },
+		]}
+	>
+		<div class="tool-page-shell simple-converter-page">
+			<div class="card simple-converter-shell">
+				<div class="card-body">
+					<div class="thermometer-layout">
+						<div class="thermometer-column d-none d-md-block">
+							<div class="thermometer-outer">
+								<div class="thermometer-tube">
+									<div id="thermometer-fill" class="thermometer-fill"></div>
+								</div>
+								<div class="thermometer-bulb"></div>
+							</div>
+						</div>
+
+						<div class="flex-grow-1">
+							<div class="simple-converter-actions mb-3 text-end">
+								<button
+									id="temp-swap"
+									class="btn btn-outline-warning btn-sm"
+									type="button">Swap Units</button
+								>
+							</div>
+
+							<div class="thermometer-slider-container mb-4">
+								<label for="temp-slider" class="form-label fw-bold">Adjust Temperature</label>
+								<input 
+									type="range" 
+									class="form-range" 
+									id="temp-slider" 
+									min="-100" 
+									max="100" 
+									step="1" 
+									value="37"
+								/>
+								<div class="d-flex justify-content-between text-muted small mt-1">
+									<span>-100</span>
+									<span>0</span>
+									<span>100</span>
+								</div>
+							</div>
+
+							<div class="simple-converter-grid">
+								<div>
+									<label for="temp-value" class="form-label"
+										>From:</label
+									>
+									<input
+										id="temp-value"
+										class="form-control simple-converter-input"
+										type="number"
+										value="37"
+									/>
+									<select
+										id="temp-from"
+										class="form-select simple-converter-list mt-3"
+										size="4"></select>
+								</div>
+								<div>
+									<label for="temp-result" class="form-label"
+										>To:</label
+									>
+									<input
+										id="temp-result"
+										class="form-control simple-converter-input"
+										type="text"
+										readonly
+									/>
+									<select
+										id="temp-to"
+										class="form-select simple-converter-list mt-3"
+										size="4"></select>
+								</div>
+							</div>
+						</div>
+					</div>
+					<p id="temp-meta" class="simple-converter-meta mb-0 mt-3">
+					</p>
+				</div>
+			</div>
+			<div class="card tool-details-card mt-3">
+				<div class="card-header">
+					<h3 class="card-title">About This Temperature Converter</h3>
+				</div>
+				<div class="card-body">
+					<p>
+						This temperature converter provides a fast and accurate
+						way to convert between common temperature scales such as
+						Celsius, Fahrenheit, and Kelvin directly in your
+						browser.
+					</p>
+					<p>
+						It is useful for weather analysis, lab calculations,
+						cooking, device calibration, and scientific applications
+						where precise temperature values are required.
+					</p>
+					<ul class="tool-detail-list">
+						<li>
+							Supports Celsius (°C), Fahrenheit (°F), and Kelvin
+							(K).
+						</li>
+						<li>
+							Uses exact mathematical formulas for accurate
+							conversion.
+						</li>
+						<li>Instant conversion with live input updates.</li>
+						<li>
+							Works completely in the browser with no external
+							API.
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="simple-converter-footnote">
+				<span
+					>Fast scale conversion for lab, weather, and device values.</span
+				>
+				<a
+					class="tool-point"
+					href="https://github.com/convert-units/convert-units"
+					target="_blank"
+					rel="noreferrer"
+					><i class="fa-solid fa-link"></i>Powered by convert-units</a
+				>
+			</div>
+		</div>
+	</Content>
+</Layout>
+
+<style>
+	.thermometer-layout {
+		display: flex;
+		gap: 3rem;
+		padding: 1rem;
+	}
+
+	.thermometer-column {
+		width: 60px;
+		position: relative;
+		padding-bottom: 50px;
+	}
+
+	.thermometer-outer {
+		width: 24px;
+		height: 300px;
+		background: #f1f3f5;
+		border: 2px solid #ced4da;
+		border-radius: 12px 12px 0 0;
+		margin: 0 auto;
+		position: relative;
+	}
+
+	.thermometer-tube {
+		width: 100%;
+		height: 100%;
+		border-radius: 10px 10px 0 0;
+		overflow: hidden;
+		position: relative;
+		background: #e9ecef;
+	}
+
+	.thermometer-fill {
+		position: absolute;
+		bottom: 0;
+		width: 100%;
+		background: linear-gradient(to top, #ff4136, #ff851b);
+		height: 0%;
+		transition: height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+	}
+
+	.thermometer-bulb {
+		width: 48px;
+		height: 48px;
+		background: #ff4136;
+		border: 2px solid #ced4da;
+		border-radius: 50%;
+		position: absolute;
+		bottom: -36px;
+		left: 50%;
+		transform: translateX(-50%);
+		box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+	}
+
+	.thermometer-slider-container {
+		background: rgba(var(--bs-warning-rgb), 0.05);
+		padding: 1.25rem;
+		border-radius: 12px;
+		border: 1px dashed rgba(var(--bs-warning-rgb), 0.2);
+	}
+</style>
+
+<script is:inline>
+	document.addEventListener('DOMContentLoaded', () => {
+		const slider = document.getElementById('temp-slider');
+		const input = document.getElementById('temp-value');
+		const fill = document.getElementById('thermometer-fill');
+
+		const updateVisual = (val) => {
+			let percent = ((parseFloat(val) + 100) / 200) * 100;
+			percent = Math.max(0, Math.min(100, percent));
+			if (fill) fill.style.height = `${percent}%`;
+		};
+
+		slider?.addEventListener('input', (e) => {
+			input.value = e.target.value;
+			input.dispatchEvent(new Event('input', { bubbles: true }));
+			updateVisual(e.target.value);
+		});
+
+		input?.addEventListener('input', (e) => {
+			slider.value = e.target.value;
+			updateVisual(e.target.value);
+		});
+
+		if (input) updateVisual(input.value);
+	});
+</script>
+
+<script type="module" src={pageScript}></script>

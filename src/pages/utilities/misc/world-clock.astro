@@ -1,0 +1,14 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import Content from "../../../layouts/Content.astro";
+
+const pageScript = "/js/pages/utilities/misc/world-clock.js";
+---
+
+<Layout title="World Clock | TechRegistry">
+	<Content title="World Clock" titleTag="Misc" breadcrumbs={[{ label: "Home", href: "/" }, { label: "World Clock" }]}>
+		<div class="row g-3" id="clocksContainer"></div>
+	</Content>
+</Layout>
+
+<script type="module" src={pageScript}></script>

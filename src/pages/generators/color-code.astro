@@ -1,0 +1,60 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Content from "../../layouts/Content.astro";
+
+const pageScript = "/js/pages/generators/color-code.js";
+---
+
+<Layout title="Color Code Generator | TechRegistry">
+	<Content title="Color Code Generator" titleTag="Generator" starCount="4.9k stars" usageCount="7.4k uses today" version="v2.7.1" statusText="All Systems Operational" freeLabel="100% Free" privacyLabel="Client-Side Only" poweredBy="Web Crypto" poweredByLink="https://developer.mozilla.org/docs/Web/API/Crypto/getRandomValues" breadcrumbs={[{ label: "Home", href: "/" }, { label: "Color Code Generator" }]}>
+		<div class="tool-page-shell" id="tool-page-root">
+			<div class="card">
+				<div class="card-body">
+					<div class="tool-toolbar">
+						<button id="tool-load-sample" class="btn btn-outline-light btn-sm" type="button">Load Sample</button>
+						<button id="tool-clear" class="btn btn-outline-secondary btn-sm" type="button">Clear</button>
+						<button id="tool-run" class="btn btn-primary btn-sm" type="button">Generate Colors</button>
+					</div>
+					<div class="tool-field-grid mt-3 mb-3">
+						<div>
+							<label class="form-label" for="color-format">Format</label>
+							<select id="color-format" class="form-select" data-tool-field="format">
+								<option value="hex">HEX</option>
+								<option value="rgb">RGB</option>
+								<option value="hsl">HSL</option>
+							</select>
+						</div>
+						<div>
+							<label class="form-label" for="color-count">Count</label>
+							<input id="color-count" class="form-control" data-tool-field="count" value="5" />
+						</div>
+					</div>
+					<div id="tool-status" class="tool-status">Ready.</div>
+					<div class="mt-3">
+						<div class="tool-label-row">
+							<label class="form-label mb-0">Generated Color Codes</label>
+							<span class="text-body-secondary">Color values appear here</span>
+						</div>
+						<pre id="tool-output" class="tool-code-output tool-code-output-compact"></pre>
+					</div>
+				</div>
+			</div>
+
+			<div class="card tool-details-card">
+				<div class="card-header"><h3 class="card-title">About This Color Code Generator</h3></div>
+				<div class="card-body">
+					<p>This color code generator creates random HEX, RGB, and HSL color values for UI design, CSS experiments, theme drafts, and quick visual testing.</p>
+					<p>It is useful when you need fresh color ideas for buttons, charts, labels, backgrounds, data states, or placeholder design tokens without opening a separate design tool.</p>
+					<ul class="tool-detail-list">
+						<li>Generates multiple browser-side color codes in one run.</li>
+						<li>Supports common web color formats: HEX, RGB, and HSL.</li>
+						<li>Helpful for CSS styling, palette exploration, prototypes, and QA fixtures.</li>
+					</ul>
+					<div class="tool-points"><a class="tool-point" href="https://developer.mozilla.org/docs/Web/API/Crypto/getRandomValues" target="_blank" rel="noreferrer"><i class="fa-solid fa-link"></i>Powered by Web Crypto</a></div>
+				</div>
+			</div>
+		</div>
+	</Content>
+</Layout>
+
+<script type="module" src={pageScript}></script>

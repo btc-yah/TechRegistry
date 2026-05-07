@@ -1,0 +1,471 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import Content from "../../../layouts/Content.astro";
+
+const pageScript = "/js/pages/utilities/media-tools/video-player.js";
+---
+
+<Layout title="Video Player | TechRegistry">
+	<Content
+		title="Video Player"
+		titleTag="MP4, WebM, Ogg player"
+		breadcrumbs={[{ label: "Home", href: "/" }, { label: "Video Player" }]}
+	>
+		<div class="tool-page-shell">
+			<div class="card video-player-card">
+				<div class="card-body p-0">
+					<div class="video-player-shell">
+						<div class="video-player-topbar">
+							<div>
+								<span class="video-player-eyebrow"
+									>Local Playback</span
+								>
+								<p class="video-player-subtitle mb-0">
+									Drop in a file and play it back with a more
+									polished viewing surface.
+								</p>
+							</div>
+							
+						</div>
+
+						<div class="video-player-controls">
+							<input
+								type="file"
+								id="videoFile"
+								class="form-control video-file-input"
+								accept="video/*"
+								placeholder="Select a video file..."
+							/>
+						</div>
+
+						<div class="video-stage">
+							<div class="video-stage-glow"></div>
+							<div class="video-stage-frame">
+								<div
+									class="video-stage-empty"
+									id="videoEmptyState"
+									role="button"
+									tabindex="0"
+									aria-label="Select a video file"
+								>
+									<div class="video-stage-empty-icon">
+										<i class="fa-solid fa-circle-play"></i>
+									</div>
+									<h4>Ready to play</h4>
+									<p class="mb-0">
+										Select a local video file to load it
+										into the player.
+									</p>
+								</div>
+								<video
+									id="videoPlayer"
+									class="video-player-element"
+									controls
+									playsinline
+									preload="metadata"
+								>
+									Your browser does not support the video tag.
+								</video>
+							</div>
+						</div>
+
+						<div class="video-player-footer">
+							<div class="video-player-status" id="videoStatus">
+								Choose a video file to begin
+							</div>
+							<div class="text-muted">
+								<small
+									>The selected file stays in your browser
+									session.</small
+								>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="card tool-details-card">
+				<div class="card-header">
+					<h3 class="card-title">Quick Keyboard Shortcuts</h3>
+				</div>
+				<div class="card-body">
+					<p>
+						Use these keys while you are on the page to control
+						playback quickly without reaching for the native
+						controls.
+					</p>
+					<div class="video-shortcut-grid">
+						<div class="video-shortcut-item">
+							<kbd>J</kbd><span>Back 10 seconds</span>
+						</div>
+						<div class="video-shortcut-item">
+							<kbd>L</kbd><span>Forward 10 seconds</span>
+						</div>
+						<div class="video-shortcut-item">
+							<kbd>Home</kbd><span>Jump to start</span>
+						</div>
+						<div class="video-shortcut-item">
+							<kbd>End</kbd><span>Jump to end</span>
+						</div>
+					</div>
+					<p class="mb-0 mt-3 text-body-secondary">
+						Native player shortcuts still work as usual. The custom
+						script now only adds the extra seek and jump keys shown
+						here.
+					</p>
+				</div>
+			</div>
+
+			<div class="card tool-details-card">
+				<div class="card-header">
+					<h3 class="card-title">About This Video Player</h3>
+				</div>
+				<div class="card-body">
+					<p>
+						This video player is built for quick local preview,
+						simple playback review, and faster keyboard-based
+						scrubbing when you want to check a clip without opening
+						a heavier app.
+					</p>
+					<p>
+						It works well for testing short recordings, reviewing
+						exports, checking mobile captures, or validating browser
+						playback support before sharing a file elsewhere.
+					</p>
+					<ul class="tool-detail-list">
+						<li>
+							Loads local video files directly in the browser.
+						</li>
+						<li>
+							Starts playback automatically after a successful
+							selection.
+						</li>
+						<li>
+							Adds lightweight extra shortcuts without
+							overriding the native player behavior.
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</Content>
+</Layout>
+
+<script type="module" src={pageScript}></script>
+
+<style>
+	.video-player-card {
+		border: 1px solid rgba(255, 255, 255, 0.08);
+		background:
+			radial-gradient(
+				circle at top right,
+				rgba(13, 110, 253, 0.18),
+				transparent 34%
+			),
+			linear-gradient(
+				145deg,
+				rgba(17, 24, 39, 0.98),
+				rgba(9, 14, 26, 0.96)
+			);
+		box-shadow: 0 28px 60px rgba(0, 0, 0, 0.28);
+		overflow: hidden;
+	}
+
+	.video-player-shell {
+		padding: 1.5rem;
+		color: #e8eefc;
+	}
+
+	.video-player-topbar,
+	.video-player-footer {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+		flex-wrap: wrap;
+	}
+
+	.video-player-eyebrow {
+		display: inline-block;
+		margin-bottom: 0.55rem;
+		padding: 0.35rem 0.7rem;
+		border-radius: 999px;
+		background: rgba(13, 110, 253, 0.14);
+		border: 1px solid rgba(86, 156, 255, 0.28);
+		font-size: 0.74rem;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: #9fc5ff;
+	}
+
+	.video-player-title {
+		margin: 0;
+		font-size: clamp(1.35rem, 2.5vw, 2rem);
+		font-weight: 700;
+		color: #f7faff;
+	}
+
+	.video-player-subtitle {
+		margin-top: 0.45rem;
+		max-width: 42rem;
+		color: rgba(232, 238, 252, 0.76);
+	}
+
+	.video-player-format-badge,
+	.video-player-status {
+		padding: 0.7rem 0.95rem;
+		border-radius: 0.95rem;
+		border: 1px solid rgba(255, 255, 255, 0.12);
+		background: rgba(255, 255, 255, 0.05);
+		backdrop-filter: blur(14px);
+	}
+
+	.video-player-format-badge {
+		font-size: 0.84rem;
+		color: #dce8ff;
+	}
+
+	.video-player-status {
+		font-size: 0.9rem;
+		color: #edf3ff;
+	}
+
+	.video-player-controls {
+		margin: 1.5rem 0 1.25rem;
+	}
+
+	.video-upload-field {
+		display: flex;
+		align-items: center;
+		gap: 0.9rem;
+		padding: 1rem 1.1rem;
+		border-radius: 1rem;
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		background: linear-gradient(
+			180deg,
+			rgba(255, 255, 255, 0.07),
+			rgba(255, 255, 255, 0.03)
+		);
+		cursor: pointer;
+		margin-bottom: 0.85rem;
+		transition:
+			transform 0.2s ease,
+			border-color 0.2s ease,
+			box-shadow 0.2s ease;
+	}
+
+	.video-upload-field:hover {
+		transform: translateY(-1px);
+		border-color: rgba(86, 156, 255, 0.38);
+		box-shadow: 0 18px 35px rgba(0, 0, 0, 0.18);
+	}
+
+	.video-upload-icon {
+		width: 3rem;
+		height: 3rem;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: 0.9rem;
+		background: linear-gradient(135deg, #0d6efd, #49b3ff);
+		color: #fff;
+		font-size: 1.1rem;
+		box-shadow: 0 12px 25px rgba(13, 110, 253, 0.34);
+	}
+
+	.video-upload-copy {
+		display: flex;
+		flex-direction: column;
+		gap: 0.15rem;
+	}
+
+	.video-upload-copy strong {
+		color: #f7faff;
+	}
+
+	.video-upload-copy small {
+		color: rgba(232, 238, 252, 0.68);
+	}
+
+	.video-file-input {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		white-space: nowrap;
+		border: 0;
+	}
+
+	.video-stage {
+		position: relative;
+	}
+
+	.video-stage-glow {
+		position: absolute;
+		inset: 8% 10% auto;
+		height: 72%;
+		border-radius: 50%;
+		background: radial-gradient(
+			circle,
+			rgba(13, 110, 253, 0.2),
+			transparent 68%
+		);
+		filter: blur(30px);
+		pointer-events: none;
+	}
+
+	.video-stage-frame {
+		position: relative;
+		min-height: clamp(22rem, 62vh, 40rem);
+		border-radius: 1.25rem;
+		padding: 0.85rem;
+		background: linear-gradient(
+			145deg,
+			rgba(255, 255, 255, 0.08),
+			rgba(255, 255, 255, 0.02)
+		);
+		border: 1px solid rgba(255, 255, 255, 0.12);
+		box-shadow:
+			inset 0 1px 0 rgba(255, 255, 255, 0.08),
+			0 20px 45px rgba(0, 0, 0, 0.24);
+	}
+
+	.video-player-element {
+		display: block;
+		width: 100%;
+		height: clamp(20.25rem, 58vh, 38rem);
+		border-radius: 0.95rem;
+		background:
+			radial-gradient(
+				circle at top,
+				rgba(72, 157, 255, 0.16),
+				transparent 36%
+			),
+			linear-gradient(180deg, #07101f, #02060f);
+		object-fit: contain;
+		position: relative;
+		z-index: 2;
+	}
+
+	.video-stage-empty {
+		position: absolute;
+		inset: 0.85rem;
+		z-index: 3;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		text-align: center;
+		padding: 2rem;
+		border-radius: 0.95rem;
+		background:
+			linear-gradient(180deg, rgba(3, 9, 19, 0.28), rgba(3, 9, 19, 0.56)),
+			repeating-linear-gradient(
+				135deg,
+				rgba(255, 255, 255, 0.04),
+				rgba(255, 255, 255, 0.04) 12px,
+				transparent 12px,
+				transparent 24px
+			);
+		color: #eef4ff;
+		cursor: pointer;
+		transition:
+			opacity 0.2s ease,
+			visibility 0.2s ease;
+	}
+
+	.video-stage-empty:focus-visible {
+		outline: 2px solid rgba(86, 156, 255, 0.95);
+		outline-offset: 4px;
+	}
+
+	.video-stage-empty.is-hidden {
+		opacity: 0;
+		visibility: hidden;
+		pointer-events: none;
+	}
+
+	.video-stage-empty-icon {
+		width: 4.5rem;
+		height: 4.5rem;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		margin-bottom: 1rem;
+		border-radius: 1.25rem;
+		background: linear-gradient(
+			135deg,
+			rgba(13, 110, 253, 0.95),
+			rgba(73, 179, 255, 0.92)
+		);
+		box-shadow: 0 16px 36px rgba(13, 110, 253, 0.28);
+		font-size: 1.45rem;
+	}
+
+	.video-stage-empty h4 {
+		margin-bottom: 0.55rem;
+		color: #ffffff;
+	}
+
+	.video-stage-empty p {
+		max-width: 24rem;
+		color: rgba(238, 244, 255, 0.75);
+	}
+
+	.video-shortcut-grid {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 0.85rem 1rem;
+	}
+
+	.video-shortcut-item {
+		display: flex;
+		align-items: center;
+		gap: 0.8rem;
+		padding: 0.8rem 0.9rem;
+		border-radius: 0.85rem;
+		border: 1px solid rgba(255, 255, 255, 0.08);
+		background: rgba(255, 255, 255, 0.03);
+	}
+
+	.video-shortcut-item kbd {
+		min-width: 3rem;
+		text-align: center;
+		padding: 0.35rem 0.55rem;
+		border-radius: 0.55rem;
+		background: rgba(13, 110, 253, 0.14);
+		color: var(--bs-body-color);
+	}
+
+	.video-shortcut-item span {
+		color: var(--bs-body-color);
+		font-size: 0.92rem;
+	}
+
+	@media (max-width: 767.98px) {
+		.video-player-shell {
+			padding: 1rem;
+		}
+
+		.video-stage-frame {
+			min-height: 18rem;
+			padding: 0.65rem;
+		}
+
+		.video-player-element {
+			height: clamp(16rem, 42vh, 24rem);
+		}
+
+		.video-stage-empty {
+			inset: 0.65rem;
+			padding: 1.5rem;
+		}
+
+		.video-shortcut-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>

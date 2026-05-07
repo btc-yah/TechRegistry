@@ -1,0 +1,660 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import Content from "../../../layouts/Content.astro";
+
+const pageScript = "/js/pages/utilities/misc/api-testing.js";
+---
+
+<Layout title="API Testing | TechRegistry">
+	<Content
+		title="API Testing"
+		titleTag="Misc"
+		version="v2.8.0"
+		statusText="All Systems Operational"
+		privacyLabel="Client-Side Only"
+		poweredBy="Fetch API"
+		poweredByLink="https://developer.mozilla.org/docs/Web/API/Fetch_API"
+		breadcrumbs={[
+			{ label: "Home", href: "/" },
+			{ label: "API Testing" },
+		]}
+	>
+		<div class="api-client-shell">
+			<div class="api-workspace-head">
+				<div>
+					<span class="api-kicker">Client</span>
+					<h2>Request builder</h2>
+				</div>
+				<div class="api-workspace-actions">
+					<span class="api-chip"><i class="fa-solid fa-shield-halved"></i> Browser fetch</span>
+					<span class="api-chip"><i class="fa-solid fa-clock-rotate-left"></i> Local history</span>
+				</div>
+			</div>
+
+			<div class="api-client-toolbar">
+				<div class="api-url-group">
+					<select id="method" class="form-select api-method-select" aria-label="HTTP method">
+						<option>GET</option>
+						<option>POST</option>
+						<option>PUT</option>
+						<option>PATCH</option>
+						<option>DELETE</option>
+					</select>
+					<input
+						type="url"
+						id="url"
+						class="form-control api-url-input"
+						placeholder="https://api.example.com/v1/resources"
+						autocomplete="off"
+					/>
+				</div>
+				<div class="api-action-group">
+					<button type="button" id="sendBtn" class="btn btn-primary api-send-btn">
+						<i class="fa-solid fa-paper-plane me-2"></i>Send
+					</button>
+					<button type="button" id="cancelBtn" class="btn btn-outline-danger d-none">
+						<i class="fa-solid fa-ban me-2"></i>Cancel
+					</button>
+					<button type="button" id="copyCurlBtn" class="btn btn-outline-info tool-toolbar-copy" title="Copy as cURL">
+						<i class="fa-solid fa-terminal"></i>
+					</button>
+				</div>
+			</div>
+
+			<div id="status" class="alert alert-info d-none api-status" role="status"></div>
+
+			<div class="api-client-grid">
+				<aside class="api-sidebar">
+					<div class="api-panel-header">
+						<div>
+							<span class="api-kicker">Workspace</span>
+							<h2>History</h2>
+						</div>
+						<span id="historyCount" class="badge text-bg-light border">0 requests</span>
+					</div>
+
+					<div class="d-grid gap-2">
+						<button type="button" id="loadSampleBtn" class="btn btn-outline-secondary btn-sm">
+							<i class="fa-regular fa-circle-play me-2"></i>Load sample
+						</button>
+						<div class="d-flex gap-2">
+							<button type="button" id="clearFormBtn" class="btn btn-outline-secondary btn-sm flex-fill">
+								Clear form
+							</button>
+							<button type="button" id="clearHistoryBtn" class="btn btn-outline-danger btn-sm flex-fill">
+								Clear history
+							</button>
+						</div>
+					</div>
+
+					<div id="historyEmpty" class="api-empty-state">
+						Requests appear here after you send them.
+					</div>
+					<div id="historyList" class="api-history-list" aria-live="polite"></div>
+				</aside>
+
+				<main class="api-workbench">
+					<section class="api-panel api-request-panel">
+						<div class="api-panel-header api-panel-header--compact">
+							<div>
+								<span class="api-kicker">Request</span>
+								<h2>Configure request</h2>
+							</div>
+						</div>
+
+						<ul class="nav nav-tabs api-tabs" id="requestTabs" role="tablist">
+							<li class="nav-item" role="presentation">
+								<button class="nav-link active" id="params-tab" data-bs-toggle="tab" data-bs-target="#paramsPane" type="button" role="tab" aria-controls="paramsPane" aria-selected="true">
+									Params
+								</button>
+							</li>
+							<li class="nav-item" role="presentation">
+								<button class="nav-link" id="headers-tab" data-bs-toggle="tab" data-bs-target="#headersPane" type="button" role="tab" aria-controls="headersPane" aria-selected="false">
+									Headers
+								</button>
+							</li>
+							<li class="nav-item" role="presentation">
+								<button class="nav-link" id="body-tab" data-bs-toggle="tab" data-bs-target="#bodyPane" type="button" role="tab" aria-controls="bodyPane" aria-selected="false">
+									Body
+								</button>
+							</li>
+						</ul>
+
+						<div class="tab-content api-tab-content">
+							<div class="tab-pane fade show active" id="paramsPane" role="tabpanel" aria-labelledby="params-tab" tabindex="0">
+								<div class="api-table-header">
+									<span>Query parameters</span>
+									<button type="button" id="addParamBtn" class="btn btn-sm btn-outline-secondary">
+										<i class="fa-solid fa-plus me-1"></i>Add
+									</button>
+								</div>
+								<div class="table-responsive">
+									<table id="paramsTable" class="table table-sm api-key-value-table align-middle mb-0">
+										<thead>
+											<tr>
+												<th></th>
+												<th>Key</th>
+												<th>Value</th>
+												<th></th>
+											</tr>
+										</thead>
+										<tbody></tbody>
+									</table>
+								</div>
+							</div>
+
+							<div class="tab-pane fade" id="headersPane" role="tabpanel" aria-labelledby="headers-tab" tabindex="0">
+								<div class="api-table-header">
+									<span>Request headers</span>
+									<button type="button" id="addHeaderBtn" class="btn btn-sm btn-outline-secondary">
+										<i class="fa-solid fa-plus me-1"></i>Add
+									</button>
+								</div>
+								<div class="table-responsive">
+									<table id="headersTable" class="table table-sm api-key-value-table align-middle mb-0">
+										<thead>
+											<tr>
+												<th></th>
+												<th>Key</th>
+												<th>Value</th>
+												<th></th>
+											</tr>
+										</thead>
+										<tbody></tbody>
+									</table>
+								</div>
+							</div>
+
+							<div class="tab-pane fade" id="bodyPane" role="tabpanel" aria-labelledby="body-tab" tabindex="0">
+								<div class="api-body-options">
+									<label for="bodyType" class="form-label mb-0">Body type</label>
+									<select id="bodyType" class="form-select form-select-sm api-body-type">
+										<option value="json">JSON</option>
+										<option value="text">Text</option>
+										<option value="none">No body</option>
+									</select>
+								</div>
+								<div id="bodyPanel" class="api-editor-panel">
+									<textarea
+										id="body"
+										class="form-control font-monospace api-code-area "
+										spellcheck="false"
+										placeholder='{"name":"TechRegistry","status":"active"}'></textarea>
+								</div>
+							</div>
+						</div>
+					</section>
+
+					<section class="api-panel api-response-panel">
+						<div class="api-panel-header api-panel-header--compact">
+							<div>
+								<span class="api-kicker">Response</span>
+								<h2>Inspect result</h2>
+							</div>
+							<div class="api-response-actions">
+								<button type="button" id="copyResponseBtn" class="btn btn-sm btn-outline-info tool-toolbar-copy" title="Copy response">
+									<i class="fa-regular fa-copy me-1"></i>Copy
+								</button>
+							</div>
+						</div>
+
+						<div class="api-response-summary" aria-label="Response summary">
+							<div>
+								<i class="fa-solid fa-signal"></i>
+								<span>Status</span>
+								<strong id="statusCode">-</strong>
+							</div>
+							<div>
+								<i class="fa-regular fa-clock"></i>
+								<span>Time</span>
+								<strong id="responseTime">-</strong>
+							</div>
+							<div>
+								<i class="fa-solid fa-weight-hanging"></i>
+								<span>Size</span>
+								<strong id="responseSize">-</strong>
+							</div>
+							<div>
+								<i class="fa-solid fa-code"></i>
+								<span>Format</span>
+								<strong id="responseType">-</strong>
+							</div>
+						</div>
+
+						<ul class="nav nav-tabs api-tabs" id="responseTabs" role="tablist">
+							<li class="nav-item" role="presentation">
+								<button class="nav-link active" id="pretty-tab" data-bs-toggle="tab" data-bs-target="#prettyPane" type="button" role="tab" aria-controls="prettyPane" aria-selected="true">
+									Pretty
+								</button>
+							</li>
+							<li class="nav-item" role="presentation">
+								<button class="nav-link" id="raw-tab" data-bs-toggle="tab" data-bs-target="#rawPane" type="button" role="tab" aria-controls="rawPane" aria-selected="false">
+									Raw
+								</button>
+							</li>
+							<li class="nav-item" role="presentation">
+								<button class="nav-link" id="response-headers-tab" data-bs-toggle="tab" data-bs-target="#responseHeadersPane" type="button" role="tab" aria-controls="responseHeadersPane" aria-selected="false">
+									Headers
+								</button>
+							</li>
+						</ul>
+
+						<div class="tab-content api-tab-content">
+							<div class="tab-pane fade show active" id="prettyPane" role="tabpanel" aria-labelledby="pretty-tab" tabindex="0">
+								<textarea id="responseBody" class="form-control font-monospace api-code-area api-code-area--response " readonly spellcheck="false" placeholder="Response body will appear here..."></textarea>
+							</div>
+							<div class="tab-pane fade" id="rawPane" role="tabpanel" aria-labelledby="raw-tab" tabindex="0">
+								<textarea id="responseRaw" class="form-control font-monospace api-code-area api-code-area--response " readonly spellcheck="false" placeholder="Raw response will appear here..."></textarea>
+							</div>
+							<div class="tab-pane fade" id="responseHeadersPane" role="tabpanel" aria-labelledby="response-headers-tab" tabindex="0">
+								<textarea id="responseHeaders" class="form-control font-monospace api-code-area api-code-area--response " readonly spellcheck="false" placeholder="Response headers will appear here..."></textarea>
+							</div>
+						</div>
+					</section>
+				</main>
+			</div>
+
+			<section class="api-info-panel">
+				<h2>About This API Testing Tool</h2>
+				<p>
+					Send quick HTTP requests from the browser, inspect response status, review headers, and reuse recent calls without opening a separate desktop client.
+				</p>
+				<p class="mb-0">
+					Requests use the browser Fetch API, so endpoint CORS rules and network restrictions still apply.
+				</p>
+			</section>
+		</div>
+	</Content>
+</Layout>
+
+<script type="module" src={pageScript}></script>
+
+<style is:global>
+	.api-client-shell {
+		display: grid;
+		gap: 1rem;
+	}
+
+	.api-workspace-head,
+	.api-client-toolbar,
+	.api-panel,
+	.api-sidebar,
+	.api-info-panel {
+		border: 1px solid var(--bs-border-color);
+		border-radius: 8px;
+		background: var(--bs-body-bg);
+		box-shadow: 0 0.25rem 1rem rgba(0, 0, 0, 0.1);
+	}
+
+	.api-workspace-head {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		gap: 1rem;
+		padding: 1rem;
+		background:
+			linear-gradient(135deg, rgba(13, 110, 253, 0.14), rgba(32, 201, 151, 0.08)),
+			var(--bs-body-bg);
+	}
+
+	.api-workspace-head h2 {
+		margin: 0;
+		font-size: 1.1rem;
+	}
+
+	.api-workspace-actions {
+		display: flex;
+		gap: 0.5rem;
+		flex-wrap: wrap;
+		justify-content: flex-end;
+	}
+
+	.api-chip {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.4rem;
+		padding: 0.45rem 0.65rem;
+		border: 1px solid var(--bs-border-color);
+		border-radius: 6px;
+		background: rgba(255, 255, 255, 0.04);
+		color: var(--bs-secondary-color);
+		font-size: 0.82rem;
+		font-weight: 700;
+	}
+
+	.api-client-toolbar {
+		display: flex;
+		gap: 0.75rem;
+		align-items: stretch;
+		padding: 0.9rem;
+	}
+
+	.api-url-group {
+		display: grid;
+		grid-template-columns: 8.5rem minmax(0, 1fr);
+		gap: 0.5rem;
+		flex: 1;
+		min-width: 0;
+	}
+
+	.api-method-select,
+	.api-url-input,
+	.api-send-btn {
+		min-height: 2.75rem;
+	}
+
+	.api-action-group {
+		display: flex;
+		gap: 0.5rem;
+		align-items: stretch;
+	}
+
+	.api-client-grid {
+		display: grid;
+		grid-template-columns: minmax(15rem, 16.5rem) minmax(0, 1fr);
+		gap: 1rem;
+		align-items: start;
+	}
+
+	.api-sidebar,
+	.api-panel,
+	.api-info-panel {
+		padding: 1.1rem;
+	}
+
+	.api-sidebar {
+		position: sticky;
+		top: 1rem;
+		display: grid;
+		gap: 1rem;
+	}
+
+	.api-panel-header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		gap: 1rem;
+	}
+
+	.api-panel-header--compact {
+		margin-bottom: 0.75rem;
+	}
+
+	.api-kicker {
+		display: block;
+		margin-bottom: 0.15rem;
+		color: var(--bs-secondary-color);
+		font-size: 0.72rem;
+		font-weight: 700;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+	}
+
+	.api-panel h2,
+	.api-sidebar h2,
+	.api-info-panel h2 {
+		margin: 0;
+		font-size: 1rem;
+	}
+
+	.api-workbench {
+		display: grid;
+		gap: 1rem;
+		min-width: 0;
+	}
+
+	.api-request-panel {
+		border-top: 3px solid rgba(13, 110, 253, 0.75);
+	}
+
+	.api-response-panel {
+		border-top: 3px solid rgba(32, 201, 151, 0.75);
+	}
+
+	.api-tabs {
+		border-bottom-color: var(--bs-border-color);
+	}
+
+	.api-tabs .nav-link {
+		color: var(--bs-secondary-color);
+		border-top-left-radius: 6px;
+		border-top-right-radius: 6px;
+	}
+
+	.api-tabs .nav-link.active {
+		font-weight: 700;
+	}
+
+	.api-tab-content {
+		padding-top: 1rem;
+	}
+
+	.api-table-header,
+	.api-body-options {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		gap: 0.75rem;
+		margin-bottom: 0.75rem;
+		color: var(--bs-secondary-color);
+		font-size: 0.9rem;
+		font-weight: 700;
+	}
+
+	.api-key-value-table th {
+		color: var(--bs-secondary-color);
+		font-size: 0.78rem;
+		font-weight: 700;
+		text-transform: uppercase;
+	}
+
+	.api-key-value-table td,
+	.api-key-value-table th {
+		padding: 0.4rem;
+	}
+
+	.api-check-cell,
+	.api-action-cell {
+		width: 2.75rem;
+		text-align: center;
+	}
+
+	.api-icon-btn {
+		width: 2rem;
+		height: 2rem;
+		padding: 0;
+	}
+
+	.api-body-type {
+		width: 8rem;
+	}
+
+	.api-editor-panel.is-disabled {
+		opacity: 0.55;
+	}
+
+	.api-code-area {
+		min-height: 14rem;
+		resize: vertical;
+		background-color: #080d16;
+		color: #d9e7ff;
+		border-color: rgba(255, 255, 255, 0.12);
+		font-size: 0.875rem;
+		line-height: 1.5;
+		padding: 0.85rem;
+	}
+
+	.api-client-shell .tr-copy-host {
+		position: relative;
+	}
+
+	.api-client-shell .tr-copy-corner-btn {
+		top: 0.75rem;
+		right: 0.75rem;
+		width: 2rem;
+		height: 2rem;
+		border-radius: 50%;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		background: rgba(8, 13, 22, 0.92);
+	}
+
+	.api-client-shell .tr-copy-corner-btn i {
+		margin: 0;
+		line-height: 1;
+	}
+
+	.api-client-shell .tr-copy-host .api-code-area {
+		padding-right: 3.25rem;
+	}
+
+	.api-code-area:focus {
+		background-color: #080d16;
+		color: #d9e7ff;
+	}
+
+	.api-code-area--response {
+		height: 42rem;
+		min-height: 42rem;
+		max-height: 78vh;
+		resize: vertical;
+	}
+
+	.api-response-summary {
+		display: grid;
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+		gap: 0.5rem;
+		margin-bottom: 0.75rem;
+	}
+
+	.api-response-summary div {
+		position: relative;
+		display: flex;
+		align-items: center;
+		gap: 0.45rem;
+		border: 1px solid var(--bs-border-color);
+		border-radius: 6px;
+		padding: 0.45rem 0.6rem;
+		min-width: 0;
+		background: var(--bs-tertiary-bg);
+	}
+
+	.api-response-summary i {
+		color: var(--bs-secondary-color);
+		font-size: 0.85rem;
+		width: 1rem;
+		text-align: center;
+	}
+
+	.api-response-summary span {
+		color: var(--bs-secondary-color);
+		font-size: 0.68rem;
+		font-weight: 700;
+		text-transform: uppercase;
+	}
+
+	.api-response-summary strong {
+		margin-left: auto;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		font-size: 0.86rem;
+	}
+
+	.api-response-summary.is-success div:first-child {
+		border-color: rgba(25, 135, 84, 0.7);
+		background: rgba(25, 135, 84, 0.14);
+	}
+
+	.api-response-summary.is-danger div:first-child {
+		border-color: rgba(220, 53, 69, 0.7);
+		background: rgba(220, 53, 69, 0.14);
+	}
+
+	.api-response-actions {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+	}
+
+	.api-history-list {
+		display: grid;
+		gap: 0.5rem;
+		max-height: 32rem;
+		overflow: auto;
+		padding-right: 0.15rem;
+	}
+
+	.api-history-item {
+		display: grid;
+		grid-template-columns: auto minmax(0, 1fr) auto;
+		gap: 0.45rem;
+		align-items: center;
+		width: 100%;
+		padding: 0.7rem;
+		color: var(--bs-body-color);
+		text-align: left;
+		background: var(--bs-tertiary-bg);
+		border: 1px solid var(--bs-border-color);
+		border-radius: 8px;
+	}
+
+	.api-history-item:hover {
+		border-color: rgba(13, 110, 253, 0.7);
+	}
+
+	.api-history-url {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		font-weight: 700;
+	}
+
+	.api-history-time {
+		grid-column: 2 / 4;
+		color: var(--bs-secondary-color);
+		font-size: 0.76rem;
+	}
+
+	.api-empty-state {
+		border: 1px dashed var(--bs-border-color);
+		border-radius: 8px;
+		padding: 0.9rem;
+		color: var(--bs-secondary-color);
+		font-size: 0.9rem;
+	}
+
+	.api-status {
+		margin: 0;
+	}
+
+	.api-info-panel p {
+		color: var(--bs-secondary-color);
+	}
+
+	@media (max-width: 991.98px) {
+		.api-client-grid,
+		.api-url-group,
+		.api-response-summary {
+			grid-template-columns: 1fr;
+		}
+
+		.api-sidebar {
+			position: static;
+		}
+
+		.api-client-toolbar,
+		.api-action-group,
+		.api-workspace-head,
+		.api-response-actions {
+			flex-direction: column;
+			align-items: stretch;
+		}
+
+		.api-code-area--response {
+			height: 34rem;
+			min-height: 34rem;
+		}
+	}
+</style>

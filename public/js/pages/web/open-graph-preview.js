@@ -1,0 +1,2 @@
+import { initInteractiveToolPage } from "../../tools/tool-suite.js";
+initInteractiveToolPage({ toolId: "open-graph-preview", detailMode: "html", fields: [{ id: "title", value: "TechRegistry Preview" }, { id: "description", value: "Preview Open Graph tags and social cards before publishing." }, { id: "url", value: "https://techregistry.dev/preview" }, { id: "image", value: "https://techregistry.dev/og/preview.png" }, { id: "siteName", value: "TechRegistry" }] });

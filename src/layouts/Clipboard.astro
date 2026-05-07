@@ -1,0 +1,88 @@
+<style is:inline>
+	.content-page-main .tr-copy-host {
+		position: relative;
+	}
+
+	.content-page-main .tr-copy-corner-btn {
+		position: absolute;
+		top: 2.60rem;
+		right: 0.75rem;
+		z-index: 2;
+		width: 2rem;
+		height: 2rem;
+		padding: 0;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: 999px;
+	}
+
+	.content-page-main .tr-copy-corner-btn i {
+		pointer-events: none;
+	}
+
+	.content-page-main .tr-copy-host .js-clipboard-source,
+	.content-page-main .tr-copy-host pre.tool-code-output,
+	.content-page-main .tr-copy-host pre.tool-detail-output {
+		padding-right: 3rem;
+	}
+</style>
+
+<script is:inline>
+	(function () {
+		const CLIPBOARD_SOURCE_CLASS = "js-clipboard-source";
+		const TARGET_SELECTOR = [
+			`.content-page-main .${CLIPBOARD_SOURCE_CLASS}`,
+			".content-page-main pre.tool-code-output",
+			".content-page-main pre.tool-detail-output",
+		].join(", ");
+
+		function ensureCopyButtons() {
+			if (!window.jQuery) return;
+
+			const $ = window.jQuery;
+
+			$(TARGET_SELECTOR).each(function (index) {
+				const $target = $(this);
+				if (!$target.length || $target.closest(".monaco-editor").length) return;
+				if ($target.closest(".tr-copy-host").children(".tr-copy-corner-btn").length) return;
+
+				const target = $target.get(0);
+				const existingHost = $target.parent();
+				if (!existingHost.length) return;
+
+				existingHost.addClass("tr-copy-host");
+				if (existingHost.children(".tr-copy-corner-btn").length) return;
+
+				let copySelector = "";
+				if (target.id) {
+					copySelector = `#${target.id}`;
+				} else {
+					const copyId = $target.attr("data-global-copy-id") || `tr-copy-${index}`;
+					$target.attr("data-global-copy-id", copyId);
+					copySelector = `[data-global-copy-id="${copyId}"]`;
+				}
+
+				existingHost.append(
+					$("<button>", {
+						type: "button",
+						class: "btn btn-outline-info btn-sm tool-toolbar-copy js-clipboard-copy tr-copy-corner-btn",
+						"data-copy-from": copySelector,
+						"data-copy-success": "",
+						"aria-label": "Copy content",
+						title: "Copy content",
+						html: '<i class="fa-regular fa-copy"></i>',
+					}),
+				);
+			});
+
+			window.TechRegistrySite?.initClipboard?.();
+		}
+
+		if (document.readyState === "loading") {
+			document.addEventListener("DOMContentLoaded", ensureCopyButtons, { once: true });
+		} else {
+			ensureCopyButtons();
+		}
+	})();
+</script>

@@ -1,0 +1,60 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Content from "../../layouts/Content.astro";
+
+const pageScript = "/js/pages/generators/html-table.js";
+---
+
+<Layout title="HTML Table Generator | TechRegistry">
+	<Content title="HTML Table Generator" titleTag="Generator" starCount="4.7k stars" usageCount="6.9k uses today" version="v2.7.1" statusText="All Systems Operational" freeLabel="100% Free" privacyLabel="Client-Side Only" poweredBy="browser-side JS" breadcrumbs={[{ label: "Home", href: "/" }, { label: "HTML Table Generator" }]}>
+		<div class="tool-page-shell" id="tool-page-root">
+			<div class="card">
+				<div class="card-body">
+					<div class="tool-toolbar">
+						<button id="tool-load-sample" class="btn btn-outline-light btn-sm" type="button">Load Sample</button>
+						<button id="tool-clear" class="btn btn-outline-secondary btn-sm" type="button">Clear</button>
+						<button id="tool-run" class="btn btn-primary btn-sm" type="button">Generate Table</button>
+					</div>
+					<div class="tool-field-grid mt-3 mb-3">
+						<div>
+							<label class="form-label" for="table-rows">Rows</label>
+							<input id="table-rows" class="form-control" data-tool-field="rows" value="3" />
+						</div>
+						<div>
+							<label class="form-label" for="table-columns">Columns</label>
+							<input id="table-columns" class="form-control" data-tool-field="columns" value="4" />
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" id="table-header" type="checkbox" data-tool-field="header" checked />
+							<label class="form-check-label" for="table-header">Include header row</label>
+						</div>
+					</div>
+					<div id="tool-status" class="tool-status">Ready.</div>
+					<div class="mt-3">
+						<div class="tool-label-row">
+							<label class="form-label mb-0">Generated HTML</label>
+							<span class="text-body-secondary">Table markup appears here</span>
+						</div>
+						<pre id="tool-output" class="tool-code-output"></pre>
+					</div>
+				</div>
+			</div>
+
+			<div class="card tool-details-card">
+				<div class="card-header"><h3 class="card-title">About This HTML Table Generator</h3></div>
+				<div class="card-body">
+					<p>This HTML table generator creates clean table markup for documentation, prototypes, admin screens, email drafts, test fixtures, and simple content pages.</p>
+					<p>It is helpful when you need a fast table skeleton with a predictable number of rows and columns before adding real data, styling, accessibility labels, or framework-specific components.</p>
+					<ul class="tool-detail-list">
+						<li>Generates table, thead, tbody, th, tr, and td markup.</li>
+						<li>Supports custom row and column counts with an optional header row.</li>
+						<li>Useful for docs examples, CMS content, QA data, and frontend layout scaffolding.</li>
+					</ul>
+					<div class="tool-points"><span class="tool-point"><i class="fa-solid fa-code"></i>Powered by browser-side JS</span></div>
+				</div>
+			</div>
+		</div>
+	</Content>
+</Layout>
+
+<script type="module" src={pageScript}></script>

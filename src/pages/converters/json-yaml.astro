@@ -1,0 +1,81 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Content from "../../layouts/Content.astro";
+
+const pageScript = "/js/pages/converters/json-yaml.js";
+
+const sampleJson = `{
+  "app": {
+    "name": "TechRegistry",
+    "enabled": true,
+    "port": 3000
+  }
+}`;
+
+const sampleYaml = `app:
+  name: TechRegistry
+  enabled: true
+  port: 3000`;
+---
+
+<Layout title="JSON and YAML | TechRegistry">
+	<Content title="JSON and YAML" titleTag="Converter" starCount="5.5k stars" usageCount="8.9k uses today" version="v2.7.1" statusText="All Systems Operational" freeLabel="100% Free" privacyLabel="Client-Side Only" breadcrumbs={[{ label: "Home", href: "/" }, { label: "JSON and YAML" }]}>
+		<div class="tool-page-shell">
+			<div class="card">
+				<div class="card-body">
+					<div class="tool-toolbar">
+						<button id="load-sample" class="btn btn-outline-light btn-sm" type="button">Load Sample</button>
+						<button id="clear-input" class="btn btn-outline-secondary btn-sm" type="button">Clear</button>
+						<button id="convert-json-yaml" class="btn btn-primary btn-sm" type="button">Convert</button>
+						<button id="swap-direction" class="btn btn-outline-warning btn-sm" type="button">Swap</button>
+						<button id="copy-output" class="btn btn-outline-info btn-sm" type="button">Copy Output</button>
+					</div>
+
+					<div class="tool-field-grid mt-3 mb-3">
+						<div>
+							<label for="conversion-direction" class="form-label">Direction</label>
+							<select id="conversion-direction" class="form-select">
+								<option value="json-to-yaml">JSON to YAML</option>
+								<option value="yaml-to-json">YAML to JSON</option>
+							</select>
+						</div>
+					</div>
+
+					<div class="tool-editors">
+						<div>
+							<div class="tool-label-row">
+								<label for="converter-input" class="form-label mb-0">Input</label>
+								<span class="text-body-secondary">Paste JSON or YAML</span>
+							</div>
+							<textarea id="converter-input" class="form-control tool-code-input js-clipboard-source">{sampleJson}</textarea>
+						</div>
+						<div>
+							<div class="tool-label-row">
+								<label class="form-label mb-0">Output</label>
+								<span class="text-body-secondary">Converted content appears here</span>
+							</div>
+							<pre id="converter-output" class="tool-code-output">{sampleYaml}</pre>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="card tool-details-card">
+				<div class="card-header"><h3 class="card-title">About This JSON and YAML Converter</h3></div>
+				<div class="card-body">
+					<p>This JSON and YAML converter is built for developers and DevOps teams who switch between API-friendly JSON and configuration-friendly YAML during daily setup, debugging, and deployment work.</p>
+					<p>It works well for application config files, CI definitions, sample payloads, cloud settings, and structured content where readability matters as much as data fidelity.</p>
+					<ul class="tool-detail-list">
+						<li>Converts JSON objects and arrays into YAML and back.</li>
+						<li>Good for config work, API examples, and deployment files.</li>
+						<li>Runs completely in the browser for quick safe conversion.</li>
+					</ul>
+					<div class="tool-points"><a class="tool-point" href="https://github.com/nodeca/js-yaml" target="_blank" rel="noreferrer"><i class="fa-solid fa-link"></i>Powered by js-yaml</a></div>
+				</div>
+			</div>
+		</div>
+	</Content>
+</Layout>
+
+<div hidden data-json-yaml-config data-sample-json={encodeURIComponent(sampleJson)} data-sample-yaml={encodeURIComponent(sampleYaml)}></div>
+<script type="module" src={pageScript}></script>

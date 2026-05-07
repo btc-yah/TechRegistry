@@ -1,0 +1,420 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import Content from "../../../layouts/Content.astro";
+
+const pageScript = "/js/pages/utilities/games/2040.js";
+---
+
+<Layout title="2048 | TechRegistry">
+    <Content
+        title="2048"
+        titleTag="Number Puzzle Game"
+        version="v1.0.0"
+        statusText="Ready to Play"
+        privacyLabel="Browser Session Only"
+        poweredBy="jQuery + JavaScript"
+        poweredByLink="https://developer.mozilla.org/en-US/docs/Web/JavaScript"
+        breadcrumbs={[{ label: "Home", href: "/" }, { label: "2048" }]}
+    >
+        <div class="tool-page-shell game-2048-shell">
+            <div class="card game-2048-card">
+                <div class="card-body game-2048-card-body">
+                    <div class="game-2048-layout">
+                        <section class="game-2048-board-panel">
+                            <div class="game-2048-toolbar">
+                                <div class="game-2048-toolbar-copy">
+                                    <div class="game-2048-toolbar-label">
+                                        Tile Controls<span
+                                            class="game-2048-eyebrow ms-2"
+                                            >Swipe or use arrow keys</span
+                                        >
+                                    </div>
+                                    <p class="mb-0 text-body-secondary">
+                                        Combine matching tiles, grow your score,
+                                        and chase the 2048 tile.
+                                    </p>
+                                </div>
+                                <div class="game-2048-toolbar-actions">
+                                    <button
+                                        id="game2048Restart"
+                                        class="btn btn-warning btn-sm"
+                                        type="button"
+                                    >
+                                        Restart
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="game-2048-score-grid">
+                                <div class="game-2048-score-card">
+                                    <span>Score</span>
+                                    <strong id="score">0</strong>
+                                </div>
+                                <div class="game-2048-score-card">
+                                    <div class="game-2048-score-head">
+                                        <span>Best</span>
+                                        <button
+                                            id="game2048ClearBest"
+                                            class="btn btn-outline-light btn-sm game-2048-clear-best"
+                                            type="button"
+                                        >
+                                            Clear
+                                        </button>
+                                    </div>
+                                    <strong id="best">0</strong>
+                                </div>
+                            </div>
+
+                            <div class="game-2048-board-stage">
+                                <div id="board" class="board"></div>
+                            </div>
+                        </section>
+
+                        <aside class="game-2048-side-panel">
+                            <div class="game-2048-side-card">
+                                <div class="game-2048-side-head">
+                                    <h4 class="mb-0">How To Play</h4>
+                                </div>
+                                <div class="game-2048-tip-list">
+                                    <p class="mb-0">
+                                        Use your keyboard arrow keys or swipe to
+                                        move every tile at once.
+                                    </p>
+                                    <p class="mb-0">
+                                        Matching values merge into one stronger
+                                        tile and add to your score.
+                                    </p>
+                                    <p class="mb-0">
+                                        Keep space open near the corners so
+                                        large-value chains stay manageable.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="game-2048-side-card">
+                                <div class="game-2048-side-head">
+                                    <h4 class="mb-0">Win Condition</h4>
+                                    <span class="game-2048-state-badge"
+                                        >2048 Goal</span
+                                    >
+                                </div>
+                                <div class="game-2048-fact">
+                                    <span>Target Tile</span>
+                                    <strong>2048</strong>
+                                </div>
+                                <div class="game-2048-fact">
+                                    <span>Input</span>
+                                    <strong>Keyboard + Touch</strong>
+                                </div>
+                            </div>
+                        </aside>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </Content>
+</Layout>
+
+<style is:global>
+    .game-2048-score-head {
+        display: flex;
+        justify-content: space-between; /* Pushes content to opposite ends */
+        align-items: center; /* Vertically centers the text and button */
+        width: 100%; /* Ensures the container takes up the full width */
+    }
+    .game-2048-card {
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        background:
+            radial-gradient(
+                circle at top left,
+                rgba(227, 160, 8, 0.16),
+                transparent 28%
+            ),
+            radial-gradient(
+                circle at bottom right,
+                rgba(13, 110, 253, 0.14),
+                transparent 32%
+            ),
+            linear-gradient(
+                145deg,
+                rgba(17, 24, 39, 0.98),
+                rgba(9, 14, 26, 0.96)
+            );
+        box-shadow: 0 28px 60px rgba(0, 0, 0, 0.24);
+        overflow: hidden;
+    }
+
+    .game-2048-card-body {
+        padding: 1.5rem;
+        color: #eef4ff;
+    }
+
+    .game-2048-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1.8fr) minmax(16rem, 0.62fr);
+        gap: 1.25rem;
+    }
+
+    .game-2048-board-panel,
+    .game-2048-side-card {
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        background: linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.05),
+            rgba(255, 255, 255, 0.03)
+        );
+        border-radius: 1.2rem;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    }
+
+    .game-2048-board-panel {
+        padding: 1rem;
+    }
+
+    .game-2048-toolbar,
+    .game-2048-side-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+
+    .game-2048-toolbar {
+        margin-bottom: 1rem;
+    }
+
+    .game-2048-toolbar-label {
+        font-size: 0.82rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: #9fc5ff;
+        margin-bottom: 0.25rem;
+    }
+
+    .game-2048-eyebrow {
+        display: inline-block;
+        padding: 0.35rem 0.75rem;
+        border-radius: 999px;
+        border: 1px solid rgba(236, 193, 75, 0.28);
+        background: rgba(236, 193, 75, 0.12);
+        font-size: 0.75rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #ffd983;
+    }
+
+    .game-2048-toolbar-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.65rem;
+    }
+
+    .game-2048-score-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.8rem;
+        margin-bottom: 1rem;
+    }
+
+    .game-2048-score-card,
+    .game-2048-fact {
+        padding: 0.85rem;
+        border-radius: 0.9rem;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .game-2048-score-card span,
+    .game-2048-fact span {
+        display: block;
+        margin-bottom: 0.35rem;
+        font-size: 0.76rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: rgba(232, 238, 252, 0.62);
+    }
+
+    .game-2048-score-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+        margin-bottom: 0.35rem;
+    }
+
+    .game-2048-score-head span {
+        margin-bottom: 0;
+    }
+
+    .game-2048-clear-best {
+        padding: 0.2rem 0.55rem;
+        font-size: 0.72rem;
+        line-height: 1.1;
+    }
+
+    .game-2048-score-card strong,
+    .game-2048-fact strong {
+        color: #ffffff;
+        font-size: 1.5rem;
+    }
+
+    .game-2048-board-stage {
+        padding: 0.9rem;
+        border-radius: 1rem;
+        background:
+            radial-gradient(
+                circle at center,
+                rgba(248, 224, 147, 0.18),
+                transparent 42%
+            ),
+            linear-gradient(
+                145deg,
+                rgba(6, 10, 17, 0.95),
+                rgba(22, 29, 43, 0.92)
+            );
+        border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .game-2048-side-panel {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .game-2048-side-card {
+        padding: 0.9rem;
+    }
+
+    .game-2048-tip-list {
+        display: grid;
+        gap: 0.75rem;
+        margin-top: 0.9rem;
+        color: #d9e8ff;
+    }
+
+    .game-2048-state-badge {
+        padding: 0.4rem 0.75rem;
+        border-radius: 999px;
+        background: rgba(236, 193, 75, 0.15);
+        border: 1px solid rgba(236, 193, 75, 0.24);
+        color: #ffe39b;
+        font-size: 0.78rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+    }
+
+    .game-2048-side-card .game-2048-fact + .game-2048-fact {
+        margin-top: 0.8rem;
+    }
+
+    .board {
+        background: #bbada0;
+        border-radius: 10px;
+        padding: 10px;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+        max-width: 400px;
+        margin: 0 auto;
+    }
+
+    .cell {
+        width: 100%;
+        padding-top: 100%;
+        position: relative;
+        background: #cdc1b4;
+        border-radius: 5px;
+    }
+
+    .tile {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: bold;
+        font-size: 24px;
+        border-radius: 5px;
+        color: #776e65;
+    }
+
+    .tile-2 {
+        background: #eee4da;
+    }
+
+    .tile-4 {
+        background: #ede0c8;
+    }
+
+    .tile-8 {
+        background: #f2b179;
+        color: #fff;
+    }
+
+    .tile-16 {
+        background: #f59563;
+        color: #fff;
+    }
+
+    .tile-32 {
+        background: #f67c5f;
+        color: #fff;
+    }
+
+    .tile-64 {
+        background: #f65e3b;
+        color: #fff;
+    }
+
+    .tile-128 {
+        background: #edcf72;
+        color: #fff;
+    }
+
+    .tile-256 {
+        background: #edcc61;
+        color: #fff;
+    }
+
+    .tile-512 {
+        background: #edc850;
+        color: #fff;
+    }
+
+    .tile-1024 {
+        background: #edc53f;
+        color: #fff;
+    }
+
+    .tile-2048 {
+        background: #edc22e;
+        color: #fff;
+    }
+
+    @media (max-width: 1199.98px) {
+        .game-2048-layout {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    @media (max-width: 767.98px) {
+        .game-2048-card-body {
+            padding: 1rem;
+        }
+
+        .game-2048-board-panel,
+        .game-2048-side-card {
+            padding: 0.9rem;
+        }
+
+        .game-2048-score-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
+<script type="module" src={pageScript}></script>

@@ -1,0 +1,89 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Content from "../../layouts/Content.astro";
+
+const pageScript = "/js/pages/formatters/css.js";
+
+const sampleInput = `.hero{display:grid;gap:1rem;padding:2rem;background:linear-gradient(135deg,#0d6efd,#091f3a)}.hero .title{font-size:2rem;color:#fff}.hero .actions a{padding:.75rem 1rem;border-radius:999px}`;
+const sampleOutput = `.hero {
+  display: grid;
+  gap: 1rem;
+  padding: 2rem;
+  background: linear-gradient(135deg, #0d6efd, #091f3a);
+}
+
+.hero .title {
+  font-size: 2rem;
+  color: #fff;
+}
+
+.hero .actions a {
+  padding: 0.75rem 1rem;
+  border-radius: 999px;
+}`;
+---
+
+<Layout title="Format CSS | TechRegistry">
+	<Content title="Format CSS" titleTag="Formatter" starCount="5.1k stars" usageCount="8.1k uses today" version="v2.7.1" statusText="All Systems Operational" freeLabel="100% Free" privacyLabel="Client-Side Only" poweredBy="js-beautify" poweredByLink="https://github.com/beautifier/js-beautify" breadcrumbs={[{ label: "Home", href: "/" }, { label: "Format CSS" }]}>
+		<div class="tool-page-shell">
+			<div class="card">
+				<div class="card-body">
+					<div class="tool-toolbar">
+						<button id="load-sample" class="btn btn-outline-light btn-sm" type="button">Load Sample</button>
+						<button id="clear-input" class="btn btn-outline-secondary btn-sm" type="button">Clear</button>
+						<button id="format-css" class="btn btn-primary btn-sm" type="button">Format CSS</button>
+						<button id="copy-output" class="btn btn-outline-info btn-sm tool-toolbar-copy" type="button">Copy Output</button>
+					</div>
+
+					<div class="tool-field-grid mt-3 mb-3">
+						<div>
+							<label for="indent-size" class="form-label">Indent Size</label>
+							<select id="indent-size" class="form-select">
+								<option value="2">2 Spaces</option>
+								<option value="4">4 Spaces</option>
+							</select>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" id="newline-between-rules" checked />
+							<label class="form-check-label" for="newline-between-rules">Add blank line between rules</label>
+						</div>
+					</div>
+
+					<div class="tool-editors">
+						<div>
+							<div class="tool-label-row">
+								<label for="formatter-input" class="form-label mb-0">Input CSS</label>
+								<span class="text-body-secondary">Paste compressed or rough styles</span>
+							</div>
+							<textarea id="formatter-input" class="form-control tool-code-input js-clipboard-source">{sampleInput}</textarea>
+						</div>
+						<div>
+							<div class="tool-label-row">
+								<label class="form-label mb-0">Formatted Output</label>
+								<span class="text-body-secondary">Readable CSS appears here</span>
+							</div>
+							<pre id="formatter-output" class="tool-code-output">{sampleOutput}</pre>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="card tool-details-card">
+				<div class="card-header"><h3 class="card-title">About This CSS Formatter</h3></div>
+				<div class="card-body">
+					<p>This CSS formatter is useful when copied styles, generated utility blocks, or compressed stylesheet fragments need to become readable again before editing or code review.</p>
+					<p>It fits front-end work, design system cleanup, bug fixing, and quick visual inspection where spacing and grouping improve maintainability.</p>
+					<ul class="tool-detail-list">
+						<li>Formats selectors, declarations, and nested blocks consistently.</li>
+						<li>Helps clean minified snippets before deeper edits.</li>
+						<li>Ideal for styling audits, review prep, and prototype work.</li>
+					</ul>
+
+				</div>
+			</div>
+		</div>
+	</Content>
+</Layout>
+
+<div hidden data-css-formatter-config data-sample-input={encodeURIComponent(sampleInput)} data-sample-output={encodeURIComponent(sampleOutput)}></div>
+<script type="module" src={pageScript}></script>

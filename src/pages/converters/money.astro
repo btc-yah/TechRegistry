@@ -1,0 +1,161 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Content from "../../layouts/Content.astro";
+
+const pageScript = "/js/pages/utilities/converter/money.js";
+---
+
+<Layout title="Money Converter | TechRegistry">
+	<Content
+		title="Money Converter"
+		titleTag="Utility"
+		breadcrumbs={[
+			{ label: "Home", href: "/" },
+			{ label: "Money Converter" },
+		]}
+		poweredBy="Fawaz Ahmed Currency API"
+		poweredByLink="https://github.com/fawazahmed0/currency-api"
+	>
+		<div class="tool-page-shell simple-converter-page">
+			<div class="card simple-converter-shell">
+				<div class="card-body">
+					<div class="simple-converter-actions">
+						<button
+							id="money-load-sample"
+							class="btn btn-outline-light btn-sm"
+							type="button">Load Sample</button
+						>
+						<button
+							id="money-clear"
+							class="btn btn-outline-secondary btn-sm"
+							type="button">Clear</button
+						>
+						<button
+							id="money-swap"
+							class="btn btn-outline-warning btn-sm"
+							type="button">Swap</button
+						>
+						<button
+							id="money-refresh"
+							class="btn btn-outline-success btn-sm"
+							type="button">Refresh Rates</button
+						>
+						<button
+							id="money-copy"
+							class="btn btn-outline-info btn-sm"
+							type="button">Copy Result</button
+						>
+					</div>
+					<div class="simple-converter-grid mt-3">
+						<div>
+							<label for="money-amount" class="form-label"
+								>From:</label
+							>
+							<input
+								id="money-amount"
+								class="form-control simple-converter-input"
+								type="number"
+								value="1"
+							/>
+							<input
+								id="money-from-search"
+								class="form-control form-control-sm mt-3"
+								type="search"
+								placeholder="Search currencies..."
+							/>
+							<select
+								id="money-from"
+								class="form-select simple-converter-list mt-3"
+								size="12"></select>
+						</div>
+						<div>
+							<label for="money-result" class="form-label"
+								>To:</label
+							>
+							<input
+								id="money-result"
+								class="form-control simple-converter-input"
+								type="text"
+								readonly
+							/>
+							<input
+								id="money-to-search"
+								class="form-control form-control-sm mt-3"
+								type="search"
+								placeholder="Search currencies..."
+							/>
+							<select
+								id="money-to"
+								class="form-select simple-converter-list mt-3"
+								size="12"></select>
+						</div>
+					</div>
+					<p id="money-meta" class="simple-converter-meta mb-0 mt-3">
+					</p>
+				</div>
+			</div>
+			<div class="card mt-3">
+				<div class="card-header border-0 pb-0">
+					<h3 class="card-title text-body-secondary small text-uppercase fw-bold">30-Day Exchange Rate Trend</h3>
+				</div>
+				<div class="card-body pt-0">
+					<div id="money-history-chart" style="min-height: 250px;"></div>
+				</div>
+			</div>
+			<div class="card tool-details-card mt-3">
+				<div class="card-header">
+					<h3 class="card-title">About This Currency Converter</h3>
+				</div>
+				<div class="card-body">
+					<p>
+						This currency converter helps you quickly convert
+						between different world currencies using up-to-date or
+						predefined exchange rates. It utilizes the Fawaz Ahmed
+						Currency API, a community-driven repository that provides
+						daily exchange rates.
+					</p>
+					<p>
+						Please note that while this API is updated frequently, rates are
+						sourced from free community endpoints and may have a slight delay compared to commercial banking sources.
+					</p>
+					<ul class="tool-detail-list">
+						<li>
+							Supports multiple global currencies like USD, INR,
+							EUR, GBP, and more.
+						</li>
+						<li>
+							Instant conversion with simple input and unit
+							selection.
+						</li>
+						<li>
+							Useful for travel budgeting and cross-border
+							pricing.
+						</li>
+						<li>
+							Can work with static or live exchange rates
+							depending on setup.
+						</li>
+						<li>
+							Includes a 30-day historical trend chart to visualize
+							recent currency fluctuations.
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="simple-converter-footnote">
+				<span
+					>Live browser-side conversion using current currency rates.</span
+				>
+				<a
+					class="tool-point"
+					href="https://github.com/fawazahmed0/currency-api"
+					target="_blank"
+					rel="noreferrer"
+					><i class="fa-solid fa-link"></i>Powered by Fawaz Ahmed API</a
+				>
+			</div>
+		</div>
+	</Content>
+</Layout>
+
+<script type="module" src={pageScript}></script>

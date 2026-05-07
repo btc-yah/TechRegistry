@@ -1,0 +1,131 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Content from "../../layouts/Content.astro";
+
+const pageScript = "/js/pages/utilities/converter/data.js";
+---
+
+<Layout title="Data Converter | TechRegistry">
+	<Content
+		title="Data Converter"
+		titleTag="Utility"
+		starCount="4.9k stars"
+		usageCount="7.1k uses today"
+		version="v2.7.1"
+		statusText="All Systems Operational"
+		freeLabel="100% Free"
+		privacyLabel="Client-Side Only"
+		poweredBy="JavaScript"
+		poweredByLink="https://developer.mozilla.org/en-US/docs/Web/JavaScript"
+		breadcrumbs={[
+			{ label: "Home", href: "/" },
+			{ label: "Data Converter" },
+		]}
+	>
+		<div class="tool-page-shell simple-converter-page">
+			<div class="card simple-converter-shell">
+				<div class="card-body">
+					<!-- Actions -->
+					<div class="simple-converter-actions">
+						<button
+							id="data-swap"
+							class="btn btn-outline-warning btn-sm"
+							type="button">Swap</button
+						>
+					
+					</div>
+
+					<!-- Main Grid -->
+					<div class="simple-converter-grid mt-3">
+						<!-- FROM -->
+						<div>
+							<label for="data-value" class="form-label"
+								>From:</label
+							>
+							<input
+								id="data-value"
+								class="form-control simple-converter-input"
+								type="number"
+								value="1"
+							/>
+							<select
+								id="data-from"
+								class="form-select simple-converter-list mt-3"
+								size="12"></select>
+						</div>
+
+						<!-- TO -->
+						<div>
+							<label for="data-result" class="form-label"
+								>To:</label
+							>
+							<input
+								id="data-result"
+								class="form-control simple-converter-input"
+								type="text"
+								readonly
+							/>
+							<select
+								id="data-to"
+								class="form-select simple-converter-list mt-3"
+								size="12"></select>
+						</div>
+					</div>
+
+					<!-- Dynamic Unit Description -->
+					<div class="mt-4 p-3 bg-light rounded border border-secondary-subtle small text-dark">
+						<div id="unit-description-container">
+							<i class="fas fa-info-circle me-1 text-primary"></i>
+							<strong>Unit Info:</strong> <span id="unit-description">Select a unit to see its technical definition.</span>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- SEO & Educational Content Section -->
+			<div class="card tool-details-card mt-4">
+				<div class="card-header">
+					<h3 class="card-title">Understanding Data Measurement: Decimal vs. Binary</h3>
+				</div>
+				<div class="card-body">
+					<p>
+						Navigating digital storage units can be confusing due to the coexistence of two standard systems: the <strong>Decimal (SI)</strong> system used by hardware manufacturers and the <strong>Binary (IEC)</strong> system typically used by operating systems and memory manufacturers.
+					</p>
+					
+					<div class="row mt-4">
+						<div class="col-md-6 mb-3">
+							<h3 class="h5 fw-semibold text-primary">Decimal Units (Base 10 - SI)</h3>
+							<p>Standardized by the International System of Units, these use powers of 1,000. Units like <strong>Kilobytes (KB)</strong>, <strong>Megabytes (MB)</strong>, and <strong>Gigabytes (GB)</strong> are used for disk drive capacity and network speeds. A "1 TB" drive is often calculated as 1,000,000,000,000 bytes by manufacturers.</p>
+						</div>
+						<div class="col-md-6 mb-3">
+							<h3 class="h5 fw-semibold text-warning">Binary Units (Base 2 - IEC)</h3>
+							<p>Standardized by the IEC, these use powers of 1,024. Units like <strong>Kibibytes (KiB)</strong>, <strong>Mebibytes (MiB)</strong>, and <strong>Gibibytes (GiB)</strong> provide the precise measurements used by RAM and system software. This explains why a drive appears "smaller" in Windows than on the box.</p>
+						</div>
+					</div>
+
+					<h3 class="h5 fw-bold mt-3">Why Use a Data Converter?</h3>
+					<p>
+						Developers and IT professionals use data converters for bandwidth calculations, server resource allocation, and database optimization. Converting between <strong>bits (b)</strong>, used for transmission, and <strong>Bytes (B)</strong>, used for storage, is a fundamental task in cloud architecture and software engineering.
+					</p>
+
+					<h3 class="h5 fw-bold mt-3 text-dark">Quick Reference Guide</h3>
+					<ul class="tool-detail-list">
+						<li><strong>8 Bits (b)</strong> = 1 Byte (B)</li>
+						<li><strong>1,000 Kilobytes (KB)</strong> = 1 Megabyte (MB) - <em>Decimal Standard</em></li>
+						<li><strong>1,024 Kibibytes (KiB)</strong> = 1 Mebibyte (MiB) - <em>Binary Standard</em></li>
+						<li><strong>Disk Throughput</strong> is usually measured in decimal (MB/s).</li>
+						<li><strong>File System Size</strong> is usually measured in binary (MiB/GiB).</li>
+					</ul>
+
+					<h3 class="h5 fw-bold mt-3">Common Conversion Questions</h3>
+					<div>
+						<p><strong>How many MB in a GB?</strong> In the SI system, exactly 1,000. However, most users looking for 1,024 are actually referring to the relationship between MiB and GiB.</p>
+						<p><strong>What is a Nibble?</strong> While not in our main list, a nibble is technically half a byte, or 4 bits.</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</Content>
+</Layout>
+
+<script type="module" src={pageScript}></script>

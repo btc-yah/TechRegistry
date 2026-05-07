@@ -1,0 +1,144 @@
+/* Main Sidebar Container */
+.app-sidebar {
+    border-right: 1px solid rgba(255, 255, 255, 0.04);
+    box-shadow: none;
+    background-color: #1a1a1a; /* Assuming a dark theme base */
+}
+
+/* Sidebar Menu Wrapper */
+.sidebar-menu {
+    gap: 0.2rem;
+    padding: 0.35rem 0.35rem 1rem;
+    list-style: none;
+}
+
+/* Section Headers (e.g., "Main", "Utilities") */
+.sidebar-menu .nav-header {
+    margin: 1.05rem 0 0.45rem;
+    padding: 0 0.95rem;
+    font-size: 0.64rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(159, 219, 243, 0.9);
+}
+
+/* Level 1 Navigation Items */
+.sidebar-menu > .nav-item {
+    margin-bottom: 0.18rem;
+}
+
+.sidebar-menu > .nav-item > .nav-link {
+    padding: 0.78rem 0.92rem;
+    border-radius: 0.95rem;
+    margin: 0 0.28rem;
+    font-weight: 600;
+    background: rgba(255, 255, 255, 0.018);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.025);
+    transition: transform 0.16s ease, background 0.16s ease, box-shadow 0.16s ease;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #fff;
+}
+
+.sidebar-menu > .nav-item > .nav-link > .nav-icon {
+    font-size: 0.95rem;
+    margin-right: 0.6rem;
+    color: rgba(159, 219, 243, 0.9);
+}
+
+/* --- Submenu (Treeview) Shared Styles --- */
+.sidebar-menu .nav-treeview {
+    list-style: none;
+    padding-left: 0;
+    display: none; /* Controlled by AdminLTE JS */
+}
+
+.nav-item.menu-open > .nav-treeview {
+    display: block;
+}
+
+/* Level 2 Container Styling */
+.sidebar-menu > .nav-item > .nav-treeview {
+    margin: 0.28rem 0.55rem 0.72rem 0.95rem;
+    padding: 0.45rem 0.35rem 0.4rem 0.75rem;
+    border-left: 1px solid rgba(255, 255, 255, 0.06);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.014), rgba(255, 255, 255, 0.008));
+    border-radius: 0 0.9rem 0.9rem 0;
+}
+
+/* Level 3 Container Styling (Nested) */
+.sidebar-menu .nav-treeview .nav-treeview {
+    margin: 0.2rem 0 0.4rem 0.8rem;
+    border-left: 1px solid rgba(159, 219, 243, 0.15);
+    background: transparent;
+    padding-left: 0.5rem;
+}
+
+/* --- Typography & Text Logic --- */
+.sidebar-menu .nav-link > p {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin: 0;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Font Size Hierarchy */
+.sidebar-menu > .nav-item > .nav-link > p { font-size: 0.84rem; }
+.sidebar-menu .nav-treeview .nav-link > p { font-size: 0.78rem; font-weight: 500; }
+.sidebar-menu .nav-treeview .nav-treeview .nav-link > p { font-size: 0.72rem; opacity: 0.85; }
+
+/* --- Arrows (Chevron) Visibility Fix --- */
+.sidebar-menu .nav-link > p > .nav-arrow {
+    margin-left: auto;
+    font-size: 0.75rem;
+    color: rgba(159, 219, 243, 0.9);
+    transition: transform 0.16s ease;
+    flex-shrink: 0; /* Prevents text from squishing the arrow */
+}
+
+/* Level 3 Arrow scaling */
+.sidebar-menu .nav-treeview .nav-treeview .nav-arrow {
+    font-size: 0.65rem;
+}
+
+/* Arrow Rotation when menu is open */
+.sidebar-menu .nav-item.menu-open > .nav-link > p > .nav-arrow {
+    transform: rotate(90deg);
+    color: #fff;
+}
+
+/* --- Hover & Active States --- */
+.sidebar-menu .nav-link:hover {
+    background: linear-gradient(135deg, rgba(159, 219, 243, 0.15), rgba(255, 255, 255, 0.05));
+    box-shadow: inset 0 0 0 1px rgba(32, 201, 151, 0.14);
+    transform: translateX(2px);
+    color: #fff;
+}
+
+.sidebar-menu .nav-item.menu-open > .nav-link,
+.sidebar-menu .nav-link.active {
+    background: linear-gradient(135deg, rgba(159, 219, 243, 0.9), rgba(255, 255, 255, 0.06));
+    box-shadow:
+        inset 0 0 0 1px rgba(32, 201, 151, 0.16),
+        0 0.2rem 0.7rem rgba(32, 201, 151, 0.06);
+    color: #000; /* Dark text on bright active background for contrast */
+}
+
+/* Active State Icon Color */
+.sidebar-menu .nav-link.active > .nav-icon,
+.sidebar-menu .nav-item.menu-open > .nav-link > .nav-icon {
+    color: #000;
+}
+
+/* Submenu Icon Sizes */
+.sidebar-menu .nav-treeview .nav-icon {
+    font-size: 0.8rem;
+    margin-right: 0.45rem;
+    color: rgba(255, 255, 255, 0.7);
+}

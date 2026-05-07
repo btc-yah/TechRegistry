@@ -1,0 +1,85 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Content from "../../layouts/Content.astro";
+
+const pageScript = "/js/pages/converters/csv-json.js";
+
+const sampleCsv = `id,name,status
+101,TechRegistry,active
+102,UI Toolkit,draft`;
+
+const sampleJson = `[
+  {
+    "id": "101",
+    "name": "TechRegistry",
+    "status": "active"
+  },
+  {
+    "id": "102",
+    "name": "UI Toolkit",
+    "status": "draft"
+  }
+]`;
+---
+
+<Layout title="CSV and JSON | TechRegistry">
+	<Content title="CSV and JSON" titleTag="Converter" starCount="5.2k stars" usageCount="8.3k uses today" version="v2.7.1" statusText="All Systems Operational" freeLabel="100% Free" privacyLabel="Client-Side Only" breadcrumbs={[{ label: "Home", href: "/" }, { label: "CSV and JSON" }]}>
+		<div class="tool-page-shell">
+			<div class="card">
+				<div class="card-body">
+					<div class="tool-toolbar">
+						<button id="load-sample" class="btn btn-outline-light btn-sm" type="button">Load Sample</button>
+						<button id="clear-input" class="btn btn-outline-secondary btn-sm" type="button">Clear</button>
+						<button id="convert-csv-json" class="btn btn-primary btn-sm" type="button">Convert</button>
+						<button id="swap-direction" class="btn btn-outline-warning btn-sm" type="button">Swap</button>
+						<button id="copy-output" class="btn btn-outline-info btn-sm" type="button">Copy Output</button>
+					</div>
+
+					<div class="tool-field-grid mt-3 mb-3">
+						<div>
+							<label for="conversion-direction" class="form-label">Direction</label>
+							<select id="conversion-direction" class="form-select">
+								<option value="csv-to-json">CSV to JSON</option>
+								<option value="json-to-csv">JSON to CSV</option>
+							</select>
+						</div>
+					</div>
+
+					<div class="tool-editors">
+						<div>
+							<div class="tool-label-row">
+								<label for="converter-input" class="form-label mb-0">Input</label>
+								<span class="text-body-secondary">Paste CSV rows or a JSON array</span>
+							</div>
+							<textarea id="converter-input" class="form-control tool-code-input js-clipboard-source">{sampleCsv}</textarea>
+						</div>
+						<div>
+							<div class="tool-label-row">
+								<label class="form-label mb-0">Output</label>
+								<span class="text-body-secondary">Converted content appears here</span>
+							</div>
+							<pre id="converter-output" class="tool-code-output">{sampleJson}</pre>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="card tool-details-card">
+				<div class="card-header"><h3 class="card-title">About This CSV and JSON Converter</h3></div>
+				<div class="card-body">
+					<p>This CSV and JSON converter is designed for developers, analysts, and QA teams who regularly move data between spreadsheet-style rows and structured JSON arrays.</p>
+					<p>It is useful for API mocks, import/export flows, sample datasets, test fixtures, admin exports, and quick transformations when you need browser-side conversion without external tooling.</p>
+					<ul class="tool-detail-list">
+						<li>Converts CSV rows into JSON arrays and back again.</li>
+						<li>Supports quick direction changes with content swapping.</li>
+						<li>Helpful for testing, migration prep, and data cleanup.</li>
+					</ul>
+					<div class="tool-points"><a class="tool-point" href="https://www.papaparse.com/" target="_blank" rel="noreferrer"><i class="fa-solid fa-link"></i>Powered by Papa Parse</a></div>
+				</div>
+			</div>
+		</div>
+	</Content>
+</Layout>
+
+<div hidden data-csv-json-config data-sample-csv={encodeURIComponent(sampleCsv)} data-sample-json={encodeURIComponent(sampleJson)}></div>
+<script type="module" src={pageScript}></script>

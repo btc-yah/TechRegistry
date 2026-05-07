@@ -1,0 +1,116 @@
+<nav class="navbar navbar-expand bg-light-subtle">
+	<div class="container-fluid">
+		<ul class="navbar-nav">
+			<li class="nav-item">
+				<a class="nav-link" data-lte-toggle="sidebar" href="#" role="button">
+					<i class="bi bi-list"></i>
+				</a>
+			</li>
+			<li class="nav-item d-none d-md-block"><a href="/" class="nav-link">Home</a></li>
+			<li class="nav-item d-none d-lg-block">
+				<span class="nav-link text-secondary small" id="nav-current-date"></span>
+			</li>
+		</ul>
+
+		<ul class="navbar-nav ms-auto">
+			<!-- Task Notifications -->
+			<li class="nav-item dropdown notifications-menu">
+				<a class="nav-link" data-bs-toggle="dropdown" href="#">
+					<i class="bi bi-bell-fill"></i>
+					<span class="navbar-badge badge text-bg-warning d-none" id="nav-task-badge">0</span>
+				</a>
+				<div class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
+					<span class="dropdown-item dropdown-header" id="nav-task-header">0 Notifications</span>
+					<div class="dropdown-divider"></div>
+					<div id="nav-task-list">
+						<!-- Tasks will be injected here -->
+						<div class="dropdown-item text-center small text-secondary py-3">No upcoming tasks</div>
+					</div>
+					<div class="dropdown-divider"></div>
+					<a href="/utilities/misc/task-handler" class="dropdown-item dropdown-footer">View All Tasks</a>
+				</div>
+			</li>
+			
+			<li class="nav-item">
+				<a class="nav-link" href="#" data-lte-toggle="fullscreen">
+					<i data-lte-icon="maximize" class="bi bi-arrows-fullscreen"></i>
+					<i data-lte-icon="minimize" class="bi bi-fullscreen-exit" style="display: none"></i>
+				</a>
+			</li>
+		</ul>
+	</div>
+</nav>
+
+<script is:inline>
+	const TASK_HANDLER_EVENTS_KEY = globalThis.TechRegistryStorageKeys?.taskHandlerEvents || 'task-handler-events';
+	const navbarStorage = globalThis.TechRegistryStorage;
+
+	/**
+	 * Navbar Dynamic Logic
+	 * Updates clock and fetches tasks from LocalStorage
+	 */
+	function initNavbarLogic() {
+		const $dateEl = document.getElementById('nav-current-date');
+		const $badge = document.getElementById('nav-task-badge');
+		const $header = document.getElementById('nav-task-header');
+		const $list = document.getElementById('nav-task-list');
+
+		// 1. Update Clock
+		function updateClock() {
+			if (!$dateEl) return;
+			const now = new Date();
+			$dateEl.innerText = now.toLocaleDateString(undefined, { 
+				weekday: 'short', month: 'short', day: 'numeric', 
+				hour: '2-digit', minute: '2-digit' 
+			});
+		}
+		setInterval(updateClock, 10000);
+		updateClock();
+
+		// 2. Fetch Tasks from Task Handler Storage
+		function syncNotifications() {
+			if (!$list) return;
+			
+			try {
+				const tasks = navbarStorage?.getJson(TASK_HANDLER_EVENTS_KEY, []) || [];
+				const today = new Date().toISOString().split('T')[0];
+				
+				// Filter for tasks happening today or in the future
+				const upcoming = tasks
+					.filter(t => t.endDate >= today)
+					.sort((a, b) => a.startDate.localeCompare(b.startDate))
+					.slice(0, 5);
+
+				if (upcoming.length > 0) {
+					$badge.innerText = upcoming.length;
+					$badge.classList.remove('d-none');
+					$header.innerText = `${upcoming.length} Upcoming Tasks`;
+					
+					$list.innerHTML = upcoming.map(task => `
+						<a href="/utilities/misc/task-handler" class="dropdown-item">
+							<i class="bi bi-calendar-check me-2 text-primary"></i> 
+							<span class="text-truncate d-inline-block" style="max-width: 150px;">${task.title}</span>
+							<span class="float-end text-secondary fs-7">${task.startTime || 'All Day'}</span>
+						</a>
+					`).join('<div class="dropdown-divider"></div>');
+				} else {
+					$badge.classList.add('d-none');
+					$header.innerText = 'No Notifications';
+					$list.innerHTML = '<div class="dropdown-item text-center small text-secondary py-3">No upcoming tasks</div>';
+				}
+			} catch (e) {
+				console.error("Failed to sync navbar notifications", e);
+			}
+		}
+
+		syncNotifications();
+		// Re-sync when storage changes (e.g. from another tab or task-handler page)
+		window.addEventListener('storage', (e) => {
+			if (e.key === TASK_HANDLER_EVENTS_KEY) syncNotifications();
+		});
+	}
+
+	document.addEventListener('astro:page-load', initNavbarLogic);
+	if (document.readyState !== 'loading') initNavbarLogic();
+	else document.addEventListener('DOMContentLoaded', initNavbarLogic);
+</script>

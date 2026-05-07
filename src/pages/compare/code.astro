@@ -1,0 +1,134 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Content from "../../layouts/Content.astro";
+
+const pageScript = "/js/pages/compare/code.js";
+
+const sampleLeft = `export function buildUserSummary(user) {
+  const parts = [];
+
+  parts.push("User Summary");
+  parts.push("------------");
+  parts.push("Id: " + user.id);
+  parts.push("Name: " + user.firstName + " " + user.lastName);
+  parts.push("Email: " + user.email);
+  parts.push("Status: " + (user.isActive ? "Active" : "Inactive"));
+
+  if (user.roles && user.roles.length > 0) {
+    parts.push("Roles: " + user.roles.join(", "));
+  }
+
+  if (user.team) {
+    parts.push("Team: " + user.team);
+  }
+
+  if (user.lastLogin) {
+    parts.push("Last Login: " + user.lastLogin);
+  }
+
+  return parts.join("\\n");
+}
+
+export function filterActiveUsers(users) {
+  return users.filter(function (user) {
+    return user.isActive === true;
+  });
+}`;
+
+const sampleRight = `export function buildUserSummary(user) {
+  const lines = [];
+
+  lines.push("User Summary");
+  lines.push("============");
+  lines.push(\`Id: \${user.id}\`);
+  lines.push(\`Name: \${user.firstName} \${user.lastName}\`);
+  lines.push(\`Email: \${user.email}\`);
+  lines.push(\`Status: \${user.isActive ? "Active" : "Inactive"}\`);
+
+  if (Array.isArray(user.roles) && user.roles.length > 0) {
+    lines.push(\`Roles: \${user.roles.join(", ")}\`);
+  }
+
+  if (user.team) {
+    lines.push(\`Team: \${user.team}\`);
+  }
+
+  if (user.lastLogin) {
+    lines.push(\`Last Login: \${user.lastLogin}\`);
+  }
+
+  if (user.flags?.includes("beta")) {
+    lines.push("Flags: beta");
+  }
+
+  return lines.join("\\n");
+}
+
+export function filterActiveUsers(users) {
+  return users.filter((user) => user.isActive);
+}
+
+export function sortUsersByLastName(users) {
+  return [...users].sort((left, right) => left.lastName.localeCompare(right.lastName));
+}`;
+---
+
+<Layout title="Compare Code | TechRegistry">
+	<Content
+		title="Compare Code"
+		titleTag="Diff Tool"
+		starCount="5.3k stars"
+		usageCount="8.8k uses today"
+		version="v2.7.1"
+		statusText="All Systems Operational"
+		freeLabel="100% Free"
+		privacyLabel="Client-Side Only"
+		poweredBy="Monaco Editor and diff"
+		breadcrumbs={[
+			{ label: "Home", href: "/" },
+			{ label: "Compare Code" },
+		]}
+	>
+		<div class="container-fluid">
+			<div class="card">
+				<div class="card-body">
+					<div class="d-flex flex-wrap gap-2 mb-3">
+						<button id="load-sample" class="btn btn-outline-light btn-sm" type="button">Load Sample</button>
+						<button id="clear-input" class="btn btn-outline-secondary btn-sm" type="button">Clear</button>
+						<button id="copy-output" class="btn btn-outline-info btn-sm" type="button">Copy Diff</button>
+					</div>
+
+					<div class="d-flex align-items-center justify-content-between mb-3 mt-3">
+						<label class="form-label mb-0">Live Diff Editor</label>
+						<div class="form-check m-0 small">
+							<input class="form-check-input" type="checkbox" id="ignore-trailing-space" checked />
+							<label class="form-check-label text-body-secondary small" for="ignore-trailing-space">
+								Ignore trailing whitespace
+							</label>
+						</div>
+					</div>
+
+				<div id="code-output" class="border rounded bg-dark" style="height: 600px; width: 100%;"></div>
+				</div>
+			</div>
+
+			<div class="card mt-4">
+				<div class="card-header"><h3 class="card-title">About This Code Compare Tool</h3></div>
+				<div class="card-body">
+					<p>This code compare tool is built for developers who want a fast side-by-side diff for snippets, refactors, generated output, test fixtures, and review notes without opening a full IDE diff flow.</p>
+					<p>Because both panes are editable inside Monaco, it works well for quick experimentation, visual review of changes, and small patch validation before sharing or committing updates.</p>
+					<ul class="list-group list-group-flush border-top-0">
+						<li class="list-group-item bg-transparent px-0 border-secondary-subtle">Good for JavaScript, TypeScript, SQL, markup, and generic code.</li>
+						<li class="list-group-item bg-transparent px-0 border-secondary-subtle">Highlights changed blocks while you type.</li>
+						<li class="list-group-item bg-transparent px-0 border-secondary-subtle">Can copy a unified diff for review or sharing.</li>
+					</ul>
+
+				</div>
+			</div>
+		</div>
+	</Content>
+</Layout>
+
+<div hidden data-code-compare-config data-sample-left={encodeURIComponent(sampleLeft)} data-sample-right={encodeURIComponent(sampleRight)}></div>
+
+<script type="module" src={pageScript}></script>

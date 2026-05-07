@@ -1,0 +1,77 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Content from "../../layouts/Content.astro";
+
+const pageScript = "/js/pages/converters/properties-yaml.js";
+
+const sampleProperties = `app.name=TechRegistry
+app.enabled=true
+app.port=3000`;
+
+const sampleYaml = `app:
+  name: TechRegistry
+  enabled: true
+  port: 3000`;
+---
+
+<Layout title="Properties and YAML | TechRegistry">
+	<Content title="Properties and YAML" titleTag="Converter" starCount="4.9k stars" usageCount="7.6k uses today" version="v2.7.1" statusText="All Systems Operational" freeLabel="100% Free" privacyLabel="Client-Side Only" breadcrumbs={[{ label: "Home", href: "/" }, { label: "Properties and YAML" }]}>
+		<div class="tool-page-shell">
+			<div class="card">
+				<div class="card-body">
+					<div class="tool-toolbar">
+						<button id="load-sample" class="btn btn-outline-light btn-sm" type="button">Load Sample</button>
+						<button id="clear-input" class="btn btn-outline-secondary btn-sm" type="button">Clear</button>
+						<button id="convert-properties-yaml" class="btn btn-primary btn-sm" type="button">Convert</button>
+						<button id="swap-direction" class="btn btn-outline-warning btn-sm" type="button">Swap</button>
+						<button id="copy-output" class="btn btn-outline-info btn-sm" type="button">Copy Output</button>
+					</div>
+
+					<div class="tool-field-grid mt-3 mb-3">
+						<div>
+							<label for="conversion-direction" class="form-label">Direction</label>
+							<select id="conversion-direction" class="form-select">
+								<option value="properties-to-yaml">Properties to YAML</option>
+								<option value="yaml-to-properties">YAML to Properties</option>
+							</select>
+						</div>
+					</div>
+
+					<div class="tool-editors">
+						<div>
+							<div class="tool-label-row">
+								<label for="converter-input" class="form-label mb-0">Input</label>
+								<span class="text-body-secondary">Paste Java properties or YAML</span>
+							</div>
+							<textarea id="converter-input" class="form-control tool-code-input js-clipboard-source">{sampleProperties}</textarea>
+						</div>
+						<div>
+							<div class="tool-label-row">
+								<label class="form-label mb-0">Output</label>
+								<span class="text-body-secondary">Converted content appears here</span>
+							</div>
+							<pre id="converter-output" class="tool-code-output">{sampleYaml}</pre>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="card tool-details-card">
+				<div class="card-header"><h3 class="card-title">About This Properties and YAML Converter</h3></div>
+				<div class="card-body">
+					<p>This Properties and YAML converter helps teams move between classic Java-style `.properties` files and nested YAML documents when updating app settings, service configs, or deployment templates.</p>
+					<p>It is especially helpful for backend services, Spring-style configuration, environment setup, and migration work where the same configuration needs to be represented in different formats.</p>
+					<ul class="tool-detail-list">
+						<li>Converts dotted properties into nested YAML structures.</li>
+						<li>Can flatten YAML back into key-value properties form.</li>
+						<li>Useful for config migration and environment maintenance.</li>
+					</ul>
+					<div class="tool-points"><a class="tool-point" href="https://github.com/nodeca/js-yaml" target="_blank" rel="noreferrer"><i class="fa-solid fa-link"></i>Powered by js-yaml</a><span class="tool-point"><i class="fa-solid fa-code"></i>Browser-side JS mapping</span></div>
+				</div>
+			</div>
+		</div>
+	</Content>
+</Layout>
+
+<div hidden data-properties-yaml-config data-sample-properties={encodeURIComponent(sampleProperties)} data-sample-yaml={encodeURIComponent(sampleYaml)}></div>
+<script type="module" src={pageScript}></script>

@@ -1,0 +1,89 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Content from "../../layouts/Content.astro";
+
+const pageScript = "/js/pages/utilities/converter/time.js";
+---
+
+<Layout title="Time Converter | TechRegistry">
+	<Content
+		title="Time Converter"
+		titleTag="Utility"
+		breadcrumbs={[
+			{ label: "Home", href: "/" },
+			{ label: "Time Converter" },
+		]}
+	>
+		<div class="tool-page-shell simple-converter-page">
+			<!-- 🌍 CLOCKS -->
+			<div class="card simple-converter-shell mb-3">
+				<div class="card-body">
+					<div
+						class="d-flex justify-content-between text-center flex-wrap"
+					>
+						<div class="clock-box">
+							<h6>India</h6>
+							<div id="clock-ist" class="clock-time"></div>
+						</div>
+
+						<div class="clock-box">
+							<h6>New York</h6>
+							<div id="clock-ny" class="clock-time"></div>
+						</div>
+
+						<div class="clock-box">
+							<h6>London</h6>
+							<div id="clock-london" class="clock-time"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- 🌐 TIMEZONE CONVERTER -->
+			<div class="card simple-converter-shell">
+				<div class="card-body">
+					<div class="simple-converter-actions">
+						<button
+							id="time-swap"
+							class="btn btn-outline-warning btn-sm">Swap</button
+						>
+						<button id="time-run" class="btn btn-primary btn-sm"
+							>Convert</button
+						>
+					</div>
+
+					<div class="simple-converter-grid mt-3">
+						<div>
+							<label class="form-label">From:</label>
+							<input
+								id="time-value"
+								type="datetime-local"
+								class="form-control simple-converter-input"
+							/>
+							<select
+								id="time-from"
+								class="form-select simple-converter-list mt-3"
+								size="6"></select>
+						</div>
+
+						<div>
+							<label class="form-label">To:</label>
+							<input
+								id="time-result"
+								type="text"
+								readonly
+								class="form-control simple-converter-input"
+							/>
+							<select
+								id="time-to"
+								class="form-select simple-converter-list mt-3"
+								size="6"></select>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</Content>
+</Layout>
+
+<script type="module" src={pageScript}></script>

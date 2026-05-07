@@ -1,0 +1,85 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Content from "../../layouts/Content.astro";
+
+const pageScript = "/js/pages/formatters/sql.js";
+
+const sampleInput = `select u.id,u.name,o.total from users u left join orders o on o.user_id=u.id where u.status='active' and o.total > 500 order by o.total desc`;
+const sampleOutput = `SELECT
+  u.id,
+  u.name,
+  o.total
+FROM users u
+LEFT JOIN orders o
+  ON o.user_id = u.id
+WHERE u.status = 'active'
+  AND o.total > 500
+ORDER BY o.total DESC`;
+---
+
+<Layout title="Format SQL | TechRegistry">
+	<Content title="Format SQL" titleTag="Formatter" starCount="5.8k stars" usageCount="9.1k uses today" version="v2.7.1" statusText="All Systems Operational" freeLabel="100% Free" privacyLabel="Client-Side Only" poweredBy="sql-formatter" poweredByLink="https://github.com/sql-formatter-org/sql-formatter" breadcrumbs={[{ label: "Home", href: "/" }, { label: "Format SQL" }]}>
+		<div class="tool-page-shell">
+			<div class="card">
+				<div class="card-body">
+					<div class="tool-toolbar">
+						<button id="load-sample" class="btn btn-outline-light btn-sm" type="button">Load Sample</button>
+						<button id="clear-input" class="btn btn-outline-secondary btn-sm" type="button">Clear</button>
+						<button id="format-sql" class="btn btn-primary btn-sm" type="button">Format SQL</button>
+						<button id="copy-output" class="btn btn-outline-info btn-sm tool-toolbar-copy" type="button">Copy Output</button>
+					</div>
+
+					<div class="tool-field-grid mt-3 mb-3">
+						<div>
+							<label for="sql-dialect" class="form-label">Dialect</label>
+							<select id="sql-dialect" class="form-select">
+								<option value="sql">Standard SQL</option>
+								<option value="mysql">MySQL</option>
+								<option value="postgresql">PostgreSQL</option>
+								<option value="tsql">T-SQL</option>
+							</select>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" id="uppercase-keywords" checked />
+							<label class="form-check-label" for="uppercase-keywords">Uppercase reserved keywords</label>
+						</div>
+					</div>
+
+					<div class="tool-editors">
+						<div>
+							<div class="tool-label-row">
+								<label for="formatter-input" class="form-label mb-0">Input SQL</label>
+								<span class="text-body-secondary">Paste compressed queries or statements</span>
+							</div>
+							<textarea id="formatter-input" class="form-control tool-code-input js-clipboard-source">{sampleInput}</textarea>
+						</div>
+						<div>
+							<div class="tool-label-row">
+								<label class="form-label mb-0">Formatted Output</label>
+								<span class="text-body-secondary">Readable SQL appears here</span>
+							</div>
+							<pre id="formatter-output" class="tool-code-output">{sampleOutput}</pre>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="card tool-details-card">
+				<div class="card-header"><h3 class="card-title">About This SQL Formatter</h3></div>
+				<div class="card-body">
+					<p>This SQL formatter helps developers and analysts clean up long queries before debugging, reviewing joins, or sharing statements with team members.</p>
+					<p>It works especially well for copied dashboard queries, generated ORM output, migration snippets, and ad hoc reporting logic that needs visual structure.</p>
+					<ul class="tool-detail-list">
+						<li>Supports common SQL dialect formatting from one editor.</li>
+						<li>Makes joins, filters, and ordering easier to scan.</li>
+						<li>Useful for debugging, review comments, and query cleanup.</li>
+					</ul>
+
+				</div>
+			</div>
+		</div>
+	</Content>
+</Layout>
+
+<div hidden data-sql-formatter-config data-sample-input={encodeURIComponent(sampleInput)} data-sample-output={encodeURIComponent(sampleOutput)}></div>
+<script type="module" src={pageScript}></script>

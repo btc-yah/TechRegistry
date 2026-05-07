@@ -1,0 +1,133 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Content from "../../layouts/Content.astro";
+
+const pageScript = "/js/pages/porters/json-to-go.js";
+
+const sampleJson = `{
+  "id": 101,
+  "name": "TechRegistry",
+  "isActive": true,
+  "tags": ["astro", "golang"],
+  "owner": {
+    "firstName": "Thila",
+    "lastName": "Dev"
+  }
+}`;
+
+const sampleGo = `type RootObject struct {
+    Id       int      \`json:"id"\`
+    Name     string   \`json:"name"\`
+    IsActive bool     \`json:"isActive"\`
+    Tags     []string \`json:"tags"\`
+    Owner    Owner    \`json:"owner"\`
+}
+
+type Owner struct {
+    FirstName string \`json:"firstName"\`
+    LastName  string \`json:"lastName"\`
+}`;
+---
+
+<Layout title="JSON to Go (Structs) | TechRegistry">
+	<Content
+		title="JSON to Go (Structs)"
+		titleTag="Converter"
+		starCount="5.7k stars"
+		usageCount="8.6k uses today"
+		version="v2.7.1"
+		statusText="All Systems Operational"
+		freeLabel="100% Free"
+		privacyLabel="Client-Side Only"
+		breadcrumbs={[
+			{ label: "Home", href: "/" },
+			{ label: "JSON to Go (Structs)" },
+		]}
+	>
+		<div class="tool-page-shell">
+			<div class="card">
+				<div class="card-body">
+					<div class="tool-toolbar">
+						<button id="load-sample" class="btn btn-outline-light btn-sm" type="button">Load Sample</button>
+						<button id="clear-input" class="btn btn-outline-secondary btn-sm" type="button">Clear</button>
+						<button id="generate-go" class="btn btn-primary btn-sm" type="button">Generate Go</button>
+						<button id="copy-output" class="btn btn-outline-info btn-sm" type="button">Copy Output</button>
+					</div>
+
+					<div class="tool-field-grid mt-3 mb-3">
+						<div>
+							<label for="struct-name" class="form-label">Root Struct</label>
+							<input id="struct-name" class="form-control" value="RootObject" placeholder="RootObject" />
+						</div>
+						<div>
+							<label for="package-name" class="form-label">Package Name</label>
+							<input id="package-name" class="form-control" value="models" placeholder="models" />
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" id="include-json-tags" checked />
+							<label class="form-check-label" for="include-json-tags">Include JSON tags</label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" id="use-pointer-fields" />
+							<label class="form-check-label" for="use-pointer-fields">Use pointers for null values</label>
+						</div>
+					</div>
+
+					<div class="tool-editors">
+						<div>
+							<div class="tool-label-row">
+								<label for="json-input" class="form-label mb-0">JSON Input</label>
+								<span class="text-body-secondary">Paste a valid JSON object or array</span>
+							</div>
+							<textarea id="json-input" class="form-control tool-code-input js-clipboard-source">{sampleJson}</textarea>
+						</div>
+
+						<div>
+							<div class="tool-label-row">
+								<label class="form-label mb-0">Generated Go</label>
+								<span class="text-body-secondary">Struct output appears here</span>
+							</div>
+							<pre id="go-output" class="tool-code-output">{sampleGo}</pre>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="card tool-details-card">
+				<div class="card-header">
+					<h3 class="card-title">About This JSON to Go Tool</h3>
+				</div>
+				<div class="card-body">
+					<p>
+						Convert raw JSON into readable Go structs for APIs, fixtures, contract modeling, and backend prototypes.
+						The generator infers nested structs, arrays, primitive types, and nullable fields directly in the browser.
+					</p>
+					<p>
+						This page is useful when you want a quick starting point for request and response models, mock payloads,
+						internal DTOs, or seed data structures without hand-writing every field. You can tune the root struct,
+						package name, JSON tag output, and null-handling style before generating.
+					</p>
+					<ul class="tool-detail-list">
+						<li>Handles nested objects, arrays, booleans, numbers, and strings.</li>
+						<li>Supports JSON tags and pointer fields for null samples.</li>
+						<li>Works entirely client-side with a page-owned script.</li>
+						<li>Great for `encoding/json` model scaffolding and quick API work.</li>
+					</ul>
+					<div class="tool-points"><span class="tool-point"><i class="fa-solid fa-code"></i>Powered by browser-side JS</span></div>
+					<p>
+						If you are shaping DTOs, request models, response types, or fixture structs, this page gives you a quick first pass that can be refined inside your Go codebase after the structure is confirmed.
+					</p>
+				</div>
+			</div>
+		</div>
+	</Content>
+</Layout>
+
+<div
+	hidden
+	data-json-to-go-config
+	data-sample-json={encodeURIComponent(sampleJson)}
+	data-sample-go={encodeURIComponent(sampleGo)}
+></div>
+
+<script type="module" src={pageScript}></script>

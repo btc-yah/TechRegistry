@@ -1,0 +1,2 @@
+import { initInteractiveToolPage } from "../../tools/tool-suite.js";
+initInteractiveToolPage({ toolId: "meta-tag-generator", detailMode: "html", fields: [{ id: "title", value: "TechRegistry Tools" }, { id: "description", value: "Developer tools for compare, convert, validate, and generate workflows." }, { id: "url", value: "https://techregistry.dev/tools" }, { id: "image", value: "https://techregistry.dev/og/tools.png" }, { id: "siteName", value: "TechRegistry" }] });

@@ -1,0 +1,537 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import Content from "../../../layouts/Content.astro";
+
+const pageScript = "/js/pages/utilities/games/chess.js";
+---
+
+<Layout title="Chess | TechRegistry">
+	<Content
+		title="Chess"
+		titleTag="Strategy Game"
+		version="v1.0.0"
+		statusText="Ready to Play"
+		privacyLabel="Browser Session Only"
+		poweredBy="chessboard.js + chess.js"
+		poweredByLink="https://chessboardjs.com/"
+		breadcrumbs={[{ label: "Home", href: "/" }, { label: "Chess" }]}
+	>
+		<div class="tool-page-shell chess-page-shell">
+			<div class="card chess-card">
+				<div class="card-body chess-card-body">
+					
+					<div class="chess-layout">
+						<section class="chess-board-panel">
+							<div class="chess-toolbar">
+								<div class="chess-toolbar-copy">
+									<div class="chess-toolbar-label">
+										Board Controls<span class="chess-eyebrow ms-2">Interactive board</span>
+									</div>
+									<p class="mb-0 text-body-secondary">
+										Use the action buttons to explore a line
+										or restart fast.
+									</p>
+								</div>
+								<div class="chess-toolbar-actions">
+									<button
+										class="btn btn-outline-light btn-sm"
+										id="chessNewGame"
+										type="button"
+									>
+										New Game
+									</button>
+									<button
+										class="btn btn-outline-secondary btn-sm"
+										id="chessUndoMove"
+										type="button"
+									>
+										Undo
+									</button>
+									<button
+										class="btn btn-outline-secondary btn-sm"
+										id="chessFlipBoard"
+										type="button"
+									>
+										Flip Board
+									</button>
+									<button
+										class="btn btn-primary btn-sm"
+										id="chessLoadOpening"
+										type="button"
+									>
+										Load Opening
+									</button>
+								</div>
+							</div>
+
+							<div class="chess-board-stage">
+								<div
+									class="chess-board-loading"
+									id="chessLoadingState"
+								>
+									<div
+										class="spinner-border text-primary"
+										role="status"
+										aria-hidden="true"
+									>
+									</div>
+									<p class="mb-0">
+										Loading the chess board...
+									</p>
+								</div>
+								<div
+									id="chessBoard"
+									class="chess-board-surface"
+									aria-label="Interactive chess board"
+								>
+								</div>
+							</div>
+
+							<div
+								class="chess-message-bar"
+								id="chessStatusMessage"
+							>
+								White to move. Drag a piece to begin.
+							</div>
+						</section>
+
+						<aside class="chess-side-panel">
+							<div class="chess-side-card">
+								<div class="chess-side-head">
+									<h4 class="mb-0">Game Settings</h4>
+								</div>
+								<div class="chess-settings-grid">
+									<div>
+										<label
+											class="form-label"
+											for="chessModeSelect"
+											>Opponent</label
+										>
+										<select
+											class="form-select"
+											id="chessModeSelect"
+										>
+											<option value="local"
+												>Local Player</option
+											>
+											<option value="ai"
+												>Computer AI</option
+											>
+										</select>
+									</div>
+									<div>
+										<label
+											class="form-label"
+											for="chessSideSelect"
+											>Your Side</label
+										>
+										<select
+											class="form-select"
+											id="chessSideSelect"
+										>
+											<option value="white">White</option>
+											<option value="black">Black</option>
+										</select>
+									</div>
+									<div>
+										<label
+											class="form-label"
+											for="chessDifficultySelect"
+											>AI Style</label
+										>
+										<select
+											class="form-select"
+											id="chessDifficultySelect"
+										>
+											<option value="balanced"
+												>Balanced</option
+											>
+											<option value="chaos"
+												>Fast / Random</option
+											>
+										</select>
+									</div>
+									<div class="d-flex align-items-end">
+										<button
+											class="btn btn-primary w-100"
+											id="chessApplySettings"
+											type="button"
+										>
+											Apply Settings
+										</button>
+									</div>
+								</div>
+								<div
+									class="chess-setting-note"
+									id="chessModeSummary"
+								>
+									Local two-player mode is active.
+								</div>
+							</div>
+
+							<div class="chess-side-card">
+								<div class="chess-side-head">
+									<h4 class="mb-0">Game Snapshot</h4>
+									<span
+										class="chess-state-badge"
+										id="chessStateBadge">Opening</span
+									>
+								</div>
+								<div class="chess-facts-grid">
+									<div class="chess-fact">
+										<span>Turn</span>
+										<strong id="chessTurnLabel"
+											>White</strong
+										>
+									</div>
+									<div class="chess-fact">
+										<span>Orientation</span>
+										<strong id="chessOrientationLabel"
+											>White</strong
+										>
+									</div>
+									<div class="chess-fact">
+										<span>Moves</span>
+										<strong id="chessMoveCount">0</strong>
+									</div>
+									<div class="chess-fact">
+										<span>Last Move</span>
+										<strong id="chessLastMove">None</strong>
+									</div>
+								</div>
+							</div>
+
+							<div class="chess-side-card">
+								<div class="chess-side-head">
+									<h4 class="mb-0">Move History</h4>
+									<span class="text-body-secondary"
+										>SAN notation</span
+									>
+								</div>
+								<ol class="chess-move-list" id="chessMoves">
+								</ol>
+							</div>
+						</aside>
+					</div>
+				</div>
+			</div>
+		</div>
+	</Content>
+</Layout>
+
+<script type="module" src={pageScript}></script>
+
+<style>
+	.chess-card {
+		border: 1px solid rgba(255, 255, 255, 0.08);
+		background:
+			radial-gradient(
+				circle at top left,
+				rgba(227, 160, 8, 0.16),
+				transparent 28%
+			),
+			radial-gradient(
+				circle at bottom right,
+				rgba(13, 110, 253, 0.14),
+				transparent 32%
+			),
+			linear-gradient(
+				145deg,
+				rgba(17, 24, 39, 0.98),
+				rgba(9, 14, 26, 0.96)
+			);
+		box-shadow: 0 28px 60px rgba(0, 0, 0, 0.24);
+		overflow: hidden;
+	}
+
+	.chess-card-body {
+		padding: 1.5rem;
+		color: #eef4ff;
+	}
+
+	.chess-hero {
+		display: flex;
+		align-items: flex-start;
+		justify-content: space-between;
+		gap: 1rem;
+		flex-wrap: wrap;
+		margin-bottom: 1.5rem;
+	}
+
+	.chess-eyebrow {
+		display: inline-block;
+		margin-bottom: 0.65rem;
+		padding: 0.35rem 0.75rem;
+		border-radius: 999px;
+		border: 1px solid rgba(236, 193, 75, 0.28);
+		background: rgba(236, 193, 75, 0.12);
+		font-size: 0.75rem;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: #ffd983;
+	}
+
+	.chess-title {
+		font-size: clamp(1.35rem, 2.6vw, 2rem);
+		font-weight: 700;
+		color: #ffffff;
+	}
+
+	.chess-subtitle {
+		max-width: 46rem;
+		color: rgba(238, 244, 255, 0.75);
+	}
+
+	.chess-status-cluster {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.75rem;
+	}
+
+	.chess-pill {
+		min-width: 10rem;
+		padding: 0.85rem 1rem;
+		border-radius: 1rem;
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		background: rgba(255, 255, 255, 0.05);
+		backdrop-filter: blur(14px);
+	}
+
+	.chess-pill-label {
+		display: block;
+		margin-bottom: 0.25rem;
+		font-size: 0.74rem;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		color: rgba(232, 238, 252, 0.62);
+	}
+
+	.chess-layout {
+		display: grid;
+		grid-template-columns: minmax(0, 1.8fr) minmax(17rem, 0.62fr);
+		gap: 1.25rem;
+	}
+
+	.chess-board-panel,
+	.chess-side-card {
+		border: 1px solid rgba(255, 255, 255, 0.08);
+		background: linear-gradient(
+			180deg,
+			rgba(255, 255, 255, 0.05),
+			rgba(255, 255, 255, 0.03)
+		);
+		border-radius: 1.2rem;
+		box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+	}
+
+	.chess-board-panel {
+		padding: 1rem;
+	}
+
+	.chess-toolbar,
+	.chess-side-head {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+		flex-wrap: wrap;
+	}
+
+	.chess-toolbar {
+		margin-bottom: 1rem;
+	}
+
+	.chess-toolbar-label {
+		font-size: 0.82rem;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		color: #9fc5ff;
+		margin-bottom: 0.25rem;
+	}
+
+	.chess-toolbar-actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.65rem;
+	}
+
+	.chess-board-stage {
+		position: relative;
+		min-height: 46rem;
+		padding: 0.9rem;
+		border-radius: 1rem;
+		background:
+			radial-gradient(
+				circle at center,
+				rgba(248, 224, 147, 0.18),
+				transparent 42%
+			),
+			linear-gradient(
+				145deg,
+				rgba(6, 10, 17, 0.95),
+				rgba(22, 29, 43, 0.92)
+			);
+		border: 1px solid rgba(255, 255, 255, 0.08);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.chess-board-loading {
+		position: absolute;
+		inset: 1rem;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: 0.85rem;
+		border-radius: 0.85rem;
+		background:
+			linear-gradient(180deg, rgba(4, 8, 15, 0.7), rgba(4, 8, 15, 0.82)),
+			repeating-linear-gradient(
+				135deg,
+				rgba(255, 255, 255, 0.04),
+				rgba(255, 255, 255, 0.04) 12px,
+				transparent 12px,
+				transparent 24px
+			);
+		color: #eef4ff;
+		z-index: 2;
+		transition:
+			opacity 0.2s ease,
+			visibility 0.2s ease;
+	}
+
+	.chess-board-loading.is-hidden {
+		opacity: 0;
+		visibility: hidden;
+		pointer-events: none;
+	}
+
+	.chess-board-surface {
+		width: min(100%, 48rem);
+		aspect-ratio: 1 / 1;
+		position: relative;
+		z-index: 1;
+	}
+
+	.chess-message-bar {
+		margin-top: 1rem;
+		padding: 0.9rem 1rem;
+		border-radius: 0.95rem;
+		border: 1px solid rgba(86, 156, 255, 0.2);
+		background: rgba(13, 110, 253, 0.12);
+		color: #eef4ff;
+	}
+
+	.chess-side-panel {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
+
+	.chess-side-card {
+		padding: 0.9rem;
+	}
+
+	.chess-settings-grid {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 0.8rem;
+		margin-top: 0.9rem;
+	}
+
+	.chess-setting-note {
+		margin-top: 0.85rem;
+		padding: 0.75rem 0.85rem;
+		border-radius: 0.85rem;
+		background: rgba(13, 110, 253, 0.1);
+		border: 1px solid rgba(86, 156, 255, 0.18);
+		color: #d9e8ff;
+		font-size: 0.9rem;
+	}
+
+	.chess-state-badge {
+		padding: 0.4rem 0.75rem;
+		border-radius: 999px;
+		background: rgba(236, 193, 75, 0.15);
+		border: 1px solid rgba(236, 193, 75, 0.24);
+		color: #ffe39b;
+		font-size: 0.78rem;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+	}
+
+	.chess-facts-grid {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 0.8rem;
+		margin-top: 1rem;
+	}
+
+	.chess-fact {
+		padding: 0.85rem;
+		border-radius: 0.9rem;
+		background: rgba(255, 255, 255, 0.03);
+		border: 1px solid rgba(255, 255, 255, 0.06);
+	}
+
+	.chess-fact span {
+		display: block;
+		margin-bottom: 0.35rem;
+		font-size: 0.76rem;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		color: rgba(232, 238, 252, 0.62);
+	}
+
+	.chess-fact strong {
+		color: #ffffff;
+	}
+
+	.chess-move-list {
+		margin: 0.85rem 0 0;
+		padding-left: 1.2rem;
+		max-height: 13rem;
+		overflow: auto;
+	}
+
+	.chess-move-list li {
+		margin-bottom: 0.55rem;
+		color: var(--bs-body-color);
+	}
+
+	@media (max-width: 1199.98px) {
+		.chess-layout {
+			grid-template-columns: 1fr;
+		}
+
+		.chess-board-stage {
+			min-height: 40rem;
+		}
+	}
+
+	@media (max-width: 767.98px) {
+		.chess-card-body {
+			padding: 1rem;
+		}
+
+		.chess-board-panel,
+		.chess-side-card {
+			padding: 0.9rem;
+		}
+
+		.chess-board-stage {
+			min-height: auto;
+			padding: 0.75rem;
+		}
+
+		.chess-facts-grid {
+			grid-template-columns: 1fr;
+		}
+
+		.chess-settings-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>

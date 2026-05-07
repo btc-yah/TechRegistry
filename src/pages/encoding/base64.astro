@@ -1,0 +1,28 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Content from "../../layouts/Content.astro";
+const pageScript = "/js/pages/encoding/base64.js";
+---
+<Layout title="Base64 Encode and Decode | TechRegistry">
+	<Content title="Base64 Encode and Decode" titleTag="Encoding" starCount="5.7k stars" usageCount="9.6k uses today" version="v2.7.1" statusText="All Systems Operational" freeLabel="100% Free" privacyLabel="Client-Side Only" poweredBy="Web Base64 APIs" poweredByLink="https://developer.mozilla.org/docs/Web/API/Window/btoa" breadcrumbs={[{ label: "Home", href: "/" }, { label: "Base64 Encode and Decode" }]}>
+		<div class="tool-page-shell" id="tool-page-root">
+			<div class="card"><div class="card-body">
+				<div class="tool-toolbar">
+					<button id="tool-load-sample" class="btn btn-outline-light btn-sm" type="button">Load Sample</button>
+					<button id="tool-clear" class="btn btn-outline-secondary btn-sm" type="button">Clear</button>
+					<button id="tool-run" class="btn btn-primary btn-sm" type="button">Convert</button>
+				</div>
+				<div class="tool-field-grid mt-3 mb-3">
+					<div><label class="form-label" for="base64-mode">Mode</label><select id="base64-mode" class="form-select" data-tool-field="mode"><option value="encode">Encode</option><option value="decode">Decode</option></select></div>
+				</div>
+				<div id="tool-status" class="tool-status">Ready.</div>
+				<div class="tool-editors mt-3">
+					<div><div class="tool-label-row"><label for="tool-input" class="form-label mb-0">Input</label><span class="text-body-secondary">Plain text or Base64</span></div><textarea id="tool-input" class="form-control tool-code-input js-clipboard-source"></textarea></div>
+					<div><div class="tool-label-row"><label class="form-label mb-0">Output</label><span class="text-body-secondary">Converted content appears here</span></div><pre id="tool-output" class="tool-code-output"></pre></div>
+				</div>
+			</div></div>
+			<div class="card tool-details-card"><div class="card-header"><h3 class="card-title">About This Base64 Tool</h3></div><div class="card-body"><p>This Base64 encoder and decoder helps when you need to inspect tokens, transport plain text through text-only channels, or decode copied payload fragments quickly in the browser.</p><p>It is useful for debugging request data, embedded assets, config values, and test fixtures without leaving the page.</p><ul class="tool-detail-list"><li>Supports both Base64 encode and decode modes.</li><li>Good for API work, data inspection, and quick conversions.</li><li>Runs client-side for fast, private transformation.</li></ul></div></div>
+		</div>
+	</Content>
+</Layout>
+<script type="module" src={pageScript}></script>

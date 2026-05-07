@@ -1,0 +1,19 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Content from "../../layouts/Content.astro";
+const pageScript = "/js/pages/encoding/unicode.js";
+---
+<Layout title="Unicode Encoder and Decoder | TechRegistry">
+	<Content title="Unicode Encoder and Decoder" titleTag="Encoding" starCount="5.0k stars" usageCount="7.9k uses today" version="v2.7.1" statusText="All Systems Operational" freeLabel="100% Free" privacyLabel="Client-Side Only" poweredBy="browser-side JS" breadcrumbs={[{ label: "Home", href: "/" }, { label: "Unicode Encoder and Decoder" }]}>
+		<div class="tool-page-shell" id="tool-page-root">
+			<div class="card"><div class="card-body">
+				<div class="tool-toolbar"><button id="tool-load-sample" class="btn btn-outline-light btn-sm" type="button">Load Sample</button><button id="tool-clear" class="btn btn-outline-secondary btn-sm" type="button">Clear</button><button id="tool-run" class="btn btn-primary btn-sm" type="button">Convert</button></div>
+				<div class="tool-field-grid mt-3 mb-3"><div><label class="form-label" for="unicode-mode">Mode</label><select id="unicode-mode" class="form-select" data-tool-field="mode"><option value="encode">Text to Unicode</option><option value="decode">Unicode to Text</option></select></div></div>
+				<div id="tool-status" class="tool-status">Ready.</div>
+				<div class="tool-editors mt-3"><div><div class="tool-label-row"><label for="tool-input" class="form-label mb-0">Input</label><span class="text-body-secondary">Text or code points like U+0041 U+1F680</span></div><textarea id="tool-input" class="form-control tool-code-input js-clipboard-source"></textarea></div><div><div class="tool-label-row"><label class="form-label mb-0">Output</label><span class="text-body-secondary">Converted content appears here</span></div><pre id="tool-output" class="tool-code-output"></pre></div></div>
+			</div></div>
+			<div class="card tool-details-card"><div class="card-header"><h3 class="card-title">About This Unicode Tool</h3></div><div class="card-body"><p>This Unicode converter helps inspect code points for text, emoji, and multilingual content while debugging encoding issues or preparing escaped values.</p><p>It is useful for frontend rendering checks, API payload inspection, and character-level troubleshooting.</p><ul class="tool-detail-list"><li>Encodes characters into `U+` code point notation.</li><li>Decodes hexadecimal code points back into readable text.</li><li>Helpful for multilingual and emoji-heavy content.</li></ul></div></div>
+		</div>
+	</Content>
+</Layout>
+<script type="module" src={pageScript}></script>

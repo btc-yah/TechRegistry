@@ -1,0 +1,62 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Content from "../../layouts/Content.astro";
+const pageScript = "/js/pages/encoding/mime.js";
+---
+
+<Layout title="MIME Encoder and Decoder | TechRegistry">
+	<Content title="MIME Encoder and Decoder" titleTag="Encoding" starCount="4.4k stars" usageCount="6.1k uses today" version="v2.7.1" statusText="All Systems Operational" freeLabel="100% Free" privacyLabel="Client-Side Only" poweredBy="browser-side JS" breadcrumbs={[{ label: "Home", href: "/" }, { label: "MIME Encoder and Decoder" }]}>
+		<div class="tool-page-shell" id="tool-page-root">
+			<div class="card">
+				<div class="card-body">
+					<div class="tool-toolbar">
+						<button id="tool-load-sample" class="btn btn-outline-light btn-sm" type="button">Load Sample</button>
+						<button id="tool-clear" class="btn btn-outline-secondary btn-sm" type="button">Clear</button>
+						<button id="tool-run" class="btn btn-primary btn-sm" type="button">Resolve</button>
+					</div>
+
+					<div class="tool-field-grid mt-3 mb-3">
+						<div>
+							<label class="form-label" for="mime-mode">Format</label>
+							<select id="mime-mode" class="form-select" data-tool-field="mode">
+								<option value="extension-to-mime">Extension to MIME type</option>
+								<option value="mime-to-extension">MIME type to extension</option>
+							</select>
+						</div>
+						<div>
+							<label class="form-label" for="tool-input">Value</label>
+							<select id="tool-input" class="form-select js-clipboard-source"></select>
+						</div>
+					</div>
+
+					<div id="tool-status" class="tool-status">Ready.</div>
+
+					<div class="mt-3">
+						<div class="tool-label-row">
+							<label class="form-label mb-0">Resolved Result</label>
+							<span class="text-body-secondary">Selected value mapped as text</span>
+						</div>
+						<div id="tool-output" class="tool-text-result"></div>
+					</div>
+				</div>
+			</div>
+
+			<div class="card tool-details-card">
+				<div class="card-header"><h3 class="card-title">About This MIME Tool</h3></div>
+				<div class="card-body">
+					<p>This MIME type lookup tool maps common file extensions to content types and converts known content types back to their typical file extensions. It is built for quick checks while working with uploads, API responses, download headers, static assets, and browser rendering behavior.</p>
+					<p>Use the format selector to switch between extension to MIME type and MIME type to extension. The value selector includes common web, document, image, audio, video, and archive formats such as JSON, HTML, CSS, JavaScript, XML, CSV, PDF, PNG, JPEG, GIF, SVG, WebP, MP3, MP4, and ZIP.</p>
+					<p>Developers commonly use MIME values in HTTP <code>Content-Type</code> headers, file upload validation, object storage metadata, email attachments, CDN configuration, and backend response handling. This page keeps those lookups fast and readable without leaving the browser.</p>
+					<ul class="tool-detail-list">
+						<li>Resolves popular extensions such as json, html, png, pdf, svg, mp3, mp4, and zip.</li>
+						<li>Converts common MIME types such as application/json, text/html, image/png, and application/pdf back to file extensions.</li>
+						<li>Useful for API debugging, upload forms, download responses, CDN metadata, and HTTP header checks.</li>
+						<li>Runs client-side with a curated mapping for fast private lookups.</li>
+					</ul>
+					<div class="tool-points"><span class="tool-point"><i class="fa-solid fa-code"></i>Powered by browser-side JS</span><span class="tool-point"><i class="fa-solid fa-list-check"></i>Curated MIME mapping</span></div>
+				</div>
+			</div>
+		</div>
+	</Content>
+</Layout>
+<script type="module" src={pageScript}></script>

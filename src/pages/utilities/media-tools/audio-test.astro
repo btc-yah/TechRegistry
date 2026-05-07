@@ -1,0 +1,475 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import Content from "../../../layouts/Content.astro";
+
+const pageScript = "/js/pages/utilities/media-tools/audio-test.js";
+---
+
+<Layout title="Audio Test | TechRegistry">
+	<Content
+		title="Audio Test"
+		titleTag="Speaker and channel tester"
+		starCount="4.9k stars"
+		usageCount="7.6k uses today"
+		version="v2.7.1"
+		statusText="All Systems Operational"
+		freeLabel="100% Free"
+		privacyLabel="Client-Side Only"
+		poweredBy="Web Audio API"
+		poweredByLink="https://developer.mozilla.org/docs/Web/API/Web_Audio_API"
+		breadcrumbs={[{ label: "Home", href: "/" }, { label: "Audio Test" }]}
+	>
+		<div class="tool-page-shell">
+			<div class="audio-boombox card border-0 shadow-lg overflow-hidden">
+				<div class="card-body p-0">
+					<div class="boombox-shell">
+						<div class="boombox-topbar">
+							<div class="brand-pill">
+								<i class="fa-solid fa-radio"></i>
+								<span>TR Stereo Deck</span>
+							</div>
+							<div class="status-cluster">
+								<span class="status-light" id="powerLight"></span>
+								<span class="status-label" id="statusText">Ready</span>
+							</div>
+						</div>
+
+						<div class="boombox-stage">
+							<section class="speaker speaker-left">
+								<div class="speaker-ring ring-outer"></div>
+								<div class="speaker-ring ring-mid"></div>
+								<div class="speaker-ring ring-inner"></div>
+								<div class="speaker-center">L</div>
+							</section>
+
+							<section class="control-console">
+								<div class="console-header">
+									<div>
+										<p class="console-kicker">Speaker diagnostics</p>
+										<h2 class="console-title">Boom Box Test Console</h2>
+									</div>
+									<div class="mini-display">
+										<span class="display-label">Output</span>
+										<strong id="channelReadout">Stereo</strong>
+									</div>
+								</div>
+
+								<div class="source-switcher" role="radiogroup" aria-label="Audio source">
+									<input type="radio" class="btn-check" name="sourceMode" id="sourceTone" value="tone" checked />
+									<label class="btn source-chip" for="sourceTone">Tone</label>
+									<input type="radio" class="btn-check" name="sourceMode" id="sourceFile" value="file" />
+									<label class="btn source-chip" for="sourceFile">Audio File</label>
+								</div>
+
+								<div class="source-panel" id="tonePanel">
+									<div class="row g-3">
+										<div class="col-md-6">
+											<label class="form-label text-uppercase small fw-semibold">Frequency</label>
+											<input type="range" id="frequency" class="form-range tuner-slider" min="20" max="20000" value="440" />
+											<div class="dial-readout"><span id="freqValue">440</span> Hz</div>
+										</div>
+										<div class="col-md-6">
+											<label class="form-label text-uppercase small fw-semibold">Waveform</label>
+											<select id="waveform" class="form-select boombox-select">
+												<option value="sine">Sine</option>
+												<option value="square">Square</option>
+												<option value="triangle">Triangle</option>
+												<option value="sawtooth">Sawtooth</option>
+											</select>
+										</div>
+									</div>
+								</div>
+
+								<div class="source-panel d-none" id="filePanel">
+									<label class="form-label text-uppercase small fw-semibold">Choose audio source</label>
+									<input type="file" id="audioFile" class="form-control boombox-input" accept="audio/*" />
+									<p class="source-hint mb-0">Upload a song, voice clip, or test sample and route it to the left, right, or both speakers.</p>
+								</div>
+
+								<div class="console-grid">
+									<div class="console-block">
+										<label class="form-label text-uppercase small fw-semibold">Volume</label>
+										<input type="range" id="volume" class="form-range tuner-slider" min="0" max="1" step="0.05" value="0.3" />
+										<div class="dial-readout"><span id="volValue">30%</span></div>
+									</div>
+
+									<div class="console-block">
+										<label class="form-label text-uppercase small fw-semibold">Channel Test</label>
+										<div class="channel-buttons" role="group" aria-label="Speaker channel selection">
+											<button type="button" class="btn channel-btn" data-channel="left">Left</button>
+											<button type="button" class="btn channel-btn active" data-channel="stereo">Stereo</button>
+											<button type="button" class="btn channel-btn" data-channel="right">Right</button>
+										</div>
+									</div>
+								</div>
+
+								<div class="transport-row">
+									<button class="btn transport-btn play-btn" id="playBtn" type="button">
+										<i class="fa-solid fa-play"></i>
+										<span>Play Test</span>
+									</button>
+									<button class="btn transport-btn stop-btn" id="stopBtn" type="button">
+										<i class="fa-solid fa-stop"></i>
+										<span>Stop</span>
+									</button>
+								</div>
+
+								<div class="console-footnote">
+									<i class="fa-solid fa-circle-info"></i>
+									<span>Use the left and right buttons to confirm channel wiring or speaker balance.</span>
+								</div>
+
+								<audio id="audioPlayer" class="w-100 mt-3" controls preload="metadata"></audio>
+							</section>
+
+							<section class="speaker speaker-right">
+								<div class="speaker-ring ring-outer"></div>
+								<div class="speaker-ring ring-mid"></div>
+								<div class="speaker-ring ring-inner"></div>
+								<div class="speaker-center">R</div>
+							</section>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="card tool-details-card">
+				<div class="card-header">
+					<h3 class="card-title">About This Audio Test Tool</h3>
+				</div>
+				<div class="card-body">
+					<p>This free online audio test tool helps you test speakers, headphones, earbuds, and stereo channel output without installing extra software. It is useful for checking whether left and right channels are reversed, confirming that both speakers are working, and identifying uneven volume during a quick sound check.</p>
+					<p>Start with the built-in tone generator for a clean test signal, then switch between left, stereo, and right output to confirm channel mapping and speaker balance. If you want to test with real content instead, upload a local audio file and route that playback through the same controls.</p>
+					<p>Because the tool runs client-side in the browser, it works well for local device diagnostics, home speaker setup, desk audio troubleshooting, earbud orientation checks, and pre-meeting headset checks. You can generate tones at different frequencies or use your own sound sample to hear how audio behaves across each channel.</p>
+					<ul class="tool-detail-list">
+						<li>Good for speaker tests, headphone tests, and stereo channel verification.</li>
+						<li>Lets you test left, right, or stereo output from one interface.</li>
+						<li>Supports both generated test tones and uploaded audio files.</li>
+						<li>Runs in the browser using the Web Audio API, so your file stays local to your session.</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</Content>
+
+	<Fragment slot="head">
+		<style>
+			.audio-boombox {
+				background:
+					radial-gradient(circle at top, rgba(255, 209, 102, 0.12), transparent 35%),
+					linear-gradient(160deg, #2b2f3a 0%, #171a20 52%, #0f1116 100%);
+				border-radius: 2rem;
+			}
+
+			.boombox-shell {
+				padding: 1.5rem;
+				color: #f5f1e8;
+			}
+
+			.boombox-topbar {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				gap: 1rem;
+				margin-bottom: 1.5rem;
+			}
+
+			.brand-pill,
+			.status-cluster,
+			.mini-display {
+				display: inline-flex;
+				align-items: center;
+				gap: 0.65rem;
+			}
+
+			.brand-pill {
+				padding: 0.75rem 1rem;
+				border-radius: 999px;
+				background: rgba(255, 255, 255, 0.07);
+				font-weight: 700;
+				letter-spacing: 0.04em;
+				text-transform: uppercase;
+			}
+
+			.status-cluster {
+				padding: 0.6rem 0.9rem;
+				border-radius: 999px;
+				background: rgba(0, 0, 0, 0.25);
+			}
+
+			.status-light {
+				width: 0.85rem;
+				height: 0.85rem;
+				border-radius: 50%;
+				background: #4ade80;
+				box-shadow: 0 0 12px rgba(74, 222, 128, 0.75);
+			}
+
+			.status-label,
+			.display-label,
+			.console-kicker,
+			.source-hint {
+				color: rgba(245, 241, 232, 0.72);
+			}
+
+			.boombox-stage {
+				display: grid;
+				grid-template-columns: minmax(180px, 220px) minmax(0, 1fr) minmax(180px, 220px);
+				gap: 1.25rem;
+				align-items: stretch;
+			}
+
+			.speaker,
+			.control-console {
+				border-radius: 1.5rem;
+				position: relative;
+			}
+
+			.speaker {
+				min-height: 100%;
+				padding: 1rem;
+				background:
+					radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.12), transparent 30%),
+					linear-gradient(180deg, #3b3f4b 0%, #1c1f27 100%);
+				display: grid;
+				place-items: center;
+				overflow: hidden;
+			}
+
+			.speaker::before {
+				content: "";
+				position: absolute;
+				inset: 0.75rem;
+				border: 1px solid rgba(255, 255, 255, 0.08);
+				border-radius: 1.25rem;
+			}
+
+			.speaker-ring,
+			.speaker-center {
+				position: absolute;
+				border-radius: 50%;
+			}
+
+			.ring-outer {
+				width: 78%;
+				aspect-ratio: 1;
+				background: radial-gradient(circle, #272a33 22%, #090b10 72%, #424756 100%);
+				box-shadow: inset 0 0 25px rgba(0, 0, 0, 0.6), 0 18px 26px rgba(0, 0, 0, 0.35);
+			}
+
+			.ring-mid {
+				width: 56%;
+				aspect-ratio: 1;
+				background: radial-gradient(circle, #444a58 0%, #1b1e25 55%, #0d0f13 100%);
+			}
+
+			.ring-inner {
+				width: 28%;
+				aspect-ratio: 1;
+				background: radial-gradient(circle, #f59e0b 0%, #78350f 72%, #120b05 100%);
+				box-shadow: 0 0 22px rgba(245, 158, 11, 0.15);
+			}
+
+			.speaker-center {
+				width: 4rem;
+				height: 4rem;
+				display: grid;
+				place-items: center;
+				background: rgba(0, 0, 0, 0.35);
+				border: 1px solid rgba(255, 255, 255, 0.14);
+				font-weight: 800;
+				letter-spacing: 0.18em;
+			}
+
+			.control-console {
+				padding: 1.5rem;
+				background:
+					linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02)),
+					linear-gradient(145deg, #5a3018 0%, #311a12 35%, #1a1b20 100%);
+				border: 1px solid rgba(255, 255, 255, 0.08);
+			}
+
+			.console-header,
+			.transport-row,
+			.console-grid {
+				display: grid;
+				gap: 1rem;
+			}
+
+			.console-header {
+				grid-template-columns: minmax(0, 1fr) auto;
+				align-items: center;
+				margin-bottom: 1.25rem;
+			}
+
+			.console-kicker {
+				font-size: 0.78rem;
+				text-transform: uppercase;
+				letter-spacing: 0.14em;
+				margin-bottom: 0.25rem;
+			}
+
+			.console-title {
+				margin: 0;
+				font-size: clamp(1.4rem, 2vw, 2rem);
+				font-weight: 800;
+			}
+
+			.mini-display {
+				flex-direction: column;
+				align-items: flex-start;
+				padding: 0.85rem 1rem;
+				border-radius: 1rem;
+				background: linear-gradient(180deg, #1f3528 0%, #101d16 100%);
+				border: 1px solid rgba(74, 222, 128, 0.2);
+			}
+
+			.source-switcher,
+			.channel-buttons {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 0.75rem;
+			}
+
+			.source-switcher {
+				margin-bottom: 1.25rem;
+			}
+
+			.source-chip,
+			.channel-btn,
+			.transport-btn {
+				border-radius: 999px;
+				border: 1px solid rgba(255, 255, 255, 0.14);
+				color: #f9f5eb;
+				transition: transform 0.18s ease, background 0.18s ease, border-color 0.18s ease;
+			}
+
+			.source-chip {
+				background: rgba(255, 255, 255, 0.05);
+				padding: 0.6rem 1rem;
+				font-weight: 700;
+			}
+
+			.btn-check:checked + .source-chip,
+			.channel-btn.active {
+				background: linear-gradient(135deg, #f59e0b 0%, #f97316 100%);
+				border-color: transparent;
+				color: #1b1208;
+				box-shadow: 0 10px 18px rgba(249, 115, 22, 0.28);
+			}
+
+			.source-panel,
+			.console-block {
+				padding: 1rem;
+				border-radius: 1.15rem;
+				background: rgba(8, 10, 14, 0.28);
+				border: 1px solid rgba(255, 255, 255, 0.06);
+			}
+
+			.console-grid {
+				grid-template-columns: repeat(2, minmax(0, 1fr));
+				margin-top: 1rem;
+			}
+
+			.tuner-slider {
+				--bs-form-range-thumb-bg: #f59e0b;
+				--bs-form-range-thumb-active-bg: #fbbf24;
+				--bs-form-range-track-bg: rgba(255, 255, 255, 0.16);
+			}
+
+			.dial-readout {
+				margin-top: 0.5rem;
+				display: inline-flex;
+				padding: 0.4rem 0.75rem;
+				border-radius: 999px;
+				background: rgba(245, 158, 11, 0.12);
+				color: #ffd79a;
+				font-weight: 700;
+			}
+
+			.boombox-select,
+			.boombox-input,
+			#audioPlayer {
+				background-color: rgba(12, 14, 18, 0.75);
+				border-color: rgba(255, 255, 255, 0.12);
+				color: #f5f1e8;
+			}
+
+			.boombox-select:focus,
+			.boombox-input:focus {
+				border-color: rgba(245, 158, 11, 0.6);
+				box-shadow: 0 0 0 0.25rem rgba(245, 158, 11, 0.18);
+			}
+
+			.transport-row {
+				grid-template-columns: repeat(2, minmax(0, 1fr));
+				margin-top: 1.25rem;
+			}
+
+			.transport-btn {
+				padding: 0.85rem 1rem;
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				gap: 0.6rem;
+				font-weight: 800;
+				text-transform: uppercase;
+				letter-spacing: 0.08em;
+			}
+
+			.play-btn {
+				background: linear-gradient(135deg, #fb7185 0%, #f59e0b 100%);
+				color: #1a1210;
+				border-color: transparent;
+			}
+
+			.stop-btn {
+				background: rgba(255, 255, 255, 0.05);
+			}
+
+			.console-footnote {
+				margin-top: 1rem;
+				display: inline-flex;
+				align-items: center;
+				gap: 0.65rem;
+				color: rgba(245, 241, 232, 0.78);
+				font-size: 0.95rem;
+			}
+
+			.source-chip:hover,
+			.channel-btn:hover,
+			.transport-btn:hover {
+				transform: translateY(-1px);
+			}
+
+			@media (max-width: 991.98px) {
+				.boombox-stage {
+					grid-template-columns: 1fr;
+				}
+
+				.speaker {
+					min-height: 220px;
+				}
+
+				.console-header,
+				.console-grid,
+				.transport-row {
+					grid-template-columns: 1fr;
+				}
+			}
+
+			@media (max-width: 575.98px) {
+				.boombox-shell,
+				.control-console {
+					padding: 1rem;
+				}
+
+				.brand-pill {
+					font-size: 0.8rem;
+				}
+			}
+		</style>
+	</Fragment>
+</Layout>
+
+<script type="module" src={pageScript}></script>

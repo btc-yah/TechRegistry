@@ -1,0 +1,81 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Content from "../../layouts/Content.astro";
+
+const pageScript = "/js/pages/formatters/html.js";
+
+const sampleInput = `<section class="hero"><h1>TechRegistry</h1><p>Format messy HTML fast.</p><div class="actions"><a href="/compare" class="btn btn-primary">Compare</a><a href="/converters" class="btn btn-outline-light">Convert</a></div></section>`;
+const sampleOutput = `<section class="hero">
+  <h1>TechRegistry</h1>
+  <p>Format messy HTML fast.</p>
+  <div class="actions">
+    <a href="/compare" class="btn btn-primary">Compare</a>
+    <a href="/converters" class="btn btn-outline-light">Convert</a>
+  </div>
+</section>`;
+---
+
+<Layout title="Format HTML | TechRegistry">
+	<Content title="Format HTML" titleTag="Formatter" starCount="5.4k stars" usageCount="8.7k uses today" version="v2.7.1" statusText="All Systems Operational" freeLabel="100% Free" privacyLabel="Client-Side Only" poweredBy="js-beautify" poweredByLink="https://github.com/beautifier/js-beautify" breadcrumbs={[{ label: "Home", href: "/" }, { label: "Format HTML" }]}>
+		<div class="tool-page-shell">
+			<div class="card">
+				<div class="card-body">
+					<div class="tool-toolbar">
+						<button id="load-sample" class="btn btn-outline-light btn-sm" type="button">Load Sample</button>
+						<button id="clear-input" class="btn btn-outline-secondary btn-sm" type="button">Clear</button>
+						<button id="format-html" class="btn btn-primary btn-sm" type="button">Format HTML</button>
+						<button id="copy-output" class="btn btn-outline-info btn-sm tool-toolbar-copy" type="button">Copy Output</button>
+					</div>
+
+					<div class="tool-field-grid mt-3 mb-3">
+						<div>
+							<label for="indent-size" class="form-label">Indent Size</label>
+							<select id="indent-size" class="form-select">
+								<option value="2">2 Spaces</option>
+								<option value="4">4 Spaces</option>
+							</select>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" id="wrap-attributes" />
+							<label class="form-check-label" for="wrap-attributes">Wrap attributes when lines get long</label>
+						</div>
+					</div>
+
+					<div class="tool-editors">
+						<div>
+							<div class="tool-label-row">
+								<label for="formatter-input" class="form-label mb-0">Input HTML</label>
+								<span class="text-body-secondary">Paste minified or unformatted markup</span>
+							</div>
+							<textarea id="formatter-input" class="form-control tool-code-input js-clipboard-source">{sampleInput}</textarea>
+						</div>
+						<div>
+							<div class="tool-label-row">
+								<label class="form-label mb-0">Formatted Output</label>
+								<span class="text-body-secondary">Clean markup appears here</span>
+							</div>
+							<pre id="formatter-output" class="tool-code-output">{sampleOutput}</pre>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="card tool-details-card">
+				<div class="card-header"><h3 class="card-title">About This HTML Formatter</h3></div>
+				<div class="card-body">
+					<p>This HTML formatter helps front-end developers, CMS editors, and QA teams clean up compressed or inconsistent markup before review, reuse, or debugging.</p>
+					<p>It works well for landing page snippets, email templates, generated fragments, and copied DOM output where readability matters before the next edit.</p>
+					<ul class="tool-detail-list">
+						<li>Beautifies nested HTML with clean indentation.</li>
+						<li>Helpful for debugging copied markup and generated templates.</li>
+						<li>Runs in the browser for fast formatting without a build step.</li>
+					</ul>
+
+				</div>
+			</div>
+		</div>
+	</Content>
+</Layout>
+
+<div hidden data-html-formatter-config data-sample-input={encodeURIComponent(sampleInput)} data-sample-output={encodeURIComponent(sampleOutput)}></div>
+<script type="module" src={pageScript}></script>

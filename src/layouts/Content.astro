@@ -1,0 +1,135 @@
+---
+import AddBar from "../layouts/AddBar.astro";
+import Clipboard from "./Clipboard.astro";
+
+interface BreadcrumbItem {
+	label: string;
+	href?: string;
+}
+
+interface Props {
+	title: string;
+	subtitle?: string;
+	breadcrumbs?: BreadcrumbItem[];
+	titleTag?: string;
+	starCount?: string;
+	usageCount?: string;
+	version?: string;
+	statusText?: string;
+	freeLabel?: string;
+	privacyLabel?: string;
+	poweredBy?: string;
+	poweredByLink?: string;
+	fullWidth?: boolean;
+}
+
+const {
+	title,
+	subtitle,
+	breadcrumbs = [],
+	titleTag = "",
+	starCount = "2k+ stars",
+	usageCount = "10k+ uses today",
+	version = "v2.1.0",
+	statusText = "All Systems Operational",
+	freeLabel = "100% Free",
+	privacyLabel = "Client-Side Only",
+	poweredBy = "",
+	poweredByLink = "",
+	fullWidth = false,
+} = Astro.props;
+
+
+---
+
+<div class="app-content-header content-page-header">
+	<div class="container-fluid">
+		<div class="content-page-hero">
+			<div class="row g-3 align-items-center">
+				<div class="col-lg-8">
+					<div class="content-page-title-row mb-2">						
+						<h1 class="content-page-title">{title}</h1>						
+						{titleTag && <span class="content-page-title-tag">{titleTag}</span>}
+						{poweredBy && (
+							poweredByLink ? (
+								<a href={poweredByLink} target="_blank" rel="noreferrer" class="content-page-title-powered"><i class="fa-solid fa-link"></i>Powered by {poweredBy}</a>
+							) : (
+								<span class="content-page-title-powered"><i class="fa-solid fa-code"></i>Powered by {poweredBy}</span>
+							)
+						)}
+					</div>
+					<div class="content-page-meta-row">
+						<div class="content-page-meta-badges">
+							<!-- <div class="content-page-meta-pill">
+								<span class="content-page-widget-icon text-warning">
+									<i class="fa-solid fa-star"></i>
+								</span>
+								<strong>{starCount}</strong>
+							</div> -->
+							<!-- <div class="content-page-meta-pill">
+								<span class="content-page-widget-label">Usage</span>
+								<strong>{usageCount}</strong>
+							</div> -->
+							<div class="content-page-meta-pill">
+								<span class="content-page-widget-label">Version</span>
+								<strong>{version}</strong>
+							</div>
+							<div class="content-page-meta-pill">
+								<span class="content-status-dot"></span>
+								<strong>{statusText}</strong>
+							</div>						
+							<div class="content-page-meta-pill">
+								<i class="fa-solid fa-shield-halved"></i>
+								<strong>{privacyLabel}</strong>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-4">
+					<div class="d-flex flex-column align-items-lg-end gap-3">
+						<a href="#" class="btn btn-primary">
+							<i class="fa-regular fa-message me-2"></i>
+							Share Feedback
+						</a>
+						<ol class="breadcrumb content-page-breadcrumb justify-content-lg-end mb-0">
+							{
+								breadcrumbs.map((item, index) => (
+									<li
+										class={`breadcrumb-item ${index === breadcrumbs.length - 1 ? "active" : ""}`}
+										aria-current={index === breadcrumbs.length - 1 ? "page" : undefined}
+									>
+										{index === breadcrumbs.length - 1 || !item.href ? (
+											item.label
+										) : (
+											<a href={item.href}>{item.label}</a>
+										)}
+									</li>
+								))
+							}
+						</ol>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="app-content content-page-body">
+	<div class="container-fluid">
+		<div class="row g-4 align-items-start">
+			<div class={fullWidth ? "col-12" : "col-xl-9 col-lg-8 col-12"}>
+				<div class="content-page-main">
+					<slot />
+				</div>
+			</div>
+			{
+				!fullWidth && (
+					<div class="col-xl-3 col-lg-4 col-12">
+						<AddBar />
+					</div>
+				)
+			}
+		</div>
+	</div>
+</div>
+<Clipboard />
